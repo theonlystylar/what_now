@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>@ViewBag.Title</title>
+	<meta charset="utf-8" />
+
+	<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/lib/bootswatch/yeti/bootstrap.min.css" />
+	<link rel="stylesheet" href="~/lib/font-awesome/font-awesome.min.css" />
+	<link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+	<div class="wrapper">
+		@RenderBody()
+	</div>
+
+	<script type="text/javascript" src="~/lib/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="~/js/site.js"></script>
+
+	@RenderSection("Scripts", false)
+</body>
+</html>

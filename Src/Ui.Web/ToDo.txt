@@ -1,0 +1,2 @@
+﻿[1/6/2015] Move bower downloads to a bower folder and set up gulp to move the libraries into the wwwroot folder so we don't have a million checkins
+Use project Itch as a model
