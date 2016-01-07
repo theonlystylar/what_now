@@ -2,6 +2,7 @@
   "name": "ui.web",
   "version": "1.0.0",
   "devDependencies": {
-    "del": "^2.2.0"
+    "del": "^2.2.0",
+    "gulp": "^3.9.0"
   }
 }
