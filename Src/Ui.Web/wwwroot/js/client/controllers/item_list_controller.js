@@ -1,11 +1,9 @@
-﻿var clientApp = angular.module("clientApp", []);
+﻿var clientAppControllers = angular.module("clientAppControllers", []);
 
-clientApp.controller("ItemListController", [
-	"$scope", "$http", function($scope, $http) {
+clientAppControllers.controller("ItemListController", [
+	"$scope", "$http", "ItemService", function($scope, $http, itemService) {
 
-		$http.get("js/client/items.json").success(function(data) {
-			$scope.items = data;
-		});
+		$scope.items = itemService.query();
 
 		$scope.onClick = function(name) {
 			alert(name);

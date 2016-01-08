@@ -32,7 +32,11 @@ gulp.task("bower", ["bower:clean"], function() {
 		.pipe(gulp.dest(paths.webroot + "lib/jquery"));
 
 	// angular
-	gulp.src("bower_components/angular/angular*.js")
+	gulp.src([
+			"bower_components/angular/angular*.js",
+			"bower_components/angular-route/angular-route*.js",
+			"bower_components/angular-resource/angular-resource*.js"
+		])
 		.pipe(gulp.dest(paths.webroot + "lib/angular"));
 });
 

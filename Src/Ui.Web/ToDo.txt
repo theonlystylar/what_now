@@ -1,2 +1,4 @@
-﻿[1/6/2015] Move bower downloads to a bower folder and set up gulp to move the libraries into the wwwroot folder so we don't have a million checkins
+﻿[1/7/2016] Go to Google tutorial https://docs.angularjs.org/tutorial/step_11 and see if we can implement a detail page that opens when the user clicks a button.
+
+[1/6/2015] Move bower downloads to a bower folder and set up gulp to move the libraries into the wwwroot folder so we don't have a million checkins
 Use project Itch as a model
