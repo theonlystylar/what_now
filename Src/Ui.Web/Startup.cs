@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json.Serialization;
 
-namespace Ui.Web
+namespace WhatNow.Ui.Web
 {
 	public class Startup
 	{

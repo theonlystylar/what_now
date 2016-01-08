@@ -6,7 +6,7 @@ using Microsoft.AspNet.Mvc;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Ui.Web.Controllers
+namespace WhatNow.Ui.Web.Controllers
 {
     public class ClientController : Controller
     {
