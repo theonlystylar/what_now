@@ -30,6 +30,10 @@ gulp.task("bower", ["bower:clean"], function() {
 	// jquery
 	gulp.src("bower_components/jquery/dist/jquery*.js")
 		.pipe(gulp.dest(paths.webroot + "lib/jquery"));
+
+	// angular
+	gulp.src("bower_components/angular/angular*.js")
+		.pipe(gulp.dest(paths.webroot + "lib/angular"));
 });
 
 /*

@@ -2,6 +2,7 @@
 	"name": "ASP.NET",
 	"private": true,
   "dependencies": {
+    "angular": "1.4.8",
     "bootstrap": "^3.3.6",
     "bootswatch": "3.3.6+1",
     "font-awesome": "^4.5.0",

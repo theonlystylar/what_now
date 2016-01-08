@@ -1,46 +1,21 @@
 ﻿@{
 	ViewBag.Title = "What Now!";
 }
-<div class="container-fluid">
+
+@section scripts{
+	<script type="text/javascript" src="~/js/client/controllers/item_list_controller.js"></script>
+}
+
+<div class="container-fluid" ng-controller="ItemListController">
+	
 	<h2>What Now!</h2>
+
 	<div class="row">
-		<div class="col-sm-6 col-md-4">
+		<div class="col-sm-6 col-md-4" ng-repeat="item in items" ng-click="onClick(item.name)">
 			<div class="thumbnail">
-				<img src="" alt="" />
+				<img src="" alt=""/>
 				<div class="caption">
-					<h3>Blowing Chunks</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-6 col-md-4">
-			<div class="thumbnail">
-				<img src="" alt="" />
-				<div class="caption">
-					<h3>Eating</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-6 col-md-4">
-			<div class="thumbnail">
-				<img src="" alt="" />
-				<div class="caption">
-					<h3>Pooping</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-6 col-md-4">
-			<div class="thumbnail">
-				<img src="" alt="" />
-				<div class="caption">
-					<h3>Peeing</h3>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-6 col-md-4">
-			<div class="thumbnail">
-				<img src="" alt="" />
-				<div class="caption">
-					<h3>Farting</h3>
+					<h3>{{item.name}}</h3>
 				</div>
 			</div>
 		</div>
