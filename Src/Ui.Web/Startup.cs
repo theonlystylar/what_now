@@ -3,6 +3,7 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
+using Newtonsoft.Json.Serialization;
 
 namespace Ui.Web
 {
@@ -24,7 +25,11 @@ namespace Ui.Web
 		// For more information on how to configure your application, visit http://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc();
+			services.AddMvc().AddJsonOptions(opts =>
+			{
+				// converts property names to camel case when returning data in api calls
+				opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+			});
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

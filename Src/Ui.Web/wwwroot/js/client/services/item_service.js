@@ -3,8 +3,7 @@
 clientAppServices.factory("ItemService", [
 	"$resource",
 	function($resource) {
-		return $resource("js/client/:itemId.json", {}, {
-			query: { method: "GET", params: { itemId: "items" }, isArray: true }
+		return $resource("api/items/:itemId", {itemId: "@id"}, {
 		});
 	}
 ]);
