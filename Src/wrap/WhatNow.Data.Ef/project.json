@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "net451": {
+      "wrappedProject": "../../Data.Ef/Data.Ef.csproj",
+      "bin": {
+        "assembly": "../../Data.Ef/obj/{configuration}/WhatNow.Data.Ef.dll",
+        "pdb": "../../Data.Ef/obj/{configuration}/WhatNow.Data.Ef.pdb"
+      },
+      "dependencies": {
+        "EntityFramework": "6.1.3"
+      }
+    }
+  }
+}

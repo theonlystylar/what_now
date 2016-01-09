@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Newtonsoft.Json.Serialization;
+using WhatNow.Data.Ef;
 
 namespace WhatNow.Ui.Web
 {
@@ -30,6 +31,7 @@ namespace WhatNow.Ui.Web
 				// converts property names to camel case when returning data in api calls
 				opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			});
+			services.AddScoped<WhatNowDataEntities>((x) => new WhatNowDataEntities("metadata=res://*/WhatNowModel.csdl|res://*/WhatNowModel.ssdl|res://*/WhatNowModel.msl;provider=System.Data.SqlClient;provider connection string=\";data source=(localdb)\\ProjectsV12;initial catalog=WhatNowData;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework\""));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

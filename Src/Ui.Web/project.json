@@ -18,8 +18,11 @@
   },
 
   "frameworks": {
-    "dnx451": { },
-    "dnxcore50": { }
+    "dnx451": {
+      "dependencies": {
+        "WhatNow.Data.Ef": "1.0.0-*"
+      }
+    }
   },
 
   "exclude": [
