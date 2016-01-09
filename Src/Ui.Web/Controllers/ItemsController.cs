@@ -10,20 +10,11 @@ namespace WhatNow.Ui.Web.Controllers
 	[Route("api/[controller]")]
 	public class ItemsController : Controller
 	{
-		//private IList<Item> _items = new List<Item>() {
-		//	new Item {Id = 1, Name = "Blowing Chunks", ImageUrl="" },
-		//	new Item {Id = 2, Name = "Eating", ImageUrl="" },
-		//	new Item {Id = 3, Name = "Pooping", ImageUrl="" },
-		//	new Item {Id = 4, Name = "Peeing", ImageUrl="" },
-		//	new Item {Id = 5, Name = "Farting", ImageUrl="" },
-		//	new Item {Id = 6, Name = "Medication", ImageUrl="" }
-		//};
-
 		private WhatNowDataEntities _dbContext;
 
-		public ItemsController(WhatNowDataEntities whatNowDbContext)
+		public ItemsController(WhatNowDataEntities dbContext)
 		{
-			_dbContext = whatNowDbContext;
+			_dbContext = dbContext;
 		}
 
 		// GET: api/items
@@ -31,6 +22,14 @@ namespace WhatNow.Ui.Web.Controllers
 		public IEnumerable<Item> Get()
 		{
 			var items = _dbContext.Items.ToList();
+			return items;
+		}
+
+		// GET: api/items/children/5
+		[HttpGet("children/{parentId?}")]
+		public IEnumerable<Item> GetChildren(int? parentId = null)
+		{
+			var items = _dbContext.Items.Where(x => x.ParentId == parentId).ToList();
 			return items;
 		}
 
@@ -59,11 +58,4 @@ namespace WhatNow.Ui.Web.Controllers
 		{
 		}
 	}
-
-	//public class Item
-	//{
-	//	public int Id { get; set; }
-	//	public string Name { get; set; }
-	//	public string ImageUrl { get; set; }
-	//}
 }
