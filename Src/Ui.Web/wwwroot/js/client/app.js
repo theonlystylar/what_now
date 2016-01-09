@@ -12,14 +12,14 @@ clientApp.config([
 	"$routeProvider",
 	function($routeProvider) {
 		$routeProvider.
-			//when("/phones", {
-			//	templateUrl: "partials/phone-list.html",
-			//	controller: "PhoneListCtrl"
-			//}).
-			//when("/phones/:phoneId", {
-			//	templateUrl: "partials/phone-detail.html",
-			//	controller: "PhoneDetailCtrl"
-			//}).
+			when("/items", {
+				templateUrl: "js/client/partials/items.html",
+				controller: "ItemListController"
+			}).
+			when("/items/:itemId", {
+				templateUrl: "js/client/partials/item.html",
+				controller: "ItemListController"
+			}).
 			otherwise({
 				redirectTo: "/items"
 			});
