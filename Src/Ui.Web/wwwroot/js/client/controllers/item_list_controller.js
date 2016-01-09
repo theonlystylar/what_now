@@ -1,4 +1,4 @@
-﻿var clientAppControllers = angular.module("clientAppControllers", []);
+﻿var clientAppControllers = angular.module("clientAppControllers");
 
 clientAppControllers.controller("ItemListController", [
 	"$scope", "ItemLogService", "ItemQueryService", function ($scope, itemLogService, itemQueryService) {

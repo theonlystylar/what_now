@@ -44,5 +44,8 @@ gulp.task("bower", ["bower:clean"], function() {
  * Clean bower destination
  */
 gulp.task("bower:clean", function() {
-	return del(paths.webroot + "lib/**/*");
+	return del([
+		paths.webroot + "lib/**/*",
+		"!" + paths.webroot + "lib/toastr/**"
+	]);
 });
