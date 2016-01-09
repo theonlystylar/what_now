@@ -10,6 +10,7 @@
         <EntityTypeShape EntityType="WhatNowDataModel.User" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
         <AssociationConnector Association="WhatNowDataModel.FK_ItemLog_Item_ItemId" ManuallyRouted="false" />
         <AssociationConnector Association="WhatNowDataModel.FK_ItemLog_User_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="WhatNowDataModel.FK_Item_Item_ParentId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

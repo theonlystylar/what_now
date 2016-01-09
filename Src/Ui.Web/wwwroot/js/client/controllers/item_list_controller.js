@@ -1,14 +1,33 @@
 ﻿var clientAppControllers = angular.module("clientAppControllers");
 
-clientAppControllers.controller("ItemListController", [
-	"$scope", "ItemLogService", "ItemQueryService", function ($scope, itemLogService, itemQueryService) {
-		itemQueryService.getRoot(function (data) {
-			$scope.items = data;
-		})
+clientAppControllers.controller(
+	"ItemListController", [
+	"$scope",
+	"$location",
+	"$routeParams",
+	"ItemLogService",
+	"ItemQueryService",
+	function ($scope, $location, $routeParams, itemLogService, itemQueryService) {
+
+		var parentId = $routeParams.parentId;
+
+		if (parentId) {
+			itemQueryService.getChildren(parentId, function (data) {
+				$scope.items = data;
+			})
+		} else {
+			itemQueryService.getRoot(function (data) {
+				$scope.items = data;
+			})
+		}
 
 		$scope.onClick = function (item) {
+			if (item.hasChildren) {
+				$location.path("items/" + item.id)
+				return;
+			}
 			itemLogService.save({
-				itemId: item.id,
+				itemId: item.id
 			},
 			// success
 			function () {

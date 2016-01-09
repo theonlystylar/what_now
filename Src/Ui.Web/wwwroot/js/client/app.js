@@ -16,8 +16,8 @@ clientApp.config([
 				templateUrl: "js/client/partials/items.html",
 				controller: "ItemListController"
 			}).
-			when("/items/:itemId", {
-				templateUrl: "js/client/partials/item.html",
+			when("/items/:parentId", {
+				templateUrl: "js/client/partials/items.html",
 				controller: "ItemListController"
 			}).
 			otherwise({

@@ -18,6 +18,7 @@ namespace WhatNow.Data.Ef
         public Item()
         {
             this.ItemLogs = new HashSet<ItemLog>();
+            this.Children = new HashSet<Item>();
         }
     
         public int Id { get; set; }
@@ -27,5 +28,8 @@ namespace WhatNow.Data.Ef
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemLog> ItemLogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Item> Children { get; set; }
+        public virtual Item Parent { get; set; }
     }
 }

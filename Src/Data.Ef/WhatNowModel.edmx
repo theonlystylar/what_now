@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WhatNowDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WhatNowDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="Id" />
@@ -34,6 +34,18 @@
           <Property Name="FirstLogin" Type="datetime" Nullable="false" />
           <Property Name="LastLogin" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Item_Item_ParentId">
+          <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+          <End Role="Item1" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ItemLog_Item_ItemId">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="ItemLog" Type="Self.ItemLog" Multiplicity="*" />
@@ -62,6 +74,10 @@
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemLog" EntityType="Self.ItemLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Item_Item_ParentId" Association="Self.FK_Item_Item_ParentId">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Item1" EntitySet="Item" />
+          </AssociationSet>
           <AssociationSet Name="FK_ItemLog_Item_ItemId" Association="Self.FK_ItemLog_Item_ItemId">
             <End Role="Item" EntitySet="Item" />
             <End Role="ItemLog" EntitySet="ItemLog" />
@@ -71,8 +87,7 @@
             <End Role="ItemLog" EntitySet="ItemLog" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WhatNowDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -85,6 +100,8 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SortOrder" Type="Int32" />
           <NavigationProperty Name="ItemLogs" Relationship="Self.FK_ItemLog_Item_ItemId" FromRole="Item" ToRole="ItemLog" />
+          <NavigationProperty Name="Children" Relationship="WhatNowDataModel.FK_Item_Item_ParentId" FromRole="Item" ToRole="Item1" />
+          <NavigationProperty Name="Parent" Relationship="WhatNowDataModel.FK_Item_Item_ParentId" FromRole="Item1" ToRole="Item" />
         </EntityType>
         <EntityType Name="ItemLog">
           <Key>
@@ -145,7 +162,23 @@
             <End Role="User" EntitySet="Users" />
             <End Role="ItemLog" EntitySet="ItemLogs" />
           </AssociationSet>
+          <AssociationSet Name="FK_Item_Item_ParentId" Association="WhatNowDataModel.FK_Item_Item_ParentId">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Item1" EntitySet="Items" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Item_Item_ParentId">
+          <End Type="WhatNowDataModel.Item" Role="Item" Multiplicity="0..1" />
+          <End Type="WhatNowDataModel.Item" Role="Item1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
