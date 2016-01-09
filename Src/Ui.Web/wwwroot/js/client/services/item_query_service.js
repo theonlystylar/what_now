@@ -1,4 +1,4 @@
-﻿var clientAppServices = angular.module("clientAppServices", []);
+﻿var clientAppServices = angular.module("clientAppServices");
 
 clientAppServices.factory("ItemQueryService", [
 	"$http",

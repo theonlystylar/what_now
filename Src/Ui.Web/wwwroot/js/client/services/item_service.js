@@ -1,4 +1,4 @@
-﻿var clientAppServices = angular.module("clientAppServices", ["ngResource"]);
+﻿var clientAppServices = angular.module("clientAppServices");
 
 clientAppServices.factory("ItemService", [
 	"$resource",

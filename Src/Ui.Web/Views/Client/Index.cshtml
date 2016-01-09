@@ -5,7 +5,9 @@
 @section scripts{
 	<script type="text/javascript" src="~/js/client/app.js"></script>
 	<script type="text/javascript" src="~/js/client/controllers/item_list_controller.js"></script>
+	<script type="text/javascript" src="~/js/client/services/module.js"></script>
 	<script type="text/javascript" src="~/js/client/services/item_service.js"></script>
+	<script type="text/javascript" src="~/js/client/services/item_log_service.js"></script>
 	<script type="text/javascript" src="~/js/client/services/item_query_service.js"></script>
 }
 
@@ -14,7 +16,7 @@
 	<h2>What Now!</h2>
 
 	<div class="row">
-		<div class="col-sm-6 col-md-4" ng-repeat="item in items" ng-click="onClick(item.name)">
+		<div class="col-sm-6 col-md-4" ng-repeat="item in items" ng-click="onClick(item)">
 			<div class="thumbnail">
 				<img src="" alt="" />
 				<div class="caption">
