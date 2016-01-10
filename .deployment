@@ -1,2 +1,2 @@
 ﻿[config]
-project = Src/Ui.Web/Ui.Web.csproj
+project = Src/Ui.Web/Ui.Web.xproj
