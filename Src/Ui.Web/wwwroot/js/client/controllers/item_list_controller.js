@@ -5,9 +5,10 @@ clientAppControllers.controller(
 	"$scope",
 	"$location",
 	"$routeParams",
+	"$window",
 	"ItemLogService",
 	"ItemQueryService",
-	function ($scope, $location, $routeParams, itemLogService, itemQueryService) {
+	function ($scope, $location, $routeParams, $window, itemLogService, itemQueryService) {
 
 		var parentId = $routeParams.parentId;
 
@@ -20,6 +21,12 @@ clientAppControllers.controller(
 				$scope.items = data;
 			})
 		}
+
+		$scope.hasParent = parentId > 0;
+
+		$scope.back = function () {
+			$window.history.back();
+		};
 
 		$scope.onClick = function (item) {
 			if (item.hasChildren) {

@@ -39,7 +39,8 @@ gulp.task("bower", ["bower:clean"], function() {
 	gulp.src([
 			"bower_components/angular/angular*.js",
 			"bower_components/angular-route/angular-route*.js",
-			"bower_components/angular-resource/angular-resource*.js"
+			"bower_components/angular-resource/angular-resource*.js",
+			"bower_components/angular-animate/angular*.js"
 		])
 		.pipe(gulp.dest(paths.webroot + "lib/angular"));
 });

@@ -1,5 +1,17 @@
-﻿<div class="container-fluid" ng-controller="ItemListController">
+﻿<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<a class="navbar-brand" href="#">What Now?</a>
+	</div>
+</nav>
+
+<div class="container-fluid" ng-controller="ItemListController">
 	<div class="row pad">
+		<div class="col-sm-6 col-md-4 pad" ng-show="hasParent" ng-click="back()">
+			<div class="btn btn-default btn-lg btn-block" aria-label="Left Align">
+				<span class="fa fa-arrow-left" aria-hidden="true"></span>
+				back
+			</div>
+		</div>
 		<div class="col-sm-6 col-md-4 pad" ng-repeat="item in items" ng-click="onClick(item)">
 			<div class="btn btn-primary btn-lg btn-block" aria-label="Left Align">
 				<span class="fa fa-heart-o" aria-hidden="true"></span>

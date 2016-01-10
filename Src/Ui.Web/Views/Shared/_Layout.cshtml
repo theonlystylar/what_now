@@ -13,8 +13,10 @@
 	@RenderSection("Styles", false)
 </head>
 <body>
-	<div class="wrapper" ng-view>
-		@RenderBody()
+	<div class="container">
+		<div class="wrapper slide page" ng-view>
+			@RenderBody()
+		</div>
 	</div>
 
 	<script type="text/javascript" src="~/lib/jquery/jquery.min.js"></script>
@@ -22,6 +24,7 @@
 	<script type="text/javascript" src="~/lib/angular/angular.min.js"></script>
 	<script type="text/javascript" src="~/lib/angular/angular-route.min.js"></script>
 	<script type="text/javascript" src="~/lib/angular/angular-resource.min.js"></script>
+	<script type="text/javascript" src="~/lib/angular/angular-animate.min.js"></script>
 
 	@RenderSection("Scripts", false)
 </body>
