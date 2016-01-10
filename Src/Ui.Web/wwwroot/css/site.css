@@ -1,2 +1,6 @@
-﻿body {
+﻿.space{
+	margin: 5px;
+}
+.pad{
+	padding: 5px;
 }

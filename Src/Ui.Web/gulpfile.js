@@ -20,12 +20,16 @@ gulp.task("bower", ["bower:clean"], function() {
 		.pipe(gulp.dest(paths.webroot + "lib/bootstrap"));
 
 	// bootswatch - bootstrap themes
-	gulp.src("bower_components/bootswatch/yeti/bootstrap*.css")
-		.pipe(gulp.dest(paths.webroot + "lib/bootswatch/yeti"));
+	gulp.src("bower_components/bootswatch/united/bootstrap*.css")
+		.pipe(gulp.dest(paths.webroot + "lib/bootswatch/united"));
 
 	// font-awesome
 	gulp.src("bower_components/font-awesome/css/font-awesome*.css")
 		.pipe(gulp.dest(paths.webroot + "lib/font-awesome"));
+
+	// font-awesome fonts
+	gulp.src("bower_components/font-awesome/fonts/*")
+		.pipe(gulp.dest(paths.webroot + "lib/fonts"));
 
 	// jquery
 	gulp.src("bower_components/jquery/dist/jquery*.js")

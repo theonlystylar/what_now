@@ -1,14 +1,9 @@
 ﻿<div class="container-fluid" ng-controller="ItemListController">
-
-	<h2>What Now!</h2>
-
-	<div class="row">
-		<div class="col-sm-6 col-md-4" ng-repeat="item in items" ng-click="onClick(item)">
-			<div class="thumbnail">
-				<img src="" alt="" />
-				<div class="caption">
-					<h3>{{item.name}}</h3>
-				</div>
+	<div class="row pad">
+		<div class="col-sm-6 col-md-4 pad" ng-repeat="item in items" ng-click="onClick(item)">
+			<div class="btn btn-primary btn-lg btn-block" aria-label="Left Align">
+				<span class="fa fa-heart-o" aria-hidden="true"></span>
+				{{item.name}}
 			</div>
 		</div>
 	</div>
