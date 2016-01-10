@@ -31,7 +31,8 @@ namespace WhatNow.Ui.Web
 				// converts property names to camel case when returning data in api calls
 				opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			});
-			services.AddScoped((x) => new WhatNowDataEntities("metadata=res://*/WhatNowModel.csdl|res://*/WhatNowModel.ssdl|res://*/WhatNowModel.msl;provider=System.Data.SqlClient;provider connection string=\";data source=tcp:andyapps.database.windows.net,1433;initial catalog=WhatNowData;User ID=andyapps_admin@andyapps;Password=ad9pm50!;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;MultipleActiveResultSets=True;App=EntityFramework\""));
+			services.AddInstance<IConfiguration>(Configuration);
+			services.AddScoped((x) => new WhatNowDataEntities(Configuration.GetSection("Data").GetSection("DefaultConnection").GetSection("ConnectionString").Value));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
