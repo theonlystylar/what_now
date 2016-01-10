@@ -16,6 +16,7 @@
   </PropertyGroup>
   <ItemGroup>
     <DnxInvisibleContent Include=".bowerrc" />
+    <DnxInvisibleContent Include=".deployment" />
   </ItemGroup>
   <ItemGroup>
     <DnxInvisibleFolder Include="bower_components\" />
