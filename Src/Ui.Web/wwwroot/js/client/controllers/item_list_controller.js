@@ -28,11 +28,11 @@ clientAppControllers.controller(
 			$window.history.back();
 		};
 
-		$scope.onClick = function (item) {
-			if (item.hasChildren) {
-				$location.path("items/" + item.id)
-				return;
-			}
+		$scope.pageToChildren = function (item) {
+			$location.path("items/" + item.id)
+		}
+
+		$scope.log = function (item) {
 			itemLogService.save({
 				itemId: item.id
 			},
@@ -44,6 +44,6 @@ clientAppControllers.controller(
 			function (error) {
 				toastr["error"]('Error!');
 			});
-		};
+		}
 	}
 ]);

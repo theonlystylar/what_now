@@ -5,6 +5,9 @@
 .pad{
 	padding: 5px;
 }
+.c-spacer-bottom{
+	margin-bottom: 10px;
+}
 
 .container .page {
     left: 0;

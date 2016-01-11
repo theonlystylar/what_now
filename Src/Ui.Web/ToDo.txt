@@ -1,4 +1,6 @@
-﻿DONE [1/7/2016] Follow tutorial on how to use EF6 with MVC 5:https://www.asp.net/mvc/overview/getting-started/database-first-development/setting-up-database
+﻿[1/10/216] Master angular transitions: http://www.yearofmoo.com/2013/08/remastered-animation-in-angularjs-1-2.html
+
+DONE [1/7/2016] Follow tutorial on how to use EF6 with MVC 5:https://www.asp.net/mvc/overview/getting-started/database-first-development/setting-up-database
 
 [1/7/2016] Go to Google tutorial https://docs.angularjs.org/tutorial/step_11 and see if we can implement a detail page that opens when the user clicks a button.
 
