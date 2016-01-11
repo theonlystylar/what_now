@@ -19,17 +19,21 @@ namespace WhatNow.Data.Ef
         {
             this.ItemLogs = new HashSet<ItemLog>();
             this.Children = new HashSet<Item>();
+            this.ItemOptions = new HashSet<ItemOption>();
         }
     
         public int Id { get; set; }
         public Nullable<int> ParentId { get; set; }
         public string Name { get; set; }
         public Nullable<int> SortOrder { get; set; }
+        public string FunnyName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ItemLog> ItemLogs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Children { get; set; }
         public virtual Item Parent { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ItemOption> ItemOptions { get; set; }
     }
 }

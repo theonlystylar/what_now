@@ -12,22 +12,18 @@ namespace WhatNow.Data.Ef
     using System;
     using System.Collections.Generic;
     
-    public partial class ItemLog
+    public partial class ItemOptionType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ItemLog()
+        public ItemOptionType()
         {
-            this.ItemLogOptions = new HashSet<ItemLogOption>();
+            this.ItemOptions = new HashSet<ItemOption>();
         }
     
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public int ItemId { get; set; }
-        public System.DateTime Logged { get; set; }
+        public string Name { get; set; }
     
-        public virtual Item Item { get; set; }
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItemLogOption> ItemLogOptions { get; set; }
+        public virtual ICollection<ItemOption> ItemOptions { get; set; }
     }
 }

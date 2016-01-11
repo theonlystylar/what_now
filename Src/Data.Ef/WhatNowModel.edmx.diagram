@@ -11,6 +11,13 @@
         <AssociationConnector Association="WhatNowDataModel.FK_ItemLog_Item_ItemId" ManuallyRouted="false" />
         <AssociationConnector Association="WhatNowDataModel.FK_ItemLog_User_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="WhatNowDataModel.FK_Item_Item_ParentId" />
+        <EntityTypeShape EntityType="WhatNowDataModel.ItemOption" Width="1.5" PointX="5.625" PointY="2.75" />
+        <EntityTypeShape EntityType="WhatNowDataModel.ItemOptionType" Width="1.5" PointX="3.375" PointY="5.375" />
+        <AssociationConnector Association="WhatNowDataModel.FK_ItemOption_Item_ItemId" />
+        <AssociationConnector Association="WhatNowDataModel.FK_ItemOption_ItemOptionType_TypeId" />
+        <EntityTypeShape EntityType="WhatNowDataModel.ItemLogOption" Width="1.5" PointX="7.875" PointY="2" />
+        <AssociationConnector Association="WhatNowDataModel.FK_ItemLogOption_ItemLog_ItemLogId" />
+        <AssociationConnector Association="WhatNowDataModel.FK_ItemLogOption_ItemOption_ItemOptionId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

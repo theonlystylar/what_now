@@ -25,7 +25,13 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			return _dbContext
 				.Items
 				.Where(x => x.ParentId == parentId)
-				.Select(x => new ItemModel { Id = x.Id, ParentId = x.ParentId, Name = x.Name, SortOrder = x.SortOrder, HasChildren = x.Children.Any() })
+				.Select(x => new ItemModel {
+					Id = x.Id,
+					ParentId = x.ParentId,
+					Name = x.Name,
+					FunnyName = x.FunnyName,
+					SortOrder = x.SortOrder,
+					HasChildren = x.Children.Any() })
 				.ToList();
 		}
 
@@ -47,6 +53,7 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				Id = item.Id,
 				ParentId = item.ParentId,
 				Name = item.Name,
+				FunnyName = item.FunnyName,
 				SortOrder = item.SortOrder,
 				HasChildren = item.Children.Any()
 			};

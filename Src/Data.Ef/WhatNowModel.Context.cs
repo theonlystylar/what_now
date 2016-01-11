@@ -33,5 +33,8 @@ namespace WhatNow.Data.Ef
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<ItemLog> ItemLogs { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<ItemOption> ItemOptions { get; set; }
+        public virtual DbSet<ItemOptionType> ItemOptionTypes { get; set; }
+        public virtual DbSet<ItemLogOption> ItemLogOptions { get; set; }
     }
 }

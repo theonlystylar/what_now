@@ -62,6 +62,9 @@
     <Build Include="Item.sql" />
     <Build Include="ItemLog.sql" />
     <Build Include="User.sql" />
+    <Build Include="ItemOption.sql" />
+    <Build Include="ItemOptionType.sql" />
+    <Build Include="ItemLogOption.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

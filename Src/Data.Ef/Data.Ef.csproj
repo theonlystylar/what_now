@@ -58,6 +58,15 @@
     <Compile Include="ItemLog.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ItemLogOption.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemOption.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemOptionType.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
