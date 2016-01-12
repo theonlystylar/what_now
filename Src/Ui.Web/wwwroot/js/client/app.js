@@ -21,6 +21,10 @@ clientApp.config([
 				templateUrl: "js/client/partials/items.html",
 				controller: "ItemListController"
 			}).
+			when("/items/log/:itemId", {
+				templateUrl: "js/client/partials/item_log.html",
+				controller: "ItemLogController"
+			}).
 			otherwise({
 				redirectTo: "/items"
 			});

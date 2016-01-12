@@ -9,7 +9,6 @@ clientAppControllers.controller(
 	"ItemLogService",
 	"ItemQueryService",
 	function ($scope, $location, $routeParams, $window, itemLogService, itemQueryService) {
-
 		var parentId = $routeParams.parentId;
 
 		if (parentId) {
@@ -29,7 +28,11 @@ clientAppControllers.controller(
 		};
 
 		$scope.pageToChildren = function (item) {
-			$location.path("items/" + item.id)
+			if (item.hasChildren) {
+				$location.path("items/" + item.id)
+				return;
+			}
+			$location.path("items/log/" + item.id)
 		}
 
 		$scope.log = function (item) {
@@ -46,4 +49,4 @@ clientAppControllers.controller(
 			});
 		}
 	}
-]);
+	]);

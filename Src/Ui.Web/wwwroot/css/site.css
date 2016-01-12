@@ -1,4 +1,32 @@
 ﻿body { }
+.c-item{
+	padding: 10px;
+	border-radius: 4px;
+	border: solid 1px #dd4814;
+	margin-bottom: 20px;
+}
+.c-item:hover{
+	background-color: #dd4814;
+	color: #fff;
+}
+.c-item .img,
+.c-item img{
+	border: solid 1px #dd4814;
+	width: 50px;
+	height: 50px;
+	float: left;
+	border-radius: 4px;
+	background-color: #fff;
+}
+.c-item span{
+	float: left;
+	font-size: 1.4em;
+	padding-left: 15px;
+}
+
+
+
+
 .space{
 	margin: 5px;
 }

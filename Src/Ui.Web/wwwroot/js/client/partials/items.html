@@ -29,17 +29,11 @@
 		</nav>
 	</div>
 	<div class="row">
-		<div class="col-sm-6 col-md-4" ng-repeat="item in items">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<span>{{item.name}}</span>
-					<div class="btn btn-sm btn-default" aria-label="Right Align" ng-show="item.hasChildren" ng-click="pageToChildren(item)">
-						Next
-						<span class="fa fa-arrow-right" aria-hidden="true"></span>
-					</div>
-					<button class="btn btn-sm btn-default" ng-show="!item.hasChildren" ng-click="log(item)">Log</button>
-					<button class="btn btn-sm btn-default" ng-show="!item.hasChildren">Log With Comment</button>
-				</div>
+		<div class="col-sm-6 col-md-4" ng-repeat="item in items" ng-click="pageToChildren(item)">
+			<div class="c-item clearfix">
+				<div class="img"></div>
+				<!--<img src="#" />-->
+				<span>{{item.name}}</span>
 			</div>
 		</div>
 	</div>
