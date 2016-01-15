@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Mvc;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using WhatNow.Data.Ef;
 using WhatNow.Ui.Web.Api.Models;
@@ -25,14 +26,10 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			return _dbContext
 				.Items
 				.Where(x => x.ParentId == parentId)
-				.Select(x => new ItemModel {
-					Id = x.Id,
-					ParentId = x.ParentId,
-					Name = x.Name,
-					FunnyName = x.FunnyName,
-					SortOrder = x.SortOrder,
-					HasChildren = x.Children.Any() })
-				.ToList();
+				.Include(x => x.Parent)
+				.Include(x => x.Children)
+				.ToList()
+				.Select(x => x.ToModel());
 		}
 
 		// GET api/items/5
@@ -41,6 +38,8 @@ namespace WhatNow.Ui.Web.Api.Controllers
 		{
 			var item = _dbContext
 				.Items
+				.Include(x => x.Parent)
+				.Include(x => x.Children)
 				.FirstOrDefault(x => x.Id == id);
 
 			if (item == null)
@@ -48,15 +47,7 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				return null;
 			}
 
-			return new ItemModel
-			{
-				Id = item.Id,
-				ParentId = item.ParentId,
-				Name = item.Name,
-				FunnyName = item.FunnyName,
-				SortOrder = item.SortOrder,
-				HasChildren = item.Children.Any()
-			};
+			return item.ToModel();
 		}
 
 		// POST api/values

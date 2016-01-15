@@ -6,6 +6,7 @@ var clientApp = angular.module("clientApp", [
 	"ngRoute",
 	"ngAnimate",
 	"navBarModule",
+	"itemListModule",
 	"clientAppControllers",
 	"clientAppServices"
 ]);
