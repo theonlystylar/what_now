@@ -7,6 +7,6 @@
 			</button>
 		</nav>
 	</div>
-	<div ng-include="'js/client/item_list/item_list_buttons.template.html'" ng-controller="itemListButtonsController"></div>
-	<div ng-include="'js/client/item_list/item_list_log_form.template.html'" ng-controller="itemListLogFormController"></div>
+	<div ng-include="'js/client/item_list/item_list_buttons.template.html'" ng-controller="itemListButtonsController" ng-show="isButtonsVisible"></div>
+	<div ng-include="'js/client/item_list/item_list_log_form.template.html'" ng-controller="itemListLogFormController" ng-show="isFormVisible"></div>
 </div>
