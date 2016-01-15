@@ -5,6 +5,7 @@
 var clientApp = angular.module("clientApp", [
 	"ngRoute",
 	"ngAnimate",
+	"core",
 	"navBarModule",
 	"itemListModule",
 	"clientAppControllers",

@@ -1,1 +1,4 @@
-﻿angular.module("itemListModule", []);
+﻿angular.module("itemListModule", [
+	"clientAppServices",
+	"core"
+]);

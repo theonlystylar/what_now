@@ -2,12 +2,15 @@
 	"itemListController", [
 	"$scope",
 	function ($scope) {
-		$scope.isListVisible = true;
-		$scope.isFormVisible = false;
 
-		$scope.goBack = function () {
-			$scope.isListVisible = !$scope.isListVisible;
-			$scope.isFormVisible = !$scope.isFormVisible;
+		$scope.item = null;
+
+		$scope.subscribe('ITEM_SELECTED', function (item) {
+			$scope.item = item;
+		});
+
+		$scope.goToParent = function () {
+			$scope.publish('ITEM_NAV_TO_PARENT_REQUESTED', {});
 		}
 	}
 	]);

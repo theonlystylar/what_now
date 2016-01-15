@@ -1,5 +1,12 @@
-﻿<div class="ng-cloak">
-	<button class="btn btn-default" ng-click="goBack()">Back</button>
-	<div ng-show="isListVisible">buttons</div>
-	<div ng-show="isFormVisible">form</div>
+﻿<div class="container-fluid ng-cloak">
+	<div class="c-spacer-bottom" ng-show="item != null">
+		<nav>
+			<button class="btn btn-default" aria-label="Left Align" ng-click="goToParent()">
+				<span class="fa fa-arrow-left" aria-hidden="true"></span>
+				back
+			</button>
+		</nav>
+	</div>
+	<div ng-include="'js/client/item_list/item_list_buttons.template.html'" ng-controller="itemListButtonsController"></div>
+	<div ng-include="'js/client/item_list/item_list_log_form.template.html'" ng-controller="itemListLogFormController"></div>
 </div>
