@@ -1,4 +1,5 @@
 ﻿angular.module("itemListModule", [
 	"clientAppServices",
-	"core"
+	"core",
+	"dataModule"
 ]);

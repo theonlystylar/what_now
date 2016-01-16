@@ -3,8 +3,6 @@ using System;
 using WhatNow.Data.Ef;
 using WhatNow.Ui.Web.Api.Models;
 
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WhatNow.Ui.Web.Api.Controllers
 {
 	[Route("api/[controller]")]

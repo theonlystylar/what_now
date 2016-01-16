@@ -1,7 +1,12 @@
 ﻿angular.module("itemListModule").controller(
 	"itemListLogFormController", [
 	"$scope",
-	function ($scope) {
+	"controlService",
+	function ($scope, controlService) {
 
+
+		controlService.query({ itemId: 2 }, function (controls) {
+			$scope.controls = controls;
+		})
 	}
 	]);
