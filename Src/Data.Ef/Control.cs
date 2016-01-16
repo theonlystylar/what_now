@@ -12,28 +12,23 @@ namespace WhatNow.Data.Ef
     using System;
     using System.Collections.Generic;
     
-    public partial class Item
+    public partial class Control
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Item()
+        public Control()
         {
-            this.Children = new HashSet<Item>();
-            this.Controls = new HashSet<Control>();
-            this.Logs = new HashSet<Log>();
+            this.ControlOptions = new HashSet<ControlOption>();
         }
     
         public int Id { get; set; }
-        public Nullable<int> ParentId { get; set; }
+        public int ItemId { get; set; }
+        public int ControlTypeId { get; set; }
         public string Name { get; set; }
-        public Nullable<int> SortOrder { get; set; }
         public string FunnyName { get; set; }
     
+        public virtual ControlType ControlType { get; set; }
+        public virtual Item Item { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Children { get; set; }
-        public virtual Item Parent { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Control> Controls { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Log> Logs { get; set; }
+        public virtual ICollection<ControlOption> ControlOptions { get; set; }
     }
 }

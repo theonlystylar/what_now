@@ -9,25 +9,42 @@ Post-Deployment Script Template
                SELECT * FROM [$(TableName)]					
 --------------------------------------------------------------------------------------
 */
-DELETE [ItemLog];
+BEGIN TRANSACTION
+
+DROP TABLE [ItemLogOption]
 GO
-DELETE [ItemOption]
+DROP TABLE [ItemLog]
+GO
+DROP TABLE [ItemOption]
+GO
+DROP TABLE [ItemOptionType]
+GO
+
+DELETE [LogOption]
+GO
+DELETE [Log];
+GO
+DELETE [ControlOption]
+GO
+DELETE [Control]
+GO
+DELETE [ControlType]
 GO
 DELETE [Item];
 GO
 
-SET IDENTITY_INSERT ItemOptionType ON;
-MERGE INTO ItemOptionType AS Target 
+SET IDENTITY_INSERT ControlType ON;
+MERGE INTO ControlType AS Target 
 USING (VALUES 
         (1, 'Checkbox'),
-		(2, 'Text')
+		(2, 'Textbox')
 ) 
 AS Source (Id, Name) 
 ON Target.Id = Source.Id 
 WHEN NOT MATCHED BY TARGET THEN 
 INSERT (Id, Name) 
 VALUES (Id, Name);
-SET IDENTITY_INSERT ItemOptionType OFF;
+SET IDENTITY_INSERT ControlType OFF;
 
 SET IDENTITY_INSERT Item ON;
 MERGE INTO Item AS Target 
@@ -46,45 +63,66 @@ INSERT (Id, ParentId, Name, FunnyName, SortOrder)
 VALUES (Id, ParentId, Name, FunnyName, SortOrder);
 SET IDENTITY_INSERT Item OFF;
 
-SET IDENTITY_INSERT ItemOption ON;
-MERGE INTO ItemOption AS Target 
+SET IDENTITY_INSERT [Control] ON;
+MERGE INTO [Control] AS Target 
 USING (VALUES 
-        (1, 2, 1, 'Dry heaving', NULL),
-		(2, 2, 1, 'Cramping', NULL),
-		(3, 2, 1, 'Chest pain', NULL),
-		(4, 2, 1, 'Close together, hard to breathe', NULL),
-		(5, 2, 2, 'Comment', NULL),
-
-		(6, 3, 1, 'Dry heaving', NULL),
-		(7, 3, 1, 'Cramping', NULL),
-		(8, 3, 1, 'Chest pain', NULL),
-		(9, 3, 1, 'Close together, hard to breathe', NULL),
-		(10, 3, 2, 'Comment', NULL),
-
-		(11, 4, 1, 'Dry heaving', NULL),
-		(12, 4, 1, 'Cramping', NULL),
-		(13, 4, 1, 'Chest pain', NULL),
-		(14, 4, 1, 'Close together, to breathe', NULL),
-		(15, 4, 2, 'Comment', NULL),
-
-		(16, 5, 1, 'Dry heaving', NULL),
-		(17, 5, 1, 'Cramping', NULL),
-		(18, 5, 1, 'Chest pain', NULL),
-		(19, 5, 1, 'Close together, hard to breathe', NULL),
-		(20, 5, 2, 'Comment', NULL),
-
-		(21, 6, 1, 'Dry heaving', NULL),
-		(22, 6, 1, 'Cramping', NULL),
-		(23, 6, 1, 'Chest pain', NULL),
-		(24, 6, 1, 'Close together, hard to breathe', NULL),
-		(25, 6, 2, 'Comment', NULL)
+        (1, 2, 1, 'Detail', null),
+		(2, 2, 2, 'Comments', null),
+		(3, 3, 1, 'Detail', null),
+		(4, 3, 2, 'Comments', null),
+		(5, 4, 1, 'Detail', null),
+		(6, 4, 2, 'Comments', null),
+		(7, 5, 1, 'Detail', null),
+		(8, 5, 2, 'Comments', null),
+		(9, 6, 1, 'Detail', null),
+		(10, 6, 2, 'Comments', null)
 ) 
-AS Source (Id, ItemId, TypeId, Name, FunnyName) 
+AS Source (Id, ItemId, ControlTypeId, Name, FunnyName) 
 ON Target.Id = Source.Id 
 WHEN NOT MATCHED BY TARGET THEN 
-INSERT (Id, ItemId, TypeId, Name, FunnyName) 
-VALUES (Id, ItemId, TypeId, Name, FunnyName);
-SET IDENTITY_INSERT ItemOption OFF;
+INSERT (Id, ItemId, ControlTypeId, Name, FunnyName) 
+VALUES (Id, ItemId, ControlTypeId, Name, FunnyName);
+SET IDENTITY_INSERT [Control] OFF;
+
+SET IDENTITY_INSERT ControlOption ON;
+MERGE INTO ControlOption AS Target 
+USING (VALUES 
+        (1, 1, 'Dry heaving', NULL),
+		(2, 1, 'Cramping', NULL),
+		(3, 1, 'Chest pain', NULL),
+		(4, 1, 'Close together, hard to breathe', NULL),
+		(5, 1, 'Comment', NULL),
+
+		(6, 3, 'Dry heaving', NULL),
+		(7, 3, 'Cramping', NULL),
+		(8, 3, 'Chest pain', NULL),
+		(9, 3, 'Close together, hard to breathe', NULL),
+		(10, 3, 'Comment', NULL),
+
+		(11, 5, 'Dry heaving', NULL),
+		(12, 5, 'Cramping', NULL),
+		(13, 5, 'Chest pain', NULL),
+		(14, 5, 'Close together, to breathe', NULL),
+		(15, 5, 'Comment', NULL),
+
+		(16, 7, 'Dry heaving', NULL),
+		(17, 7, 'Cramping', NULL),
+		(18, 7, 'Chest pain', NULL),
+		(19, 7, 'Close together, hard to breathe', NULL),
+		(20, 7, 'Comment', NULL),
+
+		(21, 9, 'Dry heaving', NULL),
+		(22, 9, 'Cramping', NULL),
+		(23, 9, 'Chest pain', NULL),
+		(24, 9, 'Close together, hard to breathe', NULL),
+		(25, 9, 'Comment', NULL)
+) 
+AS Source (Id, ControlId, Name, FunnyName) 
+ON Target.Id = Source.Id 
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT (Id, ControlId, Name, FunnyName) 
+VALUES (Id, ControlId, Name, FunnyName);
+SET IDENTITY_INSERT ControlOption OFF;
 
 MERGE INTO [User] AS Target 
 USING (VALUES 
@@ -95,3 +133,5 @@ ON Target.Id = Source.Id
 WHEN NOT MATCHED BY TARGET THEN 
 INSERT (Id, Handle, UserName, [Password], FirstLogin, LastLogin) 
 VALUES (Id, Handle, UserName, [Password], FirstLogin, LastLogin);
+
+COMMIT TRANSACTION

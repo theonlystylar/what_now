@@ -31,10 +31,11 @@ namespace WhatNow.Data.Ef
         }
     
         public virtual DbSet<Item> Items { get; set; }
-        public virtual DbSet<ItemLog> ItemLogs { get; set; }
         public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<ItemOption> ItemOptions { get; set; }
-        public virtual DbSet<ItemOptionType> ItemOptionTypes { get; set; }
-        public virtual DbSet<ItemLogOption> ItemLogOptions { get; set; }
+        public virtual DbSet<Control> Controls { get; set; }
+        public virtual DbSet<ControlOption> ControlOptions { get; set; }
+        public virtual DbSet<ControlType> ControlTypes { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
+        public virtual DbSet<LogOption> LogOptions { get; set; }
     }
 }

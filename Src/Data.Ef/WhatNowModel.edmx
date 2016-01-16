@@ -5,6 +5,32 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="WhatNowDataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Control">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="ControlTypeId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FunnyName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ControlOption">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ControlId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FunnyName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ControlType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="15" Nullable="false" />
+        </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="Id" />
@@ -15,7 +41,7 @@
           <Property Name="FunnyName" Type="varchar" MaxLength="50" />
           <Property Name="SortOrder" Type="int" />
         </EntityType>
-        <EntityType Name="ItemLog">
+        <EntityType Name="Log">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -24,31 +50,14 @@
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="Logged" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="ItemLogOption">
+        <EntityType Name="LogOption">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemLogId" Type="int" Nullable="false" />
-          <Property Name="ItemOptionId" Type="int" Nullable="false" />
+          <Property Name="LogId" Type="int" Nullable="false" />
+          <Property Name="ControlOptionId" Type="int" Nullable="false" />
           <Property Name="Value" Type="varchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="ItemOption">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemId" Type="int" Nullable="false" />
-          <Property Name="TypeId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FunnyName" Type="varchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="ItemOptionType">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -61,6 +70,42 @@
           <Property Name="FirstLogin" Type="datetime" Nullable="false" />
           <Property Name="LastLogin" Type="datetime" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Control_ControlType_ControlTypeId">
+          <End Role="ControlType" Type="Self.ControlType" Multiplicity="1" />
+          <End Role="Control" Type="Self.Control" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ControlType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Control">
+              <PropertyRef Name="ControlTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Control_Item_ItemId">
+          <End Role="Item" Type="Self.Item" Multiplicity="1" />
+          <End Role="Control" Type="Self.Control" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Control">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ControlOption_Control_ControlId">
+          <End Role="Control" Type="Self.Control" Multiplicity="1" />
+          <End Role="ControlOption" Type="Self.ControlOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Control">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ControlOption">
+              <PropertyRef Name="ControlId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Item_Item_ParentId">
           <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
           <End Role="Item1" Type="Self.Item" Multiplicity="*" />
@@ -73,112 +118,93 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemLog_Item_ItemId">
+        <Association Name="FK_Log_Item_ItemId">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="ItemLog" Type="Self.ItemLog" Multiplicity="*" />
+          <End Role="Log" Type="Self.Log" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Item">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ItemLog">
+            <Dependent Role="Log">
               <PropertyRef Name="ItemId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemLog_User_UserId">
+        <Association Name="FK_Log_User_UserId">
           <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="ItemLog" Type="Self.ItemLog" Multiplicity="*" />
+          <End Role="Log" Type="Self.Log" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ItemLog">
+            <Dependent Role="Log">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemLogOption_ItemLog_ItemLogId">
-          <End Role="ItemLog" Type="Self.ItemLog" Multiplicity="1" />
-          <End Role="ItemLogOption" Type="Self.ItemLogOption" Multiplicity="*" />
+        <Association Name="FK_LogOption_ControlOption_ControlOptionId">
+          <End Role="ControlOption" Type="Self.ControlOption" Multiplicity="1" />
+          <End Role="LogOption" Type="Self.LogOption" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ItemLog">
+            <Principal Role="ControlOption">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ItemLogOption">
-              <PropertyRef Name="ItemLogId" />
+            <Dependent Role="LogOption">
+              <PropertyRef Name="ControlOptionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemLogOption_ItemOption_ItemOptionId">
-          <End Role="ItemOption" Type="Self.ItemOption" Multiplicity="1" />
-          <End Role="ItemLogOption" Type="Self.ItemLogOption" Multiplicity="*" />
+        <Association Name="FK_LogOption_Log_LogId">
+          <End Role="Log" Type="Self.Log" Multiplicity="1" />
+          <End Role="LogOption" Type="Self.LogOption" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ItemOption">
+            <Principal Role="Log">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ItemLogOption">
-              <PropertyRef Name="ItemOptionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemOption_Item_ItemId">
-          <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="ItemOption" Type="Self.ItemOption" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemOption">
-              <PropertyRef Name="ItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemOption_ItemOptionType_TypeId">
-          <End Role="ItemOptionType" Type="Self.ItemOptionType" Multiplicity="1" />
-          <End Role="ItemOption" Type="Self.ItemOption" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemOptionType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemOption">
-              <PropertyRef Name="TypeId" />
+            <Dependent Role="LogOption">
+              <PropertyRef Name="LogId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="WhatNowDataModelStoreContainer">
+          <EntitySet Name="Control" EntityType="Self.Control" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ControlOption" EntityType="Self.ControlOption" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ControlType" EntityType="Self.ControlType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ItemLog" EntityType="Self.ItemLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ItemLogOption" EntityType="Self.ItemLogOption" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ItemOption" EntityType="Self.ItemOption" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ItemOptionType" EntityType="Self.ItemOptionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogOption" EntityType="Self.LogOption" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Control_ControlType_ControlTypeId" Association="Self.FK_Control_ControlType_ControlTypeId">
+            <End Role="ControlType" EntitySet="ControlType" />
+            <End Role="Control" EntitySet="Control" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Control_Item_ItemId" Association="Self.FK_Control_Item_ItemId">
+            <End Role="Item" EntitySet="Item" />
+            <End Role="Control" EntitySet="Control" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ControlOption_Control_ControlId" Association="Self.FK_ControlOption_Control_ControlId">
+            <End Role="Control" EntitySet="Control" />
+            <End Role="ControlOption" EntitySet="ControlOption" />
+          </AssociationSet>
           <AssociationSet Name="FK_Item_Item_ParentId" Association="Self.FK_Item_Item_ParentId">
             <End Role="Item" EntitySet="Item" />
             <End Role="Item1" EntitySet="Item" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemLog_Item_ItemId" Association="Self.FK_ItemLog_Item_ItemId">
+          <AssociationSet Name="FK_Log_Item_ItemId" Association="Self.FK_Log_Item_ItemId">
             <End Role="Item" EntitySet="Item" />
-            <End Role="ItemLog" EntitySet="ItemLog" />
+            <End Role="Log" EntitySet="Log" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemLog_User_UserId" Association="Self.FK_ItemLog_User_UserId">
+          <AssociationSet Name="FK_Log_User_UserId" Association="Self.FK_Log_User_UserId">
             <End Role="User" EntitySet="User" />
-            <End Role="ItemLog" EntitySet="ItemLog" />
+            <End Role="Log" EntitySet="Log" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemLogOption_ItemLog_ItemLogId" Association="Self.FK_ItemLogOption_ItemLog_ItemLogId">
-            <End Role="ItemLog" EntitySet="ItemLog" />
-            <End Role="ItemLogOption" EntitySet="ItemLogOption" />
+          <AssociationSet Name="FK_LogOption_ControlOption_ControlOptionId" Association="Self.FK_LogOption_ControlOption_ControlOptionId">
+            <End Role="ControlOption" EntitySet="ControlOption" />
+            <End Role="LogOption" EntitySet="LogOption" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemLogOption_ItemOption_ItemOptionId" Association="Self.FK_ItemLogOption_ItemOption_ItemOptionId">
-            <End Role="ItemOption" EntitySet="ItemOption" />
-            <End Role="ItemLogOption" EntitySet="ItemLogOption" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemOption_Item_ItemId" Association="Self.FK_ItemOption_Item_ItemId">
-            <End Role="Item" EntitySet="Item" />
-            <End Role="ItemOption" EntitySet="ItemOption" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemOption_ItemOptionType_TypeId" Association="Self.FK_ItemOption_ItemOptionType_TypeId">
-            <End Role="ItemOptionType" EntitySet="ItemOptionType" />
-            <End Role="ItemOption" EntitySet="ItemOption" />
+          <AssociationSet Name="FK_LogOption_Log_LogId" Association="Self.FK_LogOption_Log_LogId">
+            <End Role="Log" EntitySet="Log" />
+            <End Role="LogOption" EntitySet="LogOption" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -193,23 +219,11 @@
           <Property Name="ParentId" Type="Int32" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SortOrder" Type="Int32" />
-          <NavigationProperty Name="ItemLogs" Relationship="Self.FK_ItemLog_Item_ItemId" FromRole="Item" ToRole="ItemLog" />
           <NavigationProperty Name="Children" Relationship="WhatNowDataModel.FK_Item_Item_ParentId" FromRole="Item" ToRole="Item1" />
           <NavigationProperty Name="Parent" Relationship="WhatNowDataModel.FK_Item_Item_ParentId" FromRole="Item1" ToRole="Item" />
           <Property Name="FunnyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ItemOptions" Relationship="WhatNowDataModel.FK_ItemOption_Item_ItemId" FromRole="Item" ToRole="ItemOption" />
-        </EntityType>
-        <EntityType Name="ItemLog">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="ItemId" Type="Int32" Nullable="false" />
-          <Property Name="Logged" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Item" Relationship="Self.FK_ItemLog_Item_ItemId" FromRole="ItemLog" ToRole="Item" />
-          <NavigationProperty Name="User" Relationship="Self.FK_ItemLog_User_UserId" FromRole="ItemLog" ToRole="User" />
-          <NavigationProperty Name="ItemLogOptions" Relationship="WhatNowDataModel.FK_ItemLogOption_ItemLog_ItemLogId" FromRole="ItemLog" ToRole="ItemLogOption" />
+          <NavigationProperty Name="Controls" Relationship="WhatNowDataModel.FK_Control_Item_ItemId" FromRole="Item" ToRole="Control" />
+          <NavigationProperty Name="Logs" Relationship="WhatNowDataModel.FK_Log_Item_ItemId" FromRole="Item" ToRole="Log" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -221,66 +235,47 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FirstLogin" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastLogin" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ItemLogs" Relationship="Self.FK_ItemLog_User_UserId" FromRole="User" ToRole="ItemLog" />
+          <NavigationProperty Name="Logs" Relationship="WhatNowDataModel.FK_Log_User_UserId" FromRole="User" ToRole="Log" />
         </EntityType>
-        <Association Name="FK_ItemLog_Item_ItemId">
-          <End Role="Item" Type="Self.Item" Multiplicity="1" />
-          <End Role="ItemLog" Type="Self.ItemLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemLog">
-              <PropertyRef Name="ItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemLog_User_UserId">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="ItemLog" Type="Self.ItemLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemLog">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="WhatNowDataEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Items" EntityType="Self.Item" />
-          <EntitySet Name="ItemLogs" EntityType="Self.ItemLog" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_ItemLog_Item_ItemId" Association="Self.FK_ItemLog_Item_ItemId">
-            <End Role="Item" EntitySet="Items" />
-            <End Role="ItemLog" EntitySet="ItemLogs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ItemLog_User_UserId" Association="Self.FK_ItemLog_User_UserId">
-            <End Role="User" EntitySet="Users" />
-            <End Role="ItemLog" EntitySet="ItemLogs" />
-          </AssociationSet>
           <AssociationSet Name="FK_Item_Item_ParentId" Association="WhatNowDataModel.FK_Item_Item_ParentId">
             <End Role="Item" EntitySet="Items" />
             <End Role="Item1" EntitySet="Items" />
           </AssociationSet>
-          <EntitySet Name="ItemOptions" EntityType="WhatNowDataModel.ItemOption" />
-          <EntitySet Name="ItemOptionTypes" EntityType="WhatNowDataModel.ItemOptionType" />
-          <AssociationSet Name="FK_ItemOption_Item_ItemId" Association="WhatNowDataModel.FK_ItemOption_Item_ItemId">
+          <EntitySet Name="Controls" EntityType="WhatNowDataModel.Control" />
+          <EntitySet Name="ControlOptions" EntityType="WhatNowDataModel.ControlOption" />
+          <EntitySet Name="ControlTypes" EntityType="WhatNowDataModel.ControlType" />
+          <EntitySet Name="Logs" EntityType="WhatNowDataModel.Log" />
+          <EntitySet Name="LogOptions" EntityType="WhatNowDataModel.LogOption" />
+          <AssociationSet Name="FK_Control_ControlType_ControlTypeId" Association="WhatNowDataModel.FK_Control_ControlType_ControlTypeId">
+            <End Role="ControlType" EntitySet="ControlTypes" />
+            <End Role="Control" EntitySet="Controls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Control_Item_ItemId" Association="WhatNowDataModel.FK_Control_Item_ItemId">
             <End Role="Item" EntitySet="Items" />
-            <End Role="ItemOption" EntitySet="ItemOptions" />
+            <End Role="Control" EntitySet="Controls" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemOption_ItemOptionType_TypeId" Association="WhatNowDataModel.FK_ItemOption_ItemOptionType_TypeId">
-            <End Role="ItemOptionType" EntitySet="ItemOptionTypes" />
-            <End Role="ItemOption" EntitySet="ItemOptions" />
+          <AssociationSet Name="FK_ControlOption_Control_ControlId" Association="WhatNowDataModel.FK_ControlOption_Control_ControlId">
+            <End Role="Control" EntitySet="Controls" />
+            <End Role="ControlOption" EntitySet="ControlOptions" />
           </AssociationSet>
-          <EntitySet Name="ItemLogOptions" EntityType="WhatNowDataModel.ItemLogOption" />
-          <AssociationSet Name="FK_ItemLogOption_ItemLog_ItemLogId" Association="WhatNowDataModel.FK_ItemLogOption_ItemLog_ItemLogId">
-            <End Role="ItemLog" EntitySet="ItemLogs" />
-            <End Role="ItemLogOption" EntitySet="ItemLogOptions" />
+          <AssociationSet Name="FK_LogOption_ControlOption_ControlOptionId" Association="WhatNowDataModel.FK_LogOption_ControlOption_ControlOptionId">
+            <End Role="ControlOption" EntitySet="ControlOptions" />
+            <End Role="LogOption" EntitySet="LogOptions" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemLogOption_ItemOption_ItemOptionId" Association="WhatNowDataModel.FK_ItemLogOption_ItemOption_ItemOptionId">
-            <End Role="ItemOption" EntitySet="ItemOptions" />
-            <End Role="ItemLogOption" EntitySet="ItemLogOptions" />
+          <AssociationSet Name="FK_Log_Item_ItemId" Association="WhatNowDataModel.FK_Log_Item_ItemId">
+            <End Role="Item" EntitySet="Items" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Log_User_UserId" Association="WhatNowDataModel.FK_Log_User_UserId">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Log" EntitySet="Logs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogOption_Log_LogId" Association="WhatNowDataModel.FK_LogOption_Log_LogId">
+            <End Role="Log" EntitySet="Logs" />
+            <End Role="LogOption" EntitySet="LogOptions" />
           </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Item_Item_ParentId">
@@ -295,83 +290,142 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ItemOption">
+        <EntityType Name="Control">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ItemId" Type="Int32" Nullable="false" />
-          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="ControlTypeId" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FunnyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Item" Relationship="WhatNowDataModel.FK_ItemOption_Item_ItemId" FromRole="ItemOption" ToRole="Item" />
-          <NavigationProperty Name="ItemOptionType" Relationship="WhatNowDataModel.FK_ItemOption_ItemOptionType_TypeId" FromRole="ItemOption" ToRole="ItemOptionType" />
-          <NavigationProperty Name="ItemLogOptions" Relationship="WhatNowDataModel.FK_ItemLogOption_ItemOption_ItemOptionId" FromRole="ItemOption" ToRole="ItemLogOption" />
+          <NavigationProperty Name="ControlType" Relationship="WhatNowDataModel.FK_Control_ControlType_ControlTypeId" FromRole="Control" ToRole="ControlType" />
+          <NavigationProperty Name="Item" Relationship="WhatNowDataModel.FK_Control_Item_ItemId" FromRole="Control" ToRole="Item" />
+          <NavigationProperty Name="ControlOptions" Relationship="WhatNowDataModel.FK_ControlOption_Control_ControlId" FromRole="Control" ToRole="ControlOption" />
         </EntityType>
-        <EntityType Name="ItemOptionType">
+        <EntityType Name="ControlOption">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ControlId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FunnyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Control" Relationship="WhatNowDataModel.FK_ControlOption_Control_ControlId" FromRole="ControlOption" ToRole="Control" />
+          <NavigationProperty Name="LogOptions" Relationship="WhatNowDataModel.FK_LogOption_ControlOption_ControlOptionId" FromRole="ControlOption" ToRole="LogOption" />
+        </EntityType>
+        <EntityType Name="ControlType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ItemOptions" Relationship="WhatNowDataModel.FK_ItemOption_ItemOptionType_TypeId" FromRole="ItemOptionType" ToRole="ItemOption" />
+          <NavigationProperty Name="Controls" Relationship="WhatNowDataModel.FK_Control_ControlType_ControlTypeId" FromRole="ControlType" ToRole="Control" />
         </EntityType>
-        <Association Name="FK_ItemOption_Item_ItemId">
-          <End Type="WhatNowDataModel.Item" Role="Item" Multiplicity="1" />
-          <End Type="WhatNowDataModel.ItemOption" Role="ItemOption" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Item">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemOption">
-              <PropertyRef Name="ItemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ItemOption_ItemOptionType_TypeId">
-          <End Type="WhatNowDataModel.ItemOptionType" Role="ItemOptionType" Multiplicity="1" />
-          <End Type="WhatNowDataModel.ItemOption" Role="ItemOption" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemOptionType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ItemOption">
-              <PropertyRef Name="TypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ItemLogOption">
+        <EntityType Name="Log">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemLogId" Type="Int32" Nullable="false" />
-          <Property Name="ItemOptionId" Type="Int32" Nullable="false" />
-          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ItemLog" Relationship="WhatNowDataModel.FK_ItemLogOption_ItemLog_ItemLogId" FromRole="ItemLogOption" ToRole="ItemLog" />
-          <NavigationProperty Name="ItemOption" Relationship="WhatNowDataModel.FK_ItemLogOption_ItemOption_ItemOptionId" FromRole="ItemLogOption" ToRole="ItemOption" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ItemId" Type="Int32" Nullable="false" />
+          <Property Name="Logged" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Item" Relationship="WhatNowDataModel.FK_Log_Item_ItemId" FromRole="Log" ToRole="Item" />
+          <NavigationProperty Name="User" Relationship="WhatNowDataModel.FK_Log_User_UserId" FromRole="Log" ToRole="User" />
+          <NavigationProperty Name="LogOptions" Relationship="WhatNowDataModel.FK_LogOption_Log_LogId" FromRole="Log" ToRole="LogOption" />
         </EntityType>
-        <Association Name="FK_ItemLogOption_ItemLog_ItemLogId">
-          <End Type="WhatNowDataModel.ItemLog" Role="ItemLog" Multiplicity="1" />
-          <End Type="WhatNowDataModel.ItemLogOption" Role="ItemLogOption" Multiplicity="*" />
+        <EntityType Name="LogOption">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LogId" Type="Int32" Nullable="false" />
+          <Property Name="ControlOptionId" Type="Int32" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ControlOption" Relationship="WhatNowDataModel.FK_LogOption_ControlOption_ControlOptionId" FromRole="LogOption" ToRole="ControlOption" />
+          <NavigationProperty Name="Log" Relationship="WhatNowDataModel.FK_LogOption_Log_LogId" FromRole="LogOption" ToRole="Log" />
+        </EntityType>
+        <Association Name="FK_Control_ControlType_ControlTypeId">
+          <End Type="WhatNowDataModel.ControlType" Role="ControlType" Multiplicity="1" />
+          <End Type="WhatNowDataModel.Control" Role="Control" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ItemLog">
+            <Principal Role="ControlType">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ItemLogOption">
-              <PropertyRef Name="ItemLogId" />
+            <Dependent Role="Control">
+              <PropertyRef Name="ControlTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemLogOption_ItemOption_ItemOptionId">
-          <End Type="WhatNowDataModel.ItemOption" Role="ItemOption" Multiplicity="1" />
-          <End Type="WhatNowDataModel.ItemLogOption" Role="ItemLogOption" Multiplicity="*" />
+        <Association Name="FK_Control_Item_ItemId">
+          <End Type="WhatNowDataModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="WhatNowDataModel.Control" Role="Control" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ItemOption">
+            <Principal Role="Item">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ItemLogOption">
-              <PropertyRef Name="ItemOptionId" />
+            <Dependent Role="Control">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ControlOption_Control_ControlId">
+          <End Type="WhatNowDataModel.Control" Role="Control" Multiplicity="1" />
+          <End Type="WhatNowDataModel.ControlOption" Role="ControlOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Control">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ControlOption">
+              <PropertyRef Name="ControlId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogOption_ControlOption_ControlOptionId">
+          <End Type="WhatNowDataModel.ControlOption" Role="ControlOption" Multiplicity="1" />
+          <End Type="WhatNowDataModel.LogOption" Role="LogOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ControlOption">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogOption">
+              <PropertyRef Name="ControlOptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Log_Item_ItemId">
+          <End Type="WhatNowDataModel.Item" Role="Item" Multiplicity="1" />
+          <End Type="WhatNowDataModel.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Item">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="ItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Log_User_UserId">
+          <End Type="WhatNowDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="WhatNowDataModel.Log" Role="Log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Log">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogOption_Log_LogId">
+          <End Type="WhatNowDataModel.Log" Role="Log" Multiplicity="1" />
+          <End Type="WhatNowDataModel.LogOption" Role="LogOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Log">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogOption">
+              <PropertyRef Name="LogId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -392,16 +446,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ItemLogs">
-            <EntityTypeMapping TypeName="WhatNowDataModel.ItemLog">
-              <MappingFragment StoreEntitySet="ItemLog">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-                <ScalarProperty Name="Logged" ColumnName="Logged" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="WhatNowDataModel.User">
               <MappingFragment StoreEntitySet="User">
@@ -414,36 +458,56 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ItemOptions">
-            <EntityTypeMapping TypeName="WhatNowDataModel.ItemOption">
-              <MappingFragment StoreEntitySet="ItemOption">
+          <EntitySetMapping Name="Controls">
+            <EntityTypeMapping TypeName="WhatNowDataModel.Control">
+              <MappingFragment StoreEntitySet="Control">
                 <ScalarProperty Name="FunnyName" ColumnName="FunnyName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="ControlTypeId" ColumnName="ControlTypeId" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ItemOptionTypes">
-            <EntityTypeMapping TypeName="WhatNowDataModel.ItemOptionType">
-              <MappingFragment StoreEntitySet="ItemOptionType">
+          <EntitySetMapping Name="ControlOptions">
+            <EntityTypeMapping TypeName="WhatNowDataModel.ControlOption">
+              <MappingFragment StoreEntitySet="ControlOption">
+                <ScalarProperty Name="FunnyName" ColumnName="FunnyName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ControlId" ColumnName="ControlId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ControlTypes">
+            <EntityTypeMapping TypeName="WhatNowDataModel.ControlType">
+              <MappingFragment StoreEntitySet="ControlType">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ItemLogOptions">
-            <EntityTypeMapping TypeName="WhatNowDataModel.ItemLogOption">
-              <MappingFragment StoreEntitySet="ItemLogOption">
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="ItemOptionId" ColumnName="ItemOptionId" />
-                <ScalarProperty Name="ItemLogId" ColumnName="ItemLogId" />
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="WhatNowDataModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="Logged" ColumnName="Logged" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="LogOptions">
+            <EntityTypeMapping TypeName="WhatNowDataModel.LogOption">
+              <MappingFragment StoreEntitySet="LogOption">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ControlOptionId" ColumnName="ControlOptionId" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

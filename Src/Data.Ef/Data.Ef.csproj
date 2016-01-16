@@ -52,19 +52,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ControlOption.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ControlType.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Item.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ItemLog.cs">
+    <Compile Include="Log.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ItemLogOption.cs">
-      <DependentUpon>WhatNowModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ItemOption.cs">
-      <DependentUpon>WhatNowModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ItemOptionType.cs">
+    <Compile Include="LogOption.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

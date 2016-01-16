@@ -60,11 +60,12 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Item.sql" />
-    <Build Include="ItemLog.sql" />
+    <Build Include="Log.sql" />
     <Build Include="User.sql" />
-    <Build Include="ItemOption.sql" />
-    <Build Include="ItemOptionType.sql" />
-    <Build Include="ItemLogOption.sql" />
+    <Build Include="LogOption.sql" />
+    <Build Include="Control.sql" />
+    <Build Include="ControlType.sql" />
+    <Build Include="ControlOption.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

@@ -21,7 +21,7 @@ namespace WhatNow.Ui.Web.Api.Controllers
 		[HttpPost]
 		public void Post([FromBody]ItemLogEditRequest value)
 		{
-			_dbContext.ItemLogs.Add(new ItemLog
+			_dbContext.Logs.Add(new Log
 			{
 				ItemId = value.ItemId,
 				UserId = 1,

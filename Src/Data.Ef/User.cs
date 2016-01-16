@@ -17,7 +17,7 @@ namespace WhatNow.Data.Ef
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.ItemLogs = new HashSet<ItemLog>();
+            this.Logs = new HashSet<Log>();
         }
     
         public int Id { get; set; }
@@ -28,6 +28,6 @@ namespace WhatNow.Data.Ef
         public System.DateTime LastLogin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItemLog> ItemLogs { get; set; }
+        public virtual ICollection<Log> Logs { get; set; }
     }
 }
