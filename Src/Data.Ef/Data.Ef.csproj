@@ -55,6 +55,9 @@
     <Compile Include="Control.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ControlLog.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ControlOption.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
@@ -65,9 +68,6 @@
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Log.cs">
-      <DependentUpon>WhatNowModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LogOption.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

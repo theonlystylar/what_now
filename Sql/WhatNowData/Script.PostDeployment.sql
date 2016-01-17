@@ -19,6 +19,8 @@ DROP TABLE [ItemOption]
 GO
 DROP TABLE [ItemOptionType]
 GO
+DROP TABLE [LogOption]
+GO
 
 DELETE [LogOption]
 GO

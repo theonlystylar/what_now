@@ -12,13 +12,15 @@ namespace WhatNow.Data.Ef
     using System;
     using System.Collections.Generic;
     
-    public partial class LogOption
+    public partial class ControlLog
     {
         public int Id { get; set; }
         public int LogId { get; set; }
-        public int ControlOptionId { get; set; }
+        public int ControlId { get; set; }
+        public Nullable<int> ControlOptionId { get; set; }
         public string Value { get; set; }
     
+        public virtual Control Control { get; set; }
         public virtual ControlOption ControlOption { get; set; }
         public virtual Log Log { get; set; }
     }

@@ -36,6 +36,6 @@ namespace WhatNow.Data.Ef
         public virtual DbSet<ControlOption> ControlOptions { get; set; }
         public virtual DbSet<ControlType> ControlTypes { get; set; }
         public virtual DbSet<Log> Logs { get; set; }
-        public virtual DbSet<LogOption> LogOptions { get; set; }
+        public virtual DbSet<ControlLog> ControlLogs { get; set; }
     }
 }

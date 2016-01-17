@@ -17,7 +17,7 @@ namespace WhatNow.Data.Ef
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Log()
         {
-            this.LogOptions = new HashSet<LogOption>();
+            this.ControlLogs = new HashSet<ControlLog>();
         }
     
         public int Id { get; set; }
@@ -28,6 +28,6 @@ namespace WhatNow.Data.Ef
         public virtual Item Item { get; set; }
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LogOption> LogOptions { get; set; }
+        public virtual ICollection<ControlLog> ControlLogs { get; set; }
     }
 }

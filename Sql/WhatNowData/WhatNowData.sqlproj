@@ -62,10 +62,10 @@
     <Build Include="Item.sql" />
     <Build Include="Log.sql" />
     <Build Include="User.sql" />
-    <Build Include="LogOption.sql" />
     <Build Include="Control.sql" />
     <Build Include="ControlType.sql" />
     <Build Include="ControlOption.sql" />
+    <Build Include="ControlLog.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

@@ -5,21 +5,22 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="db0f9b422c51464d8a5d226367ee5840" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="WhatNowDataModel.Item" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WhatNowDataModel.User" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatNowDataModel.Item" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WhatNowDataModel.User" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
         <AssociationConnector Association="WhatNowDataModel.FK_Item_Item_ParentId" />
-        <EntityTypeShape EntityType="WhatNowDataModel.Control" Width="1.5" PointX="6" PointY="3.25" />
-        <EntityTypeShape EntityType="WhatNowDataModel.ControlOption" Width="1.5" PointX="8.25" PointY="3.5" />
-        <EntityTypeShape EntityType="WhatNowDataModel.ControlType" Width="1.5" PointX="3.75" PointY="0.75" />
-        <EntityTypeShape EntityType="WhatNowDataModel.Log" Width="1.5" PointX="3" PointY="3.375" />
-        <EntityTypeShape EntityType="WhatNowDataModel.LogOption" Width="1.5" PointX="10.5" PointY="3.5" />
+        <EntityTypeShape EntityType="WhatNowDataModel.Control" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="WhatNowDataModel.ControlOption" Width="1.5" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="WhatNowDataModel.ControlType" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="WhatNowDataModel.Log" Width="1.5" PointX="5.25" PointY="5.125" />
         <AssociationConnector Association="WhatNowDataModel.FK_Control_ControlType_ControlTypeId" />
         <AssociationConnector Association="WhatNowDataModel.FK_Control_Item_ItemId" />
         <AssociationConnector Association="WhatNowDataModel.FK_ControlOption_Control_ControlId" />
-        <AssociationConnector Association="WhatNowDataModel.FK_LogOption_ControlOption_ControlOptionId" />
         <AssociationConnector Association="WhatNowDataModel.FK_Log_Item_ItemId" />
         <AssociationConnector Association="WhatNowDataModel.FK_Log_User_UserId" />
-        <AssociationConnector Association="WhatNowDataModel.FK_LogOption_Log_LogId" />
+        <EntityTypeShape EntityType="WhatNowDataModel.ControlLog" Width="1.5" PointX="7.5" PointY="1" />
+        <AssociationConnector Association="WhatNowDataModel.FK_ControlLog_Control_ControlId" />
+        <AssociationConnector Association="WhatNowDataModel.FK_ControlLog_ControlOption_ControlOptionId" />
+        <AssociationConnector Association="WhatNowDataModel.FK_ControlLog_Log_LogId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
