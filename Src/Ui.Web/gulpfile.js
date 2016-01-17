@@ -43,6 +43,10 @@ gulp.task("bower", ["bower:clean"], function() {
 			"bower_components/angular-animate/angular*.js"
 		])
 		.pipe(gulp.dest(paths.webroot + "lib/angular"));
+
+	// underscore
+	gulp.src("bower_components/underscore/underscore*.js")
+		.pipe(gulp.dest(paths.webroot + "lib/underscore"));
 });
 
 /*

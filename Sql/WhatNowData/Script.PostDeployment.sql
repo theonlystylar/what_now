@@ -91,31 +91,26 @@ USING (VALUES
 		(2, 1, 'Cramping', NULL),
 		(3, 1, 'Chest pain', NULL),
 		(4, 1, 'Close together, hard to breathe', NULL),
-		(5, 1, 'Comment', NULL),
 
 		(6, 3, 'Dry heaving', NULL),
 		(7, 3, 'Cramping', NULL),
 		(8, 3, 'Chest pain', NULL),
 		(9, 3, 'Close together, hard to breathe', NULL),
-		(10, 3, 'Comment', NULL),
 
 		(11, 5, 'Dry heaving', NULL),
 		(12, 5, 'Cramping', NULL),
 		(13, 5, 'Chest pain', NULL),
 		(14, 5, 'Close together, to breathe', NULL),
-		(15, 5, 'Comment', NULL),
 
 		(16, 7, 'Dry heaving', NULL),
 		(17, 7, 'Cramping', NULL),
 		(18, 7, 'Chest pain', NULL),
 		(19, 7, 'Close together, hard to breathe', NULL),
-		(20, 7, 'Comment', NULL),
 
 		(21, 9, 'Dry heaving', NULL),
 		(22, 9, 'Cramping', NULL),
 		(23, 9, 'Chest pain', NULL),
-		(24, 9, 'Close together, hard to breathe', NULL),
-		(25, 9, 'Comment', NULL)
+		(24, 9, 'Close together, hard to breathe', NULL)
 ) 
 AS Source (Id, ControlId, Name, FunnyName) 
 ON Target.Id = Source.Id 

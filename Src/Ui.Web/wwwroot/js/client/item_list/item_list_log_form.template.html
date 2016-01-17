@@ -1,1 +1,31 @@
-﻿logging
+﻿<form role="form">
+	<div class="slide-top" ng-repeat="control in controls">
+
+		<div ng-switch="control.controlType.name">
+
+			<div class="form-group" ng-switch-when="Checkbox">
+
+				<label>{{control.name}}</label>
+				<div class="form-group">
+					<div ng-repeat="controlOption in control.controlOptions">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" ng-model="controlOption.checked"> {{controlOption.name}}
+							</label>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="form-group" ng-switch-when="Textbox">
+
+				<label>{{control.name}}:</label>
+				<textarea class="form-control" rows="3" ng-model="control.value"></textarea>
+
+			</div>
+		</div>
+	</div>
+
+	<button class="btn btn-default" ng-click="cancel()">Cancel</button>
+	<button class="btn btn-primary" ng-click="save()">Save</button>
+</form>
