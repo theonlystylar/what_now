@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNet.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using Microsoft.AspNet.Mvc;
 using WhatNow.Data.Ef;
 using WhatNow.Ui.Web.Api.Models;
 
@@ -10,7 +10,7 @@ namespace WhatNow.Ui.Web.Api.Controllers
 	[Route("api/[controller]")]
 	public class ItemsController : Controller
 	{
-		private WhatNowDataEntities _dbContext;
+		private readonly WhatNowDataEntities _dbContext;
 
 		public ItemsController(WhatNowDataEntities dbContext)
 		{
@@ -40,33 +40,7 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				.Include(x => x.Children)
 				.FirstOrDefault(x => x.Id == id);
 
-			if (item == null)
-			{
-				return null;
-			}
-
-			return item.ToModel();
-		}
-
-		// POST api/values
-		[HttpPost]
-		public void Post([FromBody]ItemModel value)
-		{
-			// todo
-		}
-
-		// PUT api/values/5
-		[HttpPut("{id}")]
-		public void Put(int id, [FromBody]ItemModel value)
-		{
-			// todo
-		}
-
-		// DELETE api/values/5
-		[HttpDelete("{id}")]
-		public void Delete(int id)
-		{
-			// todo
+			return item?.ToModel();
 		}
 	}
 }
