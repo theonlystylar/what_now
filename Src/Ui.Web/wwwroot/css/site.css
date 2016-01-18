@@ -24,7 +24,7 @@
 	border: solid 1px #dd4814;
 	margin-bottom: 20px;
 }
-.c-item:hover{
+.c-item.hover{
 	background-color: #dd4814;
 	color: #fff;
 }
