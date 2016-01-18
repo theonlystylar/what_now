@@ -12,11 +12,12 @@ namespace WhatNow.Ui.Web
 	{
 		public static IConfigurationRoot Configuration;
 
-		public Startup(IApplicationEnvironment appEnv)
+		public Startup(IHostingEnvironment env, IApplicationEnvironment appEnv)
 		{
 			var builder = new ConfigurationBuilder()
 				.SetBasePath(appEnv.ApplicationBasePath)
 				.AddJsonFile("config.json")
+				.AddJsonFile($"config.{env.EnvironmentName}.json", optional: true)
 				.AddEnvironmentVariables();
 
 			Configuration = builder.Build();
@@ -32,7 +33,7 @@ namespace WhatNow.Ui.Web
 				opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 			});
 			services.AddInstance<IConfiguration>(Configuration);
-			services.AddScoped((x) => new WhatNowDataEntities(Configuration.GetSection("Data").GetSection("DefaultConnection").GetSection("ConnectionString").Value));
+			services.AddScoped((x) => new WhatNowDataEntities(Configuration["Data:DefaultConnection:ConnectionString"]));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

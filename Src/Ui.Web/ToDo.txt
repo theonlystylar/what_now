@@ -1,8 +1,22 @@
-﻿[1/10/216] Master angular transitions: http://www.yearofmoo.com/2013/08/remastered-animation-in-angularjs-1-2.html
+﻿DONE [1/18/2016] Figure out how to detect the environment name so we can do this in the startup.cs file:
+		var builder = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+		It's in the start up file for a new mvc project (not the empty one).  env.EnvironmentName comes from
+		Microsoft.AspNet.Hosting.Abstractions assembly but it's not clear looking at the app how to reference it.
+
+[1/18/2016] Load entire item hierarchy to speed up drill down and drill up.  Should also make it easy to provide breadcrumb navigation.
+
+[1/18/2016] Show loading splash screen while app is first opened (especially since the load time will be a little longer when pulling the entire hierarchy).
+
+[1/18/2016] Add login security
+
+DONE [1/10/216] Master angular transitions: http://www.yearofmoo.com/2013/08/remastered-animation-in-angularjs-1-2.html
 
 DONE [1/7/2016] Follow tutorial on how to use EF6 with MVC 5:https://www.asp.net/mvc/overview/getting-started/database-first-development/setting-up-database
 
-[1/7/2016] Go to Google tutorial https://docs.angularjs.org/tutorial/step_11 and see if we can implement a detail page that opens when the user clicks a button.
+DONE [1/7/2016] Go to Google tutorial https://docs.angularjs.org/tutorial/step_11 and see if we can implement a detail page that opens when the user clicks a button.
 
 DONE [1/6/2015] Move bower downloads to a bower folder and set up gulp to move the libraries into the wwwroot folder so we don't have a million checkins
 Use project Itch as a model

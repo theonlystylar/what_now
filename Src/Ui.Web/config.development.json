@@ -1,0 +1,7 @@
+﻿{
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "metadata=res://*/WhatNowModel.csdl|res://*/WhatNowModel.ssdl|res://*/WhatNowModel.msl;provider=System.Data.SqlClient;provider connection string=\";data source=(localdb)\\ProjectsV12;initial catalog=WhatNowData;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework\""
+    }
+  }
+}
