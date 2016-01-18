@@ -3,6 +3,8 @@
 
 		<div ng-switch="control.controlType.name">
 
+			<!-- Checkbox Control -->
+
 			<div class="form-group" ng-switch-when="Checkbox">
 
 				<label>{{control.name}}</label>
@@ -16,7 +18,27 @@
 					</div>
 				</div>
 
+			</div><!-- Option Control -->
+
+			<div class="form-group" ng-switch-when="Radio">
+
+				<label>{{control.name}}</label>
+				<div class="form-group">
+					<div ng-repeat="controlOption in control.controlOptions">
+						<div class="radio">
+							<label>
+								<input type="radio" name="{{control.name}}" ng-model="control.value" ng-value="controlOption.id"> {{controlOption.name}}
+							</label>
+						</div>
+					</div>
+				</div>
+
 			</div>
+
+
+
+			<!-- Texbox Control -->
+
 			<div class="form-group" ng-switch-when="Textbox">
 
 				<label>{{control.name}}:</label>

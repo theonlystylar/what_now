@@ -14,7 +14,11 @@
 					itemId: $scope.item.id,
 					controlLogs: getCheckboxControlForms()
 				};
-				form.controlLogs = form.controlLogs.concat(getTextboxControlForms());
+
+				form.controlLogs = form.controlLogs
+					.concat(getTextboxControlForms())
+					.concat(getRadioControlForms());
+
 				logService.save(form,
 					// success
 					function() {
@@ -24,6 +28,7 @@
 					function(error) {
 						toastr["error"]("Error!");
 					});
+
 				$scope.publish("ITEM_NAV_TO_PARENT_REQUESTED", {});
 			};
 
@@ -46,6 +51,20 @@
 									value: null
 								});
 							}
+						});
+					}
+				});
+				return forms;
+			}
+
+			function getRadioControlForms() {
+				var forms = [];
+				_.each($scope.controls, function (control) {
+					if (control.controlType.name === "Radio" && control.value != undefined && control.value > 0) {
+						forms.push({
+							controlId: control.id,
+							controlOptionId: control.value,
+							value: null
 						});
 					}
 				});
