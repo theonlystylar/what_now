@@ -1,15 +1,18 @@
 ﻿angular.module("itemListModule").controller(
 	"itemListController", [
 		"$scope",
-		function($scope) {
-
+		"itemNodeDataService",
+		function($scope, itemNodeDataService) {
 			$scope.item = null;
 			$scope.isButtonsVisible = true;
 			$scope.isFormVisible = false;
 
 			$scope.subscribe("ITEM_SELECTED", function(item) {
 				$scope.item = item;
-				$scope.isButtonsVisible = !($scope.isFormVisible = item && item.children.length == 0);
+				itemNodeDataService.get({ parentId: (item == null ? null : item.id) }, function(data) {
+					$scope.isFormVisible = (data.length === 0); // no children
+					$scope.isButtonsVisible = data.length > 0; // has children
+				});
 			});
 
 			$scope.goToParent = function() {

@@ -42,5 +42,17 @@ namespace WhatNow.Ui.Web.Api.Controllers
 
 			return item?.ToModel();
 		}
+
+		// GET api/items/nodes
+		[HttpGet("nodes")]
+		public IEnumerable<ItemNodeModel> GetNodes()
+		{
+			var items = _dbContext
+				.Items
+				.Include(x => x.Parent)
+				.Include(x => x.Children);
+
+			return items?.ToNodeModels();
+		}
 	}
 }

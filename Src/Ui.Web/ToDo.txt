@@ -11,6 +11,8 @@
 [1/18/2016] Show loading splash screen while app is first opened (especially since the load time will be a little longer when pulling the entire hierarchy).
 
 [1/18/2016] Add login security
+	http://stackoverflow.com/questions/29289731/example-of-using-asp-net-5-mvc-6-with-identity-and-ef-6
+	https://github.com/EntrypointSoft/AspNet.Identity.EntityFramework6
 
 DONE [1/10/216] Master angular transitions: http://www.yearofmoo.com/2013/08/remastered-animation-in-angularjs-1-2.html
 

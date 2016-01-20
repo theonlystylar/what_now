@@ -3,7 +3,8 @@
 		"$scope",
 		"controlService",
 		"logService",
-		function($scope, controlService, logService) {
+		"itemNodeDataService",
+		function($scope, controlService, logService, itemNodeDataService) {
 
 			$scope.cancel = function() {
 				$scope.publish("ITEM_NAV_TO_PARENT_REQUESTED", {});
@@ -34,9 +35,15 @@
 
 			$scope.subscribe("ITEM_SELECTED", function(item) {
 				$scope.controls = 0;
-				if (item && item.children.length === 0) {
-					loadControls(item);
-				}
+				if (item == null) return;
+				itemNodeDataService.get({ parentId: item.id }, function(data) {
+					if (data.length === 0) { // no children
+						loadControls(item);
+					}
+				});
+				//if (item && item.children.length === 0) {
+				//	loadControls(item);
+				//}
 			});
 
 			function getCheckboxControlForms() {
