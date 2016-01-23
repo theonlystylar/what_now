@@ -1,10 +1,10 @@
 ﻿angular.module("itemListModule").controller(
 	"itemListLogFormController", [
 		"$scope",
-		"controlService",
+		"controlDataService",
 		"logService",
 		"itemNodeDataService",
-		function($scope, controlService, logService, itemNodeDataService) {
+		function($scope, controlDataService, logService, itemNodeDataService) {
 
 			$scope.cancel = function() {
 				$scope.publish("ITEM_NAV_TO_PARENT_REQUESTED", {});
@@ -27,7 +27,7 @@
 					},
 					// error
 					function(error) {
-						toastr["error"]("Error!");
+						toastr["error"](error);
 					});
 
 				$scope.publish("ITEM_NAV_TO_PARENT_REQUESTED", {});
@@ -36,14 +36,11 @@
 			$scope.subscribe("ITEM_SELECTED", function(item) {
 				$scope.controls = 0;
 				if (item == null) return;
-				itemNodeDataService.getChildren(item.id).then(function (data) {
+				itemNodeDataService.getChildren(item.id).then(function(data) {
 					if (data.length === 0) { // no children
 						loadControls(item);
 					}
 				});
-				//if (item && item.children.length === 0) {
-				//	loadControls(item);
-				//}
 			});
 
 			function getCheckboxControlForms() {
@@ -66,7 +63,7 @@
 
 			function getRadioControlForms() {
 				var forms = [];
-				_.each($scope.controls, function (control) {
+				_.each($scope.controls, function(control) {
 					if (control.controlType.name === "Radio" && control.value != undefined && control.value > 0) {
 						forms.push({
 							controlId: control.id,
@@ -94,7 +91,7 @@
 
 			function loadControls(item) {
 				$scope.item = item;
-				controlService.query({ itemId: item.id }, function(controls) {
+				controlDataService.getByItem(item.id).then(function(controls) {
 					$scope.controls = controls;
 				});
 			}

@@ -18,12 +18,12 @@ namespace WhatNow.Ui.Web.Api.Controllers
 		}
 
 		// GET api/controls/5
-		[HttpGet("{itemId}")]
-		public IEnumerable<ControlModel> Get(int itemId)
+		[HttpGet("{itemId?}")]
+		public IEnumerable<ControlModel> Get(int? itemId)
 		{
 			return _dbContext
 				.Controls
-				.Where(x => x.ItemId == itemId)
+				.Where(x => itemId == null || x.ItemId == itemId)
 				.Include(x => x.ControlType)
 				.Include(x => x.ControlOptions)
 				.ToList()

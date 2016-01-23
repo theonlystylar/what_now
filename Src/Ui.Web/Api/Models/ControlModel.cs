@@ -7,6 +7,7 @@ namespace WhatNow.Ui.Web.Api.Models
 	public class ControlModel
 	{
 		public int Id { get; set; }
+		public int ItemId { get; set; }
 		public string Name { get; set; }
 		public string FunnyName { get; set; }
 
@@ -18,9 +19,10 @@ namespace WhatNow.Ui.Web.Api.Models
 	{
 		public static ControlModel ToModel(this Control controlEntity)
 		{
-			return new ControlModel()
+			return new ControlModel
 			{
 				Id = controlEntity.Id,
+				ItemId = controlEntity.ItemId,
 				Name = controlEntity.Name,
 				FunnyName = controlEntity.FunnyName,
 				ControlType = controlEntity.ControlType.ToModel(),

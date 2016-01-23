@@ -1,8 +1,7 @@
 ﻿angular.module("dataModule")
 	.factory("itemNodeDataService", [
-		"$q",
 		"$http",
-		function($q, $http) {
+		function($http) {
 
 			function get(id) {
 				return where({ id: id });
