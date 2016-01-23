@@ -9,9 +9,9 @@
 
 			$scope.subscribe("ITEM_SELECTED", function(item) {
 				$scope.item = item;
-				itemNodeDataService.get({ parentId: (item == null ? null : item.id) }, function(data) {
-					$scope.isFormVisible = (data.length === 0); // no children
-					$scope.isButtonsVisible = data.length > 0; // has children
+				itemNodeDataService.getChildren(item == null ? null : item.id).then(function(children) {
+					$scope.isFormVisible = (children.length === 0); // no children
+					$scope.isButtonsVisible = children.length > 0; // has children
 				});
 			});
 

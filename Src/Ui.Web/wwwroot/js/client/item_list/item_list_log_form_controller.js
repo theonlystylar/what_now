@@ -36,7 +36,7 @@
 			$scope.subscribe("ITEM_SELECTED", function(item) {
 				$scope.controls = 0;
 				if (item == null) return;
-				itemNodeDataService.get({ parentId: item.id }, function(data) {
+				itemNodeDataService.getChildren(item.id).then(function (data) {
 					if (data.length === 0) { // no children
 						loadControls(item);
 					}

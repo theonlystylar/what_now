@@ -1,30 +1,32 @@
 ﻿angular.module("dataModule")
 	.factory("itemNodeDataService", [
-		"$resource",
-		function($resource) {
+		"$q",
+		"$http",
+		function($q, $http) {
 
-			var _nodes;
+			function get(id) {
+				return where({ id: id });
+			}
 
-			function get(properties, callback) {
-				getAll(function(data) {
-					callback(_.where(data, properties));
+			function getAll() {
+				return $http.get("api/items/nodes", { cache: "true" }).then(function(response) {
+					return response.data;
 				});
 			}
 
-			function getAll(callback) {
-				if (_nodes) {
-					callback(_nodes);
-					return;
-				}
+			function getChildren(parentId) {
+				return where({ parentId: parentId });
+			}
 
-				$resource("api/items/nodes").query({}, function (data) {
-					_nodes = data;
-					callback(_nodes);
+			function where(propertyFilter) {
+				return getAll().then(function(data) {
+					return _.where(data, propertyFilter);
 				});
-			};
+			}
 
 			return {
-				get: get
+				get: get,
+				getChildren: getChildren
 			};
 		}
 	]);

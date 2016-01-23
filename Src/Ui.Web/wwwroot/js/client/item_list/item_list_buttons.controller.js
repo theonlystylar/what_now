@@ -1,10 +1,8 @@
 ﻿angular.module("itemListModule").controller(
 	"itemListButtonsController", [
 		"$scope",
-		"ItemService",
-		"ItemQueryService",
 		"itemNodeDataService",
-		function ($scope, itemService, itemQueryService, itemNodeDataService) {
+		function ($scope, itemNodeDataService) {
 			loadItems();
 
 			var _item = null;
@@ -19,29 +17,19 @@
 
 			function loadItems(parentId) {
 				if (parentId) {
-					itemNodeDataService.get({ parentId: parentId }, function(data) {
-						$scope.items = data;
-					});
-					itemNodeDataService.get({ id: parentId }, function (data) {
-						_item = data[0];
+					itemNodeDataService.get(parentId).then(function (item) {
+						_item = item[0];
 						$scope.publish("ITEM_SELECTED", _item);
 					});
-					//itemService.get({ itemId: parentId }, function(item) {
-					//	_item = item;
-					//	$scope.items = item.children;
-					//	$scope.publish("ITEM_SELECTED", item);
-					//});
+					itemNodeDataService.getChildren(parentId).then(function (items) {
+						$scope.items = items;
+					});
 				} else {
-					itemNodeDataService.get({ parentId: null }, function (data) {
+					itemNodeDataService.getChildren(null).then(function (items) {
 						_item = null;
-						$scope.items = data;
+						$scope.items = items;
 						$scope.publish("ITEM_SELECTED", _item);
 					});
-					//itemQueryService.getRoot(function(data) {
-					//	_item = null;
-					//	$scope.items = data;
-					//	$scope.publish("ITEM_SELECTED", null);
-					//});
 				}
 			};
 		}
