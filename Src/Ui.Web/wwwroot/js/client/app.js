@@ -5,6 +5,7 @@
 var clientApp = angular.module("clientApp", [
 	"ngRoute",
 	"ngAnimate",
+	"kendo.directives",
 	"core",
 	"dataModule",
 	"navBarModule",

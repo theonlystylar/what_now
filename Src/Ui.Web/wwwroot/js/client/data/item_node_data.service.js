@@ -4,7 +4,7 @@
 		function($http) {
 
 			function get(id) {
-				return where({ id: id });
+				return findWhere({ id: id });
 			}
 
 			function getAll() {
@@ -20,6 +20,13 @@
 			function where(propertyFilter) {
 				return getAll().then(function(data) {
 					return _.where(data, propertyFilter);
+				});
+			}
+
+			// returns first instance found
+			function findWhere(propertyFilter) {
+				return getAll().then(function(data) {
+					return _.findWhere(data, propertyFilter);
 				});
 			}
 

@@ -1,36 +1,34 @@
 ﻿angular.module("itemListModule").controller(
 	"itemListButtonsController", [
 		"$scope",
+		"$timeout",
 		"itemNodeDataService",
-		function ($scope, itemNodeDataService) {
-			loadItems();
+		function($scope, $timeout, itemNodeDataService) {
 
-			var _item = null;
+			initialize();
 
-			$scope.drillToChildren = function(item) {
-				loadItems(item.id);
+			function initialize() {
+				$timeout(function () {
+					// DOM has finished rendering
+					// Need to wait until DOM is rendered before loading the items so the buttons are rendered
+					// and the transition "bounce" is visible
+					setItems();
+				});
+			}
+
+			$scope.onItemSelect = function (item) {
+				$scope.$parent.drill(item);
 			};
 
-			$scope.subscribe("ITEM_NAV_TO_PARENT_REQUESTED", function() {
-				loadItems(_item ? _item.parentId : null);
+			$scope.$on("REFRESH_CHILD_ITEMS", function() {
+				setItems();
 			});
 
-			function loadItems(parentId) {
-				if (parentId) {
-					itemNodeDataService.get(parentId).then(function (item) {
-						_item = item[0];
-						$scope.publish("ITEM_SELECTED", _item);
-					});
-					itemNodeDataService.getChildren(parentId).then(function (items) {
-						$scope.items = items;
-					});
-				} else {
-					itemNodeDataService.getChildren(null).then(function (items) {
-						_item = null;
-						$scope.items = items;
-						$scope.publish("ITEM_SELECTED", _item);
-					});
-				}
+			function setItems() {
+				var parentId = $scope.$parent.item == null ? null : $scope.$parent.item.id;
+				itemNodeDataService.getChildren(parentId).then(function(items) {
+					$scope.items = items;
+				});
 			};
 		}
 	]);

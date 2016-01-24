@@ -1,5 +1,5 @@
 ﻿<div class="row">
-	<div class="col-sm-6 col-md-4 slide-top" ng-repeat="item in items" ng-click="drillToChildren(item)">
+	<div class="col-sm-6 col-md-4 slide-top" ng-repeat="item in items" ng-click="onItemSelect(item)">
 		<div class="c-item clearfix" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 			<div class="img"></div>
 			<!--<img src="#"/>-->

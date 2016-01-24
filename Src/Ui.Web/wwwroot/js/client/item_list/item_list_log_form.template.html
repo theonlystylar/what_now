@@ -1,4 +1,18 @@
 ﻿<form role="form">
+
+	<!-- Calendar -->
+
+	<div class="form-group">
+		<label>Time</label>
+		<div class="form-group">
+			<input type="text"
+			       kendo-date-time-picker
+			       k-on-change="onDateTimeSelected(kendoEvent)"
+			       k-ng-model="currentDate"
+			       k-format="'M/d/yyyy h:mm tt'"/>
+		</div>
+	</div>
+
 	<div class="slide-top" ng-repeat="control in controls">
 
 		<div ng-switch="control.controlType.name">
@@ -12,13 +26,15 @@
 					<div ng-repeat="controlOption in control.controlOptions">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" ng-model="controlOption.checked"> {{controlOption.name}}
+								<input type="checkbox" ng-model="controlOption.checked"/> {{controlOption.name}}
 							</label>
 						</div>
 					</div>
 				</div>
 
-			</div><!-- Option Control -->
+			</div>
+
+			<!-- Option Control -->
 
 			<div class="form-group" ng-switch-when="Radio">
 
@@ -27,15 +43,13 @@
 					<div ng-repeat="controlOption in control.controlOptions">
 						<div class="radio">
 							<label>
-								<input type="radio" name="{{control.name}}" ng-model="control.value" ng-value="controlOption.id"> {{controlOption.name}}
+								<input type="radio" name="{{control.name}}" ng-model="control.value" ng-value="controlOption.id"/> {{controlOption.name}}
 							</label>
 						</div>
 					</div>
 				</div>
 
 			</div>
-
-
 
 			<!-- Texbox Control -->
 

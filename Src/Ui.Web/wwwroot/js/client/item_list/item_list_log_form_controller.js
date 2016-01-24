@@ -1,13 +1,30 @@
 ﻿angular.module("itemListModule").controller(
 	"itemListLogFormController", [
 		"$scope",
+		"$timeout",
 		"controlDataService",
 		"logService",
-		"itemNodeDataService",
-		function($scope, controlDataService, logService, itemNodeDataService) {
+		function($scope, $timeout, controlDataService, logService) {
+
+			initialize();
+
+			function initialize() {
+				$timeout(function() {
+					// DOM has finished rendering
+					// Need to wait until DOM is rendered before loading the items so the controls are rendered
+					// and the transition "bounce" is visible
+					setForm();
+				});
+			}
+
+			// two way binding of the datetimepicker value doesn't appear to work so using event instead
+			$scope.onDateTimeSelected = function(e) {
+				var datePicker = e.sender;
+				$scope.dateTimeOverride = datePicker.value();
+			};
 
 			$scope.cancel = function() {
-				$scope.publish("ITEM_NAV_TO_PARENT_REQUESTED", {});
+				$scope.$parent.back();
 			};
 
 			$scope.save = function() {
@@ -20,6 +37,11 @@
 					.concat(getTextboxControlForms())
 					.concat(getRadioControlForms());
 
+				// add datetime override if user provided
+				if ($scope.dateTimeOverride != null && $scope.dateTimeOverride instanceof Date) {
+					form.dateTimeOverride = $scope.dateTimeOverride;
+				}
+
 				logService.save(form,
 					// success
 					function() {
@@ -30,18 +52,8 @@
 						toastr["error"](error);
 					});
 
-				$scope.publish("ITEM_NAV_TO_PARENT_REQUESTED", {});
+				$scope.$parent.back();
 			};
-
-			$scope.subscribe("ITEM_SELECTED", function(item) {
-				$scope.controls = 0;
-				if (item == null) return;
-				itemNodeDataService.getChildren(item.id).then(function(data) {
-					if (data.length === 0) { // no children
-						loadControls(item);
-					}
-				});
-			});
 
 			function getCheckboxControlForms() {
 				var forms = [];
@@ -89,8 +101,12 @@
 				return forms;
 			}
 
-			function loadControls(item) {
+			function setForm() {
+				var item = $scope.$parent.item;
 				$scope.item = item;
+				$scope.currentDate = new Date();
+				$scope.dateTimeOverride = null;
+
 				controlDataService.getByItem(item.id).then(function(controls) {
 					$scope.controls = controls;
 				});
