@@ -10,8 +10,7 @@ var clientApp = angular.module("clientApp", [
 	"dataModule",
 	"navBarModule",
 	"itemListModule",
-	"clientAppControllers",
-	"clientAppServices"
+	"clientApp.pagesModule"
 ]);
 
 clientApp.config([
@@ -19,16 +18,8 @@ clientApp.config([
 	function($routeProvider) {
 		$routeProvider.
 			when("/items", {
-				templateUrl: "js/client/partials/items.html",
-				controller: "ItemListController"
-			}).
-			when("/items/:parentId", {
-				templateUrl: "js/client/partials/items.html",
-				controller: "ItemListController"
-			}).
-			when("/items/log/:itemId", {
-				templateUrl: "js/client/partials/item_log.html",
-				controller: "ItemLogController"
+				templateUrl: "js/client/pages/track_stuff_page.template.html",
+				controller: "trackStuffPageController"
 			}).
 			otherwise({
 				redirectTo: "/items"
