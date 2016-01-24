@@ -13,11 +13,11 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li ng-class="{active: getCurrentTab() === 'trackstuff'}">
-					<a href="#">Track Stuff</a>
+				<li ng-class="{active: tabName === 'trackstuff'}">
+					<a href="#/trackstuff">Track Stuff</a>
 				</li>
-				<li ng-class="{active: getCurrentTab() === 'seestuff'}">
-					<a href="#">See Stuff</a>
+				<li ng-class="{active: tabName === 'seestuff'}">
+					<a href="#/seestuff">See Stuff</a>
 				</li>
 			</ul>
 			<form class="navbar-form navbar-left">

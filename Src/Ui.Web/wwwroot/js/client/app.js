@@ -17,12 +17,16 @@ clientApp.config([
 	"$routeProvider",
 	function($routeProvider) {
 		$routeProvider.
-			when("/items", {
+			when("/trackstuff", {
 				templateUrl: "js/client/pages/track_stuff_page.template.html",
 				controller: "trackStuffPageController"
 			}).
+			when("/seestuff", {
+				templateUrl: "js/client/pages/see_stuff_page.template.html",
+				controller: "seeStuffPageController"
+			}).
 			otherwise({
-				redirectTo: "/items"
+				redirectTo: "/trackstuff"
 			});
 	}
 ]);

@@ -1,10 +1,6 @@
 ﻿angular.module("navBarModule").controller(
 	"NavBarController", [
-		"$scope",
-		function ($scope) {
+		function() {
 
-			$scope.getCurrentTab = function() {
-				return "trackstuff";
-			}
 		}
 	]);
