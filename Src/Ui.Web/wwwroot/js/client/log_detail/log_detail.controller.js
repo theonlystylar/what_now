@@ -3,7 +3,7 @@
 		"logDetailController", [
 			"$scope",
 			"logDetailDataService",
-			function ($scope, logDetailDataService) {
+			function($scope, logDetailDataService) {
 
 				initialize();
 
@@ -12,7 +12,10 @@
 				}
 
 				function setLogDetails() {
-					logDetailDataService.getAll().then(function (logDetails) {
+					logDetailDataService.getAll().then(function(logDetails) {
+						_.each(logDetails, function(logDetail) {
+							logDetail.loggedLocalTime = moment.utc(logDetail.logged).toDate();
+						});
 						$scope.logDetails = logDetails;
 					});
 				}

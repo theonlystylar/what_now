@@ -10,7 +10,7 @@
 		</thead>
 		<tbody>
 		<tr ng-repeat="logDetail in logDetails">
-			<td>{{logDetail.logged | date:'MM/dd/yyyy h:mma'}}</td>
+			<td>{{logDetail.loggedLocalTime | date:'MM/dd/yyyy h:mma'}}</td>
 			<td>{{logDetail.item}}</td>
 			<td>{{logDetail.control}}</td>
 			<td>{{logDetail.value}}</td>
