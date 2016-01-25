@@ -26,5 +26,24 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				.OrderByDescending(x => x.Logged)
 				.Take(maxRows);
 		}
+
+		[HttpDelete("{logId}/{controlLogId}")]
+		public void Delete(int logId, int controlLogId)
+		{
+			if (controlLogId > 0)
+			{
+				var controlLog = _dbContext.ControlLogs.FirstOrDefault(x => x.Id == controlLogId);
+				if (controlLog == null) return;
+				_dbContext.ControlLogs.Remove(controlLog);
+				_dbContext.SaveChanges();
+			}
+			else
+			{
+				var log = _dbContext.Logs.FirstOrDefault(x => x.Id == logId);
+				if (log == null) return;
+				_dbContext.Logs.Remove(log);
+				_dbContext.SaveChanges();
+			}
+		}
 	}
 }

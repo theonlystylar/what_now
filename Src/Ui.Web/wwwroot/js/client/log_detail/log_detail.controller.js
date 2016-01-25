@@ -7,6 +7,14 @@
 
 				initialize();
 
+				$scope.deleteLog = function (logDetail) {
+					if (confirm("Delete " + logDetail.item + " : " + logDetail.value)) {
+						logDetailDataService.deleteControlLog(logDetail.logId, logDetail.controlLogId).then(function() {
+							setLogDetails();
+						});
+					}
+				}
+
 				function initialize() {
 					setLogDetails();
 				}
