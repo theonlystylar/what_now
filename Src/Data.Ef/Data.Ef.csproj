@@ -70,6 +70,9 @@
     <Compile Include="Log.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="LogDetail.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>

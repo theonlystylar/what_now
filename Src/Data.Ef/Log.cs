@@ -24,6 +24,7 @@ namespace WhatNow.Data.Ef
         public int UserId { get; set; }
         public int ItemId { get; set; }
         public System.DateTime Logged { get; set; }
+        public System.DateTime CreateDate { get; set; }
     
         public virtual Item Item { get; set; }
         public virtual User User { get; set; }

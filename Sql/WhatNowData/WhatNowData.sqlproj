@@ -66,6 +66,7 @@
     <Build Include="ControlType.sql" />
     <Build Include="ControlOption.sql" />
     <Build Include="ControlLog.sql" />
+    <Build Include="LogDetail.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

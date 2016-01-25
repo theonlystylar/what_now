@@ -1531,6 +1531,10 @@
           "lib/net45/_._": {}
         }
       },
+      "WhatNow.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1"
+      },
       "WhatNow.Data.Ef/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
@@ -3070,6 +3074,10 @@
         "runtime": {
           "lib/net45/_._": {}
         }
+      },
+      "WhatNow.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1"
       },
       "WhatNow.Data.Ef/1.0.0": {
         "type": "project",
@@ -4611,6 +4619,10 @@
           "lib/net45/_._": {}
         }
       },
+      "WhatNow.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.5.1"
+      },
       "WhatNow.Data.Ef/1.0.0": {
         "type": "project",
         "framework": ".NETFramework,Version=v4.5.1",
@@ -4621,6 +4633,10 @@
     }
   },
   "libraries": {
+    "WhatNow.Core/1.0.0": {
+      "type": "project",
+      "path": "../wrap/WhatNow.Core/project.json"
+    },
     "WhatNow.Data.Ef/1.0.0": {
       "type": "project",
       "path": "../wrap/WhatNow.Data.Ef/project.json"
@@ -6473,6 +6489,7 @@
       "Newtonsoft.Json >= 6.0.6"
     ],
     "DNX,Version=v4.5.1": [
+      "WhatNow.Core >= 1.0.0-*",
       "WhatNow.Data.Ef >= 1.0.0-*"
     ]
   }

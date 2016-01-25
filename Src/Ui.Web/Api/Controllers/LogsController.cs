@@ -23,7 +23,8 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			{
 				ItemId = value.ItemId,
 				UserId = 1,
-				Logged = value.DateTimeOverride ?? DateTime.UtcNow
+				Logged = value.DateTimeOverride ?? DateTime.UtcNow,
+				CreateDate = DateTime.UtcNow
 			};
 
 			foreach (var controlLog in value.ControlLogs)

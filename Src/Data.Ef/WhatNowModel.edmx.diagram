@@ -21,6 +21,7 @@
         <AssociationConnector Association="WhatNowDataModel.FK_ControlLog_Control_ControlId" />
         <AssociationConnector Association="WhatNowDataModel.FK_ControlLog_ControlOption_ControlOptionId" />
         <AssociationConnector Association="WhatNowDataModel.FK_ControlLog_Log_LogId" />
+        <EntityTypeShape EntityType="WhatNowDataModel.LogDetail" Width="1.5" PointX="10.125" PointY="1.125" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

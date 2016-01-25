@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "compilationOptions": {
     "emitEntryPoint": true
@@ -20,6 +20,7 @@
   "frameworks": {
     "dnx451": {
       "dependencies": {
+        "WhatNow.Core": "1.0.0-*",
         "WhatNow.Data.Ef": "1.0.0-*"
       }
     }

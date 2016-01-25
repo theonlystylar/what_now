@@ -31,8 +31,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ControlId" Type="int" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FunnyName" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FunnyName" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="ControlType">
           <Key>
@@ -59,6 +59,7 @@
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="Logged" Type="datetime" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -70,6 +71,24 @@
           <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FirstLogin" Type="datetime" Nullable="false" />
           <Property Name="LastLogin" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="LogDetail">
+          <Key>
+            <PropertyRef Name="LogId" />
+            <PropertyRef Name="UserId" />
+            
+            
+            <PropertyRef Name="ControlLogId" />
+          </Key>
+          <Property Name="LogId" Type="int" Nullable="false" />
+          <Property Name="ControlLogId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Logged" Type="datetime" Nullable="false" />
+          <Property Name="Item" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Control" Type="varchar" MaxLength="50" />
+          <Property Name="Value" Type="varchar" MaxLength="500" />
         </EntityType>
         <Association Name="FK_Control_ControlType_ControlTypeId">
           <End Role="ControlType" Type="Self.ControlType" Multiplicity="1" />
@@ -187,6 +206,17 @@
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogDetail" EntityType="Self.LogDetail" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [LogDetail].[LogId] AS [LogId], 
+    [LogDetail].[ControlLogId] AS [ControlLogId], 
+    [LogDetail].[UserId] AS [UserId], 
+    [LogDetail].[Logged] AS [Logged], 
+    [LogDetail].[Item] AS [Item], 
+    [LogDetail].[Control] AS [Control], 
+    [LogDetail].[Value] AS [Value]
+    FROM [dbo].[LogDetail] AS [LogDetail]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Control_ControlType_ControlTypeId" Association="Self.FK_Control_ControlType_ControlTypeId">
             <End Role="ControlType" EntitySet="ControlType" />
             <End Role="Control" EntitySet="Control" />
@@ -298,6 +328,7 @@
             <End Role="Log" EntitySet="Logs" />
             <End Role="ControlLog" EntitySet="ControlLogs" />
           </AssociationSet>
+          <EntitySet Name="LogDetails" EntityType="WhatNowDataModel.LogDetail" />
         </EntityContainer>
         <Association Name="FK_Item_Item_ParentId">
           <End Type="WhatNowDataModel.Item" Role="Item" Multiplicity="0..1" />
@@ -331,8 +362,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ControlId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="FunnyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FunnyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Control" Relationship="WhatNowDataModel.FK_ControlOption_Control_ControlId" FromRole="ControlOption" ToRole="Control" />
           <NavigationProperty Name="ControlLogs" Relationship="WhatNowDataModel.FK_ControlLog_ControlOption_ControlOptionId" FromRole="ControlOption" ToRole="ControlLog" />
         </EntityType>
@@ -355,6 +386,7 @@
           <NavigationProperty Name="Item" Relationship="WhatNowDataModel.FK_Log_Item_ItemId" FromRole="Log" ToRole="Item" />
           <NavigationProperty Name="User" Relationship="WhatNowDataModel.FK_Log_User_UserId" FromRole="Log" ToRole="User" />
           <NavigationProperty Name="ControlLogs" Relationship="WhatNowDataModel.FK_ControlLog_Log_LogId" FromRole="Log" ToRole="ControlLog" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_Control_ControlType_ControlTypeId">
           <End Type="WhatNowDataModel.ControlType" Role="ControlType" Multiplicity="1" />
@@ -465,6 +497,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="LogDetail">
+          <Key>
+            <PropertyRef Name="LogId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ControlLogId" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" />
+          <Property Name="ControlLogId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Logged" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Item" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Control" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -526,6 +572,7 @@
           <EntitySetMapping Name="Logs">
             <EntityTypeMapping TypeName="WhatNowDataModel.Log">
               <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="Logged" ColumnName="Logged" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
@@ -541,6 +588,19 @@
                 <ScalarProperty Name="ControlId" ColumnName="ControlId" />
                 <ScalarProperty Name="LogId" ColumnName="LogId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogDetails">
+            <EntityTypeMapping TypeName="WhatNowDataModel.LogDetail">
+              <MappingFragment StoreEntitySet="LogDetail">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Control" ColumnName="Control" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="Logged" ColumnName="Logged" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ControlLogId" ColumnName="ControlLogId" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
