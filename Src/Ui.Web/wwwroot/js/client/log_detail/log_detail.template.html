@@ -1,0 +1,20 @@
+﻿<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>Logged</th>
+			<th>Item</th>
+			<th>Control</th>
+			<th>Value</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr ng-repeat="logDetail in logDetails">
+			<td>{{logDetail.logged | date:'MM/dd/yyyy h:mma'}}</td>
+			<td>{{logDetail.item}}</td>
+			<td>{{logDetail.control}}</td>
+			<td>{{logDetail.value}}</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
