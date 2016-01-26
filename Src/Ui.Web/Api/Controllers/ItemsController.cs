@@ -26,6 +26,8 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				.Where(x => x.ParentId == parentId)
 				.Include(x => x.Parent)
 				.Include(x => x.Children)
+				.OrderBy(x => x.Name)
+				.ThenBy(x => x.FunnyName)
 				.ToList()
 				.Select(x => x.ToModel());
 		}
@@ -38,6 +40,8 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				.Items
 				.Include(x => x.Parent)
 				.Include(x => x.Children)
+				.OrderBy(x => x.Name)
+				.ThenBy(x => x.FunnyName)
 				.FirstOrDefault(x => x.Id == id);
 
 			return item?.ToModel();
@@ -49,8 +53,8 @@ namespace WhatNow.Ui.Web.Api.Controllers
 		{
 			var items = _dbContext
 				.Items
-				.Include(x => x.Parent)
-				.Include(x => x.Children);
+				.OrderBy(x => x.Name)
+				.ThenBy(x => x.FunnyName);
 
 			return items?.ToNodeModels();
 		}
