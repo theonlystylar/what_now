@@ -142,7 +142,9 @@ USING (VALUES
 		(50, 34, 2, N'Meal', NULL),
 		(51, 34, 2, N'Snack', NULL),
 		(52, 35, 1, N'Type', NULL),
-		(53, 35, 2, N'Comments', NULL)
+		(53, 35, 2, N'Comments', NULL),
+		(54, 29, 3, N'Dosage', NULL),
+		(55, 29, 2, N'Comments', NULL)
 ) 
 AS Source (Id, ItemId, ControlTypeId, Name, FunnyName) 
 ON Target.Id = Source.Id 
@@ -263,7 +265,10 @@ USING (VALUES
 		(119, 48, N'Pediasure Grow & Gain', NULL),
 		(120, 52, N'Acupuncture Appointment', NULL),
 		(122, 52, N'Moxa @ Home', NULL),
-		(123, 52, N'Acupressure @ Home', NULL)
+		(123, 52, N'Acupressure @ Home', NULL),
+		(124, 54, N'1', NULL),
+		(125, 54, N'2', NULL),
+		(126, 54, N'3', NULL)
 ) 
 AS Source (Id, ControlId, Name, FunnyName) 
 ON Target.Id = Source.Id 
