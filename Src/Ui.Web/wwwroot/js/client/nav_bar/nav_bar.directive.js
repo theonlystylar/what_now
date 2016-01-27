@@ -4,7 +4,8 @@
 		return {
 			restrict: "E",
 			scope: {
-				tabName: "=tabName"
+				tabName: "=tabName",
+				canEdit: "=canEdit"
 			},
 			templateUrl: "js/client/nav_bar/nav_bar.template.html",
 			controller: "NavBarController"
