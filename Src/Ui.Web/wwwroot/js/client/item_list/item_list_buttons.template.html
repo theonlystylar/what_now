@@ -1,9 +1,18 @@
 ﻿<div class="row">
-	<div class="col-sm-6 col-md-4 slide-top" ng-repeat="item in items" ng-click="onItemSelect(item)">
-		<div class="c-item clearfix" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+	<div class="col-sm-6 col-md-4 slide-top" ng-repeat="item in items">
+		<div class="c-item clearfix" ng-if="!editing" ng-click="onItemSelect(item)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 			<div class="img"></div>
 			<!--<img src="#"/>-->
 			<span>{{item.name}}</span>
+		</div>
+		<div class="c-item clearfix" ng-if="editing">
+			<div class="img"></div>
+			<!--<img src="#"/>-->
+			<span>{{item.name}}</span>
+			<div style="width: 100%; float: left; margin-top: 5px;">
+				<button class="btn btn-sm">Edit Picture</button>
+				<button class="btn btn-sm">Edit Text</button>
+			</div>
 		</div>
 	</div>
 </div>

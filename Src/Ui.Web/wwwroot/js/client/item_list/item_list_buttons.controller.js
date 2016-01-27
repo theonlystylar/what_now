@@ -5,6 +5,8 @@
 		"itemNodeDataService",
 		function($scope, $timeout, itemNodeDataService) {
 
+			$scope.editing = false;
+
 			initialize();
 
 			function initialize() {
@@ -21,6 +23,16 @@
 			};
 
 			$scope.$on("REFRESH_CHILD_ITEMS", function() {
+				setItems();
+			});
+			
+			$scope.subscribe("EDIT_ON", function() {
+				$scope.editing = true;
+				setItems();
+			});
+
+			$scope.subscribe("EDIT_OFF", function () {
+				$scope.editing = false;
 				setItems();
 			});
 
