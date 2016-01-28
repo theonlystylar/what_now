@@ -3,7 +3,7 @@
 		"itemListController", [
 			"$scope",
 			"itemNodeDataService",
-			function($scope, itemNodeDataService) {
+			function ($scope, itemNodeDataService) {
 
 				initialize();
 
@@ -11,9 +11,22 @@
 					$scope.item = null;
 					$scope.isButtonsVisible = true;
 					$scope.isFormVisible = false;
+					$scope.isButtonEditorVisible = false;
 				}
 
-				$scope.drill = function(item) {
+				$scope.showChangeForm = function (item) {
+					$scope.isButtonsVisible = false;
+					$scope.isFormVisible = false;
+					$scope.isButtonEditorVisible = true;
+				}
+
+				$scope.hideChangeForm = function (item) {
+					$scope.isButtonEditorVisible = false;
+					setVisibility();
+					refreshChildItems();
+				}
+
+				$scope.goToChildren = function(item) {
 					$scope.item = item;
 					setVisibility();
 					refreshChildItems();

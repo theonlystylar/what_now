@@ -6,5 +6,4 @@ Components Used:
 
 	AngularJS Directives
 	DateTimePicker
-	Chart
-	Switch
+	Upload

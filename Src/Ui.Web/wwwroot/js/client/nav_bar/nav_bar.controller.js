@@ -1,18 +1,14 @@
 ﻿angular.module("navBarModule").controller(
 	"NavBarController", [
 		"$scope",
-		function($scope) {
+		"navBarStateService",
+		function($scope, navBarStateService) {
 
-			$scope.editing = false;
+			$scope.editing = navBarStateService.getEditing();
+			$scope.toggleEditing = navBarStateService.toggleEditing;
 
-			$scope.toggleEditing = function() {
-				if ($scope.editing) {
-					$scope.editing = false;
-					$scope.publish("EDIT_OFF", {});
-				} else {
-					$scope.editing = true;
-					$scope.publish("EDIT_ON", {});
-				}
-			}
+			navBarStateService.subscribeToEditing($scope, function(event, args) {
+				$scope.editing = args.editing;
+			});
 		}
 	]);

@@ -3,9 +3,10 @@
 		"$scope",
 		"$timeout",
 		"itemNodeDataService",
-		function($scope, $timeout, itemNodeDataService) {
+		"navBarStateService",
+		function ($scope, $timeout, itemNodeDataService, navBarStateService) {
 
-			$scope.editing = false;
+			$scope.editing = navBarStateService.getEditing();
 
 			initialize();
 
@@ -18,21 +19,20 @@
 				});
 			}
 
+			navBarStateService.subscribeToEditing($scope, function (event, args) {
+				$scope.editing = args.editing;
+				setItems();
+			});
+
+			$scope.onItemChange = function(item) {
+				$scope.$parent.showChangeForm(item);
+			}
+
 			$scope.onItemSelect = function (item) {
-				$scope.$parent.drill(item);
+				$scope.$parent.goToChildren(item);
 			};
 
 			$scope.$on("REFRESH_CHILD_ITEMS", function() {
-				setItems();
-			});
-			
-			$scope.subscribe("EDIT_ON", function() {
-				$scope.editing = true;
-				setItems();
-			});
-
-			$scope.subscribe("EDIT_OFF", function () {
-				$scope.editing = false;
 				setItems();
 			});
 
