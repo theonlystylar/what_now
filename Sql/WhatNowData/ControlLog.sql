@@ -4,7 +4,7 @@
     [LogId] INT NOT NULL,
     [ControlId] INT NOT NULL,  
     [ControlOptionId] INT NULL, 
-    [Value] VARCHAR(500) NULL, 
+    [Value] VARCHAR(2000) NULL, 
     CONSTRAINT [PK_ControlLog] PRIMARY KEY ([Id]),
 	CONSTRAINT [FK_ControlLog_Log_LogId] FOREIGN KEY ([LogId]) 
         REFERENCES [dbo].[Log] ([Id]),
