@@ -27,6 +27,7 @@ namespace WhatNow.Data.Ef
         public string Name { get; set; }
         public Nullable<int> SortOrder { get; set; }
         public string FunnyName { get; set; }
+        public Nullable<int> ImageId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Item> Children { get; set; }
@@ -35,5 +36,6 @@ namespace WhatNow.Data.Ef
         public virtual ICollection<Control> Controls { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Log> Logs { get; set; }
+        public virtual File File { get; set; }
     }
 }

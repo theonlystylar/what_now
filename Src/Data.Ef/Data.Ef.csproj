@@ -64,6 +64,12 @@
     <Compile Include="ControlType.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="File.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="FileType.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Item.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>

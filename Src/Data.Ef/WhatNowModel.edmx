@@ -23,7 +23,7 @@
           <Property Name="LogId" Type="int" Nullable="false" />
           <Property Name="ControlId" Type="int" Nullable="false" />
           <Property Name="ControlOptionId" Type="int" />
-          <Property Name="Value" Type="varchar" MaxLength="500" />
+          <Property Name="Value" Type="varchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="ControlOption">
           <Key>
@@ -41,6 +41,16 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="15" Nullable="false" />
         </EntityType>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ContentType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Content" Type="varbinary(max)" Nullable="false" />
+          <Property Name="FileType" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Item">
           <Key>
             <PropertyRef Name="Id" />
@@ -50,6 +60,7 @@
           <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FunnyName" Type="varchar" MaxLength="50" />
           <Property Name="SortOrder" Type="int" />
+          <Property Name="ImageId" Type="int" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -88,7 +99,7 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <Property Name="Logged" Type="datetime" Nullable="false" />
           <Property Name="Item" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Control" Type="varchar" MaxLength="50" />
-          <Property Name="Value" Type="varchar" MaxLength="500" />
+          <Property Name="Value" Type="varchar" MaxLength="2000" />
         </EntityType>
         <Association Name="FK_Control_ControlType_ControlTypeId">
           <End Role="ControlType" Type="Self.ControlType" Multiplicity="1" />
@@ -162,6 +173,18 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Item_File_ImageId">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="Item" Type="Self.Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Item_Item_ParentId">
           <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
           <End Role="Item1" Type="Self.Item" Multiplicity="*" />
@@ -203,6 +226,7 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <EntitySet Name="ControlLog" EntityType="Self.ControlLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ControlOption" EntityType="Self.ControlOption" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ControlType" EntityType="Self.ControlType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="File" EntityType="Self.File" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -241,6 +265,10 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
             <End Role="Control" EntitySet="Control" />
             <End Role="ControlOption" EntitySet="ControlOption" />
           </AssociationSet>
+          <AssociationSet Name="FK_Item_File_ImageId" Association="Self.FK_Item_File_ImageId">
+            <End Role="File" EntitySet="File" />
+            <End Role="Item" EntitySet="Item" />
+          </AssociationSet>
           <AssociationSet Name="FK_Item_Item_ParentId" Association="Self.FK_Item_Item_ParentId">
             <End Role="Item" EntitySet="Item" />
             <End Role="Item1" EntitySet="Item" />
@@ -271,6 +299,8 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <Property Name="FunnyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Controls" Relationship="WhatNowDataModel.FK_Control_Item_ItemId" FromRole="Item" ToRole="Control" />
           <NavigationProperty Name="Logs" Relationship="WhatNowDataModel.FK_Log_Item_ItemId" FromRole="Item" ToRole="Log" />
+          <Property Name="ImageId" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="WhatNowDataModel.FK_Item_File_ImageId" FromRole="Item" ToRole="File" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -329,6 +359,11 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
             <End Role="ControlLog" EntitySet="ControlLogs" />
           </AssociationSet>
           <EntitySet Name="LogDetails" EntityType="WhatNowDataModel.LogDetail" />
+          <EntitySet Name="Files" EntityType="WhatNowDataModel.File" />
+          <AssociationSet Name="FK_Item_File_ImageId" Association="WhatNowDataModel.FK_Item_File_ImageId">
+            <End Role="File" EntitySet="Files" />
+            <End Role="Item" EntitySet="Items" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Item_Item_ParentId">
           <End Type="WhatNowDataModel.Item" Role="Item" Multiplicity="0..1" />
@@ -456,7 +491,7 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <Property Name="LogId" Type="Int32" Nullable="false" />
           <Property Name="ControlId" Type="Int32" Nullable="false" />
           <Property Name="ControlOptionId" Type="Int32" />
-          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Control" Relationship="WhatNowDataModel.FK_ControlLog_Control_ControlId" FromRole="ControlLog" ToRole="Control" />
           <NavigationProperty Name="ControlOption" Relationship="WhatNowDataModel.FK_ControlLog_ControlOption_ControlOptionId" FromRole="ControlLog" ToRole="ControlOption" />
           <NavigationProperty Name="Log" Relationship="WhatNowDataModel.FK_ControlLog_Log_LogId" FromRole="ControlLog" ToRole="Log" />
@@ -509,8 +544,34 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <Property Name="Logged" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Item" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Control" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="FileType" Type="WhatNowDataModel.FileType" Nullable="false" />
+          <NavigationProperty Name="Items" Relationship="WhatNowDataModel.FK_Item_File_ImageId" FromRole="File" ToRole="Item" />
+        </EntityType>
+        <Association Name="FK_Item_File_ImageId">
+          <End Type="WhatNowDataModel.File" Role="File" Multiplicity="0..1" />
+          <End Type="WhatNowDataModel.Item" Role="Item" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Item">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="FileType">
+          <Member Name="Thumbnail" Value="1" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -520,6 +581,7 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="WhatNowDataModel.Item">
               <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
                 <ScalarProperty Name="FunnyName" ColumnName="FunnyName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
@@ -601,6 +663,17 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="ControlLogId" ColumnName="ControlLogId" />
                 <ScalarProperty Name="LogId" ColumnName="LogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Files">
+            <EntityTypeMapping TypeName="WhatNowDataModel.File">
+              <MappingFragment StoreEntitySet="File">
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

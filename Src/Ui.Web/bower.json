@@ -11,6 +11,7 @@
     "font-awesome": "^4.5.0",
     "jquery": "^1.8.3",
     "moment": "^2.11.1",
+    "ng-file-upload": "^11.2.3",
     "underscore": "^1.8.3"
   }
 }

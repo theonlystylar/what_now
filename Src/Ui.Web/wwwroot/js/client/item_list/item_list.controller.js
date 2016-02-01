@@ -15,6 +15,7 @@
 				}
 
 				$scope.showChangeForm = function (item) {
+					$scope.selectedItem = item;
 					$scope.isButtonsVisible = false;
 					$scope.isFormVisible = false;
 					$scope.isButtonEditorVisible = true;

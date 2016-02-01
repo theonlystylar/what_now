@@ -1,4 +1,5 @@
 ﻿angular.module("itemListModule", [
 	"core",
-	"dataModule"
+	"dataModule",
+	"ngFileUpload"
 ]);

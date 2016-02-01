@@ -26,6 +26,7 @@
 	border: solid 1px #dd4814;
 	margin-bottom: 20px;
 	cursor: pointer;
+	color: #dd4814;
 }
 .c-item.hover{
 	background-color: #dd4814;
@@ -55,6 +56,29 @@
 }
 .c-item .c-menu i:hover {
 	color: #b94a48;
+}
+.c-btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.c-btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.c-thumb {
+    width: 50px;
+    height: 50px;
 }
 
 /* Angular elements decorated with the ng-cloak attribute will be hidden until the code runs */

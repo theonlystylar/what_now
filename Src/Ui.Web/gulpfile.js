@@ -51,6 +51,10 @@ gulp.task("bower", ["bower:clean"], function() {
 	// underscore
 	gulp.src("bower_components/underscore/underscore*.js")
 		.pipe(gulp.dest(paths.webroot + "lib/underscore"));
+
+	// ng-file-upload
+	gulp.src("bower_components/ng-file-upload/ng-file-upload.*js")
+		.pipe(gulp.dest(paths.webroot + "lib/ng-file-upload"));
 });
 
 /*
