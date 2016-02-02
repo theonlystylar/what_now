@@ -3,7 +3,7 @@
 		<!-- item button -->
 		<div class="c-item clearfix" ng-if="!editing" ng-click="onItemSelect(item)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 			<div class="img">
-				<img src="{{'api/items/icon/' + item.id}}"/>
+				<img src="{{'api/items/icon/' + item.imageId || 0}}"/>
 			</div>
 			<span>{{item.name}}</span>
 		</div>
@@ -11,7 +11,7 @@
 		<!-- edit mode item button -->
 		<div class="c-item clearfix" ng-if="editing">
 			<div class="img">
-				<img src="{{'api/items/icon/' + item.id}}" />
+				<img src="{{'api/items/icon/' + item.imageId || 0}}" />
 			</div>
 			<span>{{item.name}}</span>
 			<div class="c-menu">

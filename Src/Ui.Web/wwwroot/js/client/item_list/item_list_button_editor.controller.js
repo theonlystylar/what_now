@@ -22,20 +22,11 @@
 			};
 
 			$scope.item = {
-				name: "",
-				FunnyName: ""
+				name: $scope.$parent.selectedItem.name,
+				funnyName: $scope.$parent.selectedItem.funnyName
 			}
 
 			$scope.data = "none";
-
-			//$scope.save = function() {
-			//	var fileReader = new FileReader();
-			//	fileReader.onloadend = function(e) {
-			//		$scope.data = e.target.result;
-			//	};
-			//	fileReader.readAsArrayBuffer($scope.icon);
-			//};
-
 
 			$scope.save = function(iconFile) {
 				iconFile.upload = Upload.upload({

@@ -11,6 +11,7 @@ namespace WhatNow.Ui.Web.Api.Models
 		public string Name { get; set; }
 		public string FunnyName { get; set; }
 		public int? SortOrder { get; set; }
+		public int? ImageId { get; set; }
 	}
 
 	public static class ItemNodeModelExtensions
@@ -23,7 +24,8 @@ namespace WhatNow.Ui.Web.Api.Models
 				ParentId = itemEntity.ParentId,
 				Name = itemEntity.Name,
 				FunnyName = itemEntity.FunnyName,
-				SortOrder = itemEntity.SortOrder
+				SortOrder = itemEntity.SortOrder,
+				ImageId = itemEntity.ImageId
 			};
 		}
 

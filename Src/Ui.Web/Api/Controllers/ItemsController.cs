@@ -27,6 +27,8 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			HostingEnvironment = hostingEnvironment;
 		}
 
+		public IHostingEnvironment HostingEnvironment { get; set; }
+
 		// GET: api/items/children/5
 		[HttpGet("children/{parentId?}")]
 		public IEnumerable<ItemModel> GetChildren(int? parentId = null)
@@ -75,31 +77,42 @@ namespace WhatNow.Ui.Web.Api.Controllers
 		{
 			//http://damienbod.com/2015/12/05/asp-net-5-mvc-6-file-upload-with-ms-sql-server-filetable/
 
-			var file = request.File;
+			//TODO: need to send parent ID as well.
 
-			var item = _dbContext
-				.Items
-				.FirstOrDefault(x => x.Id == request.Id);
+			Item item;
+
+			if (request.Id == null)
+			{
+				item = new Item();
+				_dbContext.Items.Add(item);
+			}
+			else
+			{
+				item = _dbContext
+					.Items
+					.FirstOrDefault(x => x.Id == request.Id);
+			}
+
+			if (item == null)
+			{
+				Response.StatusCode = StatusCodes.Status404NotFound;
+				return;
+			}
+
+			item.Name = request.Name;
+			item.FunnyName = request.FunnyName;
+			// parent id
+
+			//TODO: delete file if is empty
 
 			// read stream
+			var file = request.File;
 			var fileBytes = new byte[file.Length];
-			file.OpenReadStream().Read(fileBytes, 0, (int)file.Length);
+			file.OpenReadStream().Read(fileBytes, 0, (int) file.Length);
 
 			// get file name
 			var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
 			var fileName = parsedContentDisposition.FileName;
-
-			//FileDetails fileDetails;
-			//using (var reader = new StreamReader(file.OpenReadStream()))
-			//{
-			//	var fileContent = reader.ReadToEnd();
-			//	var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
-			//	fileDetails = new FileDetails
-			//	{
-			//		Filename = parsedContentDisposition.FileName,
-			//		Content = fileContent
-			//	};
-			//}
 
 			if (item.File == null)
 			{
@@ -122,7 +135,6 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				item.File.Name = fileName;
 			}
 
-			
 
 			await _dbContext.SaveChangesAsync();
 
@@ -165,20 +177,17 @@ namespace WhatNow.Ui.Web.Api.Controllers
 		[HttpGet("icon/{id}")]
 		public ActionResult GetImage(int id)
 		{
-			var item = _dbContext
-				.Items
-				.Include(x => x.File)
+			var file = _dbContext
+				.Files
 				.FirstOrDefault(x => x.Id == id);
 
-			if (item?.File != null)
+			if (file != null)
 			{
-				return File(item.File.Content, item.File.ContentType);
+				return File(file.Content, file.ContentType);
 			}
 
-			var path = Path.Combine(HostingEnvironment.WebRootPath, "images");
-			path = Path.Combine(path, "default_icon.png");
-			//return File(path, "image/png");
-
+			// return default image
+			var path = Path.Combine(HostingEnvironment.WebRootPath, @"images\default_icon.png");
 			var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
 			return File(stream, "image/png");
 
@@ -194,56 +203,18 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			//return result;
 		}
 
-		public IHostingEnvironment HostingEnvironment { get; set; }
-
-		[HttpPost("postpicture")]
-		public async Task PostPicture(IList<IFormFile> files)
-		{
-		
+		//		await f.SaveAsAsync(path);
+		//		path = Path.Combine(path, Guid.NewGuid() + ".png");
+		//		var path = Path.Combine(HostingEnvironment.WebRootPath, "uploaded_pics");
+		//	{
 
 
+		//	foreach (var f in files)
+		//{
+		//public async Task PostPicture(IList<IFormFile> files)
 
-			foreach (var f in files)
-			{
-				var path = Path.Combine(HostingEnvironment.WebRootPath, "uploaded_pics");
-				path = Path.Combine(path, Guid.NewGuid() + ".png");
-				await f.SaveAsAsync(path);
-			}
-		}
-	}
-
-	public class ValidateMimeMultipartContentFilter : ActionFilterAttribute
-	{
-		private readonly ILogger _logger;
-
-		public ValidateMimeMultipartContentFilter(ILoggerFactory loggerFactory)
-		{
-			_logger = loggerFactory.CreateLogger("ctor ValidateMimeMultipartContentFilter");
-		}
-
-		public override void OnActionExecuting(ActionExecutingContext context)
-		{
-			if (!IsMultipartContentType(context.HttpContext.Request.ContentType))
-			{
-				context.Result = new HttpStatusCodeResult(415);
-				return;
-			}
-
-			base.OnActionExecuting(context);
-		}
-
-		private static bool IsMultipartContentType(string contentType)
-		{
-			return !string.IsNullOrEmpty(contentType) && contentType.IndexOf("multipart/", StringComparison.OrdinalIgnoreCase) >= 0;
-		}
-	}
-
-	public class ItemEditRequest
-	{
-		public int? Id { get; set; }
-		public IFormFile File { get; set; }
-		public string Name { get; set; }
-		public string FunnyName { get; set; }
-
+		//[HttpPost("postpicture")]
+		//	}
+		//}
 	}
 }
