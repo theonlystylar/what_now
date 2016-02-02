@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -7,8 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
-using Microsoft.AspNet.Mvc.Filters;
-using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using WhatNow.Data.Ef;
 using WhatNow.Ui.Web.Api.Models;
@@ -68,12 +65,12 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				.OrderBy(x => x.Name)
 				.ThenBy(x => x.FunnyName);
 
-			return items?.ToNodeModels();
+			return items.ToNodeModels();
 		}
 
-		// GET api/items/
+		// POST api/items/
 		[HttpPost]
-		public async Task Post(ItemEditRequest request)
+		public async Task<IActionResult> Post(ItemEditRequest request)
 		{
 			//http://damienbod.com/2015/12/05/asp-net-5-mvc-6-file-upload-with-ms-sql-server-filetable/
 
@@ -88,15 +85,14 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			}
 			else
 			{
-				item = _dbContext
+				item = await _dbContext
 					.Items
-					.FirstOrDefault(x => x.Id == request.Id);
+					.FirstOrDefaultAsync(x => x.Id == request.Id);
 			}
 
 			if (item == null)
 			{
-				Response.StatusCode = StatusCodes.Status404NotFound;
-				return;
+				return HttpNotFound();
 			}
 
 			item.Name = request.Name;
@@ -108,7 +104,7 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			// read stream
 			var file = request.File;
 			var fileBytes = new byte[file.Length];
-			file.OpenReadStream().Read(fileBytes, 0, (int) file.Length);
+			await file.OpenReadStream().ReadAsync(fileBytes, 0, (int) file.Length);
 
 			// get file name
 			var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
@@ -137,49 +133,15 @@ namespace WhatNow.Ui.Web.Api.Controllers
 
 
 			await _dbContext.SaveChangesAsync();
-
-			//var file = Request.Form.Files[0];
-			//var path = Path.Combine(HostingEnvironment.WebRootPath, "uploaded_pics");
-
-			//path = Path.Combine(path, Guid.NewGuid() + ".png");
-			//await file.SaveAsAsync(path);
-
-
-			// Check if the request contains multipart/form-data.
-			//if (!Request.Content.IsMimeMultipartContent("form-data"))
-			//{
-			//	return BadRequest("Unsupported media type");
-			//}
-			//try
-			//{
-			//	var provider = new CustomMultipartFormDataStreamProvider(workingFolder);
-
-			//	await Request.Content.ReadAsMultipartAsync(provider);
-
-			//	var photos =
-			//	  provider.FileData
-			//		 .Select(file => new FileInfo(file.LocalFileName))
-			//		 .Select(fileInfo => new PhotoViewModel
-			//		 {
-			//			 Name = fileInfo.Name,
-			//			 Created = fileInfo.CreationTime,
-			//			 Modified = fileInfo.LastWriteTime,
-			//			 Size = fileInfo.Length / 1024
-			//		 }).ToList();
-			//	return Ok(new { Message = "Photos uploaded ok", Photos = photos });
-			//}
-			//catch (Exception ex)
-			//{
-			//	return BadRequest(ex.GetBaseException().Message);
-			//}
+			return Ok(item.ToNodeModel());
 		}
 
 		[HttpGet("icon/{id}")]
-		public ActionResult GetImage(int id)
+		public async Task<IActionResult> GetImage(int id)
 		{
-			var file = _dbContext
+			var file = await _dbContext
 				.Files
-				.FirstOrDefault(x => x.Id == id);
+				.FirstOrDefaultAsync(x => x.Id == id);
 
 			if (file != null)
 			{
@@ -190,31 +152,6 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			var path = Path.Combine(HostingEnvironment.WebRootPath, @"images\default_icon.png");
 			var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
 			return File(stream, "image/png");
-
-
-			//Response.StatusCode = StatusCodes.Status404NotFound;
-			//return null;
-
-			//Response.StatusCode = StatusCodes.Status404NotFound;
-			//var stream = new FileStream(path, FileMode.Open);
-			//result.Content = new StreamContent(stream);
-			//result.Content.Headers.ContentType =
-			//	 new MediaTypeHeaderValue("application/octet-stream");
-			//return result;
 		}
-
-		//		await f.SaveAsAsync(path);
-		//		path = Path.Combine(path, Guid.NewGuid() + ".png");
-		//		var path = Path.Combine(HostingEnvironment.WebRootPath, "uploaded_pics");
-		//	{
-
-
-		//	foreach (var f in files)
-		//{
-		//public async Task PostPicture(IList<IFormFile> files)
-
-		//[HttpPost("postpicture")]
-		//	}
-		//}
 	}
 }

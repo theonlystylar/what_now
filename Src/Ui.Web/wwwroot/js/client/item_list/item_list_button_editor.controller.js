@@ -3,7 +3,8 @@
 		"$scope",
 		"$timeout",
 		"Upload",
-		function ($scope, $timeout, Upload) {
+		"itemNodeDataService",
+		function ($scope, $timeout, Upload, itemNodeDataService) {
 
 			$scope.cancel = function() {
 				$scope.$parent.hideChangeForm();
@@ -40,11 +41,26 @@
 				});
 				iconFile.upload.then(function (response) {
 					$timeout(function() {
-						iconFile.result = response.data;
+						//var item = $scope.$parent.selectedItem;
+						itemNodeDataService.get(response.data.id).then(function (item)
+						{
+							if (item) {
+								item.parentId = response.data.parentId;
+								item.name = response.data.name;
+								item.funnyName = response.data.funnyName;
+								item.imageId = response.data.imageId;
+								item.sortOrder = response.data.sortOrder;
+							}
+						});
+						
+						$scope.$parent.hideChangeForm();
+						toastr["success"]($scope.item.name + " saved");
 					});
 				}, function(response) {
-					if (response.status > 0)
-						$scope.errorMsg = response.status + ": " + response.data;
+					if (response.status > 0) {
+						var errorMsg = response.status + ": " + response.data;
+						toastr["error"](errorMsg);
+					}
 				}, function(evt) {
 					// Math.min is to fix IE which reports 200% sometimes
 					iconFile.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));

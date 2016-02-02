@@ -1,21 +1,20 @@
-﻿<div class="row">
+﻿<div class="row" ng-cloak>
 	<div class="col-sm-6 col-md-4 slide-top" ng-repeat="item in items">
 		<!-- item button -->
 		<div class="c-item clearfix" ng-if="!editing" ng-click="onItemSelect(item)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 			<div class="img">
-				<img src="{{'api/items/icon/' + item.imageId || 0}}"/>
+				<img ng-src="{{'api/items/icon/' + item.imageId || 0}}"/>
 			</div>
-			<span>{{item.name}}</span>
+			<span>{{item.funnyName || item.name}}</span>
 		</div>
 		<!-- end item button -->
 		<!-- edit mode item button -->
-		<div class="c-item clearfix" ng-if="editing">
+		<div class="c-item clearfix" ng-if="editing" ng-click="onItemChange(item)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 			<div class="img">
-				<img src="{{'api/items/icon/' + item.imageId || 0}}" />
+				<img ng-src="{{'api/items/icon/' + item.imageId || 0}}" />
 			</div>
-			<span>{{item.name}}</span>
+			<span>{{item.funnyName || item.name}}</span>
 			<div class="c-menu">
-				<i class="fa fa-pencil-square-o" ng-click="onItemChange(item)"></i>
 				<i class="fa fa-times" ng-click="onItemDelete(item)"></i>
 			</div>
 		</div>

@@ -56,13 +56,13 @@
 
 .c-item .c-menu {
 	float: right;
-	font-size: 1.6em;
-	margin-top: -5px;
+	font-size: 1.8em;
+	margin-top: -7px;
 }
 
-.c-item .c-menu i { color: #dd4814; }
+/*.c-item .c-menu i { color: #dd4814; }*/
 
-.c-item .c-menu i:hover { color: #b94a48; }
+/*.c-item .c-menu i:hover { color: #b94a48; }*/
 
 .c-btn-file {
 	overflow: hidden;

@@ -1,15 +1,28 @@
 ﻿angular.module("dataModule")
 	.factory("itemNodeDataService", [
 		"$http",
-		function($http) {
+		"$timeout",
+		"$q",
+		function ($http, $timeout, $q) {
+
+			var _nodes;
 
 			function get(id) {
 				return findWhere({ id: id });
 			}
 
 			function getAll() {
-				return $http.get("api/items/nodes", { cache: "true" }).then(function(response) {
-					return response.data;
+				if (_nodes) {
+					var defer = $q.defer();
+					$timeout(function () {
+						defer.resolve(_nodes);
+					});
+					return defer.promise;
+				}
+				//return $http.get("api/items/nodes", { cache: "true" }).then(function (response) {
+				return $http.get("api/items/nodes").then(function (response) {
+					_nodes = response.data;
+					return _nodes;
 				});
 			}
 
