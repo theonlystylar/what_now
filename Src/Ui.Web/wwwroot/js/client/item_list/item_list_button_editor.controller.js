@@ -30,15 +30,22 @@
 			$scope.data = "none";
 
 			$scope.save = function(iconFile) {
-				iconFile.upload = Upload.upload({
+
+				var request = {
 					url: "api/items",
 					data: {
 						id: $scope.$parent.selectedItem.id,
 						name: $scope.item.name,
-						funnyName: $scope.item.funnyName,
 						file: iconFile
 					}
-				});
+				}
+
+				if ($scope.item.funnyName) {
+					request.data.funnyName = $scope.item.funnyName;
+				}
+
+				// TODO: only use this upload if there is a file
+				iconFile.upload = Upload.upload(request);
 				iconFile.upload.then(function (response) {
 					$timeout(function() {
 						//var item = $scope.$parent.selectedItem;

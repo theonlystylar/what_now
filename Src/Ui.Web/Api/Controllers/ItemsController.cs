@@ -103,32 +103,36 @@ namespace WhatNow.Ui.Web.Api.Controllers
 
 			// read stream
 			var file = request.File;
-			var fileBytes = new byte[file.Length];
-			await file.OpenReadStream().ReadAsync(fileBytes, 0, (int) file.Length);
 
-			// get file name
-			var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
-			var fileName = parsedContentDisposition.FileName;
-
-			if (item.File == null)
+			if(file != null)
 			{
-				// create new file
+				var fileBytes = new byte[file.Length];
+				await file.OpenReadStream().ReadAsync(fileBytes, 0, (int) file.Length);
 
-				item.File = new File
+				// get file name
+				var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
+				var fileName = parsedContentDisposition.FileName;
+
+				if (item.File == null)
 				{
-					Content = fileBytes,
-					ContentType = request.File.ContentType,
-					Name = fileName,
-					FileType = FileType.Thumbnail
-				};
-			}
-			else
-			{
-				// update file
+					// create new file
 
-				item.File.Content = fileBytes;
-				item.File.ContentType = request.File.ContentType;
-				item.File.Name = fileName;
+					item.File = new File
+					{
+						Content = fileBytes,
+						ContentType = request.File.ContentType,
+						Name = fileName,
+						FileType = FileType.Thumbnail
+					};
+				}
+				else
+				{
+					// update file
+
+					item.File.Content = fileBytes;
+					item.File.ContentType = request.File.ContentType;
+					item.File.Name = fileName;
+				}
 			}
 
 
