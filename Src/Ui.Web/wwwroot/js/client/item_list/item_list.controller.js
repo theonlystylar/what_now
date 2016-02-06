@@ -2,9 +2,10 @@
 	.controller(
 		"itemListController", [
 			"$scope",
+			"itemListState",
 			"itemDataService",
 			"itemManager",
-			function($scope, itemDataService, itemManager) {
+			function($scope, itemListState, itemDataService, itemManager) {
 
 				// preload items before intializing controller
 				itemManager.load().then(function() {
@@ -28,25 +29,21 @@
 				$scope.hideChangeForm = function() {
 					$scope.isButtonEditorVisible = false;
 					setVisibility();
-					refreshChildItems();
 				}
 
-				$scope.goToChildren = function(item) {
+				$scope.goToChildren = itemListState.setSelectedItem;
+				$scope.back = itemListState.setSelectedItemToParent;
+
+				// bind events
+
+				itemListState.subscribeToSelectedItemChanged($scope, setItem);
+				//itemListState.subscribeToVisibleViewChanged($scope, setVisibility);
+
+				// private functions
+
+				function setItem(e, item) {
 					$scope.item = item;
 					setVisibility();
-					refreshChildItems();
-				}
-
-				$scope.back = function() {
-					var parentId = $scope.item == null ? null : $scope.item.getParentId();
-					var parent = itemManager.getById(parentId)
-					$scope.item = parent;
-					setVisibility();
-					refreshChildItems();
-				}
-
-				function refreshChildItems() {
-					$scope.$broadcast("REFRESH_CHILD_ITEMS");
 				}
 
 				function setVisibility() {

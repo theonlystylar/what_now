@@ -3,8 +3,10 @@
 		"$scope",
 		"$timeout",
 		"Upload",
-		"itemNodeDataService",
-		function ($scope, $timeout, Upload, itemNodeDataService) {
+		//"itemNodeDataService",
+		function ($scope, $timeout, Upload /*, itemNodeDataService */) {
+
+			//TODO: use itemManager instead of itemNodeDataService
 
 			$scope.cancel = function() {
 				$scope.$parent.hideChangeForm();

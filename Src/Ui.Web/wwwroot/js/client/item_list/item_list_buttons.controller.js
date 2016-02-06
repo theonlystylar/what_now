@@ -2,10 +2,10 @@
 	"itemListButtonsController", [
 		"$scope",
 		"$timeout",
-		"itemNodeDataService",
+		"itemListState",
 		"navBarStateService",
 		"itemManager",
-		function ($scope, $timeout, itemNodeDataService, navBarStateService, itemManager) {
+		function ($scope, $timeout, itemListState, navBarStateService, itemManager) {
 
 			$scope.editing = navBarStateService.getEditing();
 
@@ -28,13 +28,15 @@
 				$scope.$parent.goToChildren(item);
 			};
 
-			$scope.$on("REFRESH_CHILD_ITEMS", function() {
-				setItems();
-			});
+			// bind events
+
+			itemListState.subscribeToSelectedItemChanged($scope, setItems);
+
+			// private methods
 
 			function setItems() {
-				var parentId = $scope.$parent.item == null ? null : $scope.$parent.item.getId();
-				$scope.items = itemManager.getChildren(parentId);
+				var selectedItemId = itemListState.getSelectedItemId();
+				$scope.items = itemManager.getChildren(selectedItemId);
 			};
 		}
 	]);
