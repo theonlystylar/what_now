@@ -4,19 +4,15 @@
 		"$timeout",
 		"itemNodeDataService",
 		"navBarStateService",
-		function ($scope, $timeout, itemNodeDataService, navBarStateService) {
+		"itemManager",
+		function ($scope, $timeout, itemNodeDataService, navBarStateService, itemManager) {
 
 			$scope.editing = navBarStateService.getEditing();
 
 			initialize();
 
 			function initialize() {
-				$timeout(function () {
-					// DOM has finished rendering
-					// Need to wait until DOM is rendered before loading the items so the buttons are rendered
-					// and the transition "bounce" is visible
-					setItems();
-				});
+				setItems();
 			}
 
 			navBarStateService.subscribeToEditing($scope, function (event, args) {
@@ -37,10 +33,8 @@
 			});
 
 			function setItems() {
-				var parentId = $scope.$parent.item == null ? null : $scope.$parent.item.id;
-				itemNodeDataService.getChildren(parentId).then(function(items) {
-					$scope.items = items;
-				});
+				var parentId = $scope.$parent.item == null ? null : $scope.$parent.item.getId();
+				$scope.items = itemManager.getChildren(parentId);
 			};
 		}
 	]);

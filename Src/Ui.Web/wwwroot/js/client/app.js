@@ -11,7 +11,8 @@ var clientApp = angular.module("clientApp", [
 	"navBarModule",
 	"itemListModule",
 	"clientApp.pagesModule",
-	"clientApp.logDetailModule"
+	"clientApp.logDetailModule",
+	"clientApp.modelsModule"
 ]);
 
 clientApp.config([

@@ -3,17 +3,17 @@
 		<!-- item button -->
 		<div class="c-item clearfix" ng-if="!editing" ng-click="onItemSelect(item)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 			<div class="img">
-				<img ng-src="{{'api/items/icon/' + item.imageId || 0}}"/>
+				<img ng-src="{{'api/items/icon/' + item.getImageId()}}"/>
 			</div>
-			<span>{{item.funnyName || item.name}}</span>
+			<span>{{item.getDisplayName()}}</span>
 		</div>
 		<!-- end item button -->
 		<!-- edit mode item button -->
 		<div class="c-item clearfix" ng-if="editing" ng-click="onItemChange(item)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 			<div class="img">
-				<img ng-src="{{'api/items/icon/' + item.imageId || 0}}" />
+				<img ng-src="{{'api/items/icon/' + item.getImageId()}}" />
 			</div>
-			<span>{{item.funnyName || item.name}}</span>
+			<span>{{item.getDisplayName()}}</span>
 			<div class="c-menu">
 				<i class="fa fa-times" ng-click="onItemDelete(item)"></i>
 			</div>

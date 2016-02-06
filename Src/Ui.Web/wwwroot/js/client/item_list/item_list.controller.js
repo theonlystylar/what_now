@@ -2,10 +2,14 @@
 	.controller(
 		"itemListController", [
 			"$scope",
-			"itemNodeDataService",
-			function ($scope, itemNodeDataService) {
+			"itemDataService",
+			"itemManager",
+			function($scope, itemDataService, itemManager) {
 
-				initialize();
+				// preload items before intializing controller
+				itemManager.load().then(function() {
+					initialize();
+				});
 
 				function initialize() {
 					$scope.item = null;
@@ -14,14 +18,14 @@
 					$scope.isButtonEditorVisible = false;
 				}
 
-				$scope.showChangeForm = function (item) {
+				$scope.showChangeForm = function(item) {
 					$scope.selectedItem = item;
 					$scope.isButtonsVisible = false;
 					$scope.isFormVisible = false;
 					$scope.isButtonEditorVisible = true;
 				}
 
-				$scope.hideChangeForm = function (item) {
+				$scope.hideChangeForm = function() {
 					$scope.isButtonEditorVisible = false;
 					setVisibility();
 					refreshChildItems();
@@ -34,12 +38,11 @@
 				}
 
 				$scope.back = function() {
-					var parentId = $scope.item == null ? null : $scope.item.parentId;
-					itemNodeDataService.get(parentId).then(function(item) {
-						$scope.item = item;
-						setVisibility();
-						refreshChildItems();
-					});
+					var parentId = $scope.item == null ? null : $scope.item.getParentId();
+					var parent = itemManager.getById(parentId)
+					$scope.item = parent;
+					setVisibility();
+					refreshChildItems();
 				}
 
 				function refreshChildItems() {
@@ -47,11 +50,10 @@
 				}
 
 				function setVisibility() {
-					var itemId = $scope.item == null ? null : $scope.item.id;
-					itemNodeDataService.getChildren(itemId).then(function(children) {
-						$scope.isFormVisible = (children.length === 0); // no children
-						$scope.isButtonsVisible = children.length > 0; // has children
-					});
+					var itemId = $scope.item == null ? null : $scope.item.getId();
+					var children = itemManager.getChildren(itemId);
+					$scope.isFormVisible = (children.length === 0); // no children
+					$scope.isButtonsVisible = children.length > 0; // has children
 				}
 			}
 		]);

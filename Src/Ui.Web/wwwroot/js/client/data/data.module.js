@@ -1,3 +1,4 @@
 ﻿angular.module("dataModule", [
-	"ngResource"
+	"ngResource",
+	"clientApp.modelsModule"
 ]);
