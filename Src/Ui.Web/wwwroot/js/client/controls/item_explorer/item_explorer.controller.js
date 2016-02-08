@@ -2,15 +2,20 @@
 	.controller(
 		"itemExplorerController", [
 			"$scope",
-			"itemManager",
 			"itemExplorerState",
-			function ($scope, itemManager, itemExplorerState) {
+			"itemManager",
+			"itemControlManager",
+			function($scope, itemExplorerState, itemManager, itemControlManager) {
 
 				// preload items before intializing controller
 				// child controls assume the item manager is loaded
-				itemManager.load().then(function () {
-					initialize();
-				});
+				itemManager
+					.load()
+					.then(function() {
+						return itemControlManager.load();
+					}).then(function() {
+						initialize();
+					});
 
 				$scope.back = function() {
 					itemExplorerState.navigateBack();
