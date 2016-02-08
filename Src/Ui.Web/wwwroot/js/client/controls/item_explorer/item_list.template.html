@@ -3,13 +3,13 @@
 		<!-- item button -->
 		<div class="c-item clearfix" ng-if="!editing" ng-click="selectItem(item)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 			<div class="img">
-				<img ng-src="{{'api/items/icon/' + item.getImageId()}}"/>
+				<img ng-src="{{'api/items/icon/' + item.getImageId()}}" />
 			</div>
 			<span>{{item.getDisplayName()}}</span>
 		</div>
 		<!-- end item button -->
 		<!-- edit mode item button -->
-		<div class="c-item clearfix" ng-if="editing" ng-click="selectItem(item)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+		<div class="c-item clearfix" ng-if="editing" ng-click="editItem(item)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 			<div class="img">
 				<img ng-src="{{'api/items/icon/' + item.getImageId()}}" />
 			</div>

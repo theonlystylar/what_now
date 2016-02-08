@@ -7,16 +7,17 @@
 			"itemManager",
 			function($scope, itemListState, itemDataService, itemManager) {
 
+				var _loaded = false;
+
 				// preload items before intializing controller
-				itemManager.load().then(function() {
+				itemManager.load().then(function () {
+					_loaded = true;
 					initialize();
 				});
 
 				function initialize() {
 					$scope.item = null;
-					$scope.isButtonsVisible = true;
-					$scope.isFormVisible = false;
-					$scope.isButtonEditorVisible = false;
+					itemListState.setSelectedView(itemListState.viewEnum.buttons);
 				}
 
 				$scope.showChangeForm = function(item) {
@@ -31,26 +32,26 @@
 					setVisibility();
 				}
 
-				$scope.goToChildren = itemListState.setSelectedItem;
-				$scope.back = itemListState.setSelectedItemToParent;
+				$scope.setSelectedItemToParent = itemListState.setSelectedItemToParent;
+
+				$scope.isVisible = function (viewName) {
+					//if (!_loaded) return false;
+					return itemListState.viewEnum[viewName] === itemListState.getSelectedView();
+				}
 
 				// bind events
 
 				itemListState.subscribeToSelectedItemChanged($scope, setItem);
-				//itemListState.subscribeToVisibleViewChanged($scope, setVisibility);
+				//itemListState.subscribeToSelectedViewChanged($scope, setVisibility);
 
 				// private functions
 
 				function setItem(e, item) {
 					$scope.item = item;
-					setVisibility();
 				}
 
-				function setVisibility() {
-					var itemId = $scope.item == null ? null : $scope.item.getId();
-					var children = itemManager.getChildren(itemId);
-					$scope.isFormVisible = (children.length === 0); // no children
-					$scope.isButtonsVisible = children.length > 0; // has children
-				}
+				//function setVisibility() {
+				//	//$scope.$apply();
+				//}
 			}
 		]);

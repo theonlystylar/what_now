@@ -1,19 +1,14 @@
-﻿angular.module("itemListModule")
-	.factory("itemListState", [
+﻿angular.module("clientApp.controls")
+	.factory("itemExplorerState", [
 		"$rootScope",
 		"itemManager",
 		function($rootScope, itemManager) {
 
 			var _selectedItem = null,
 				_selectedItemChanged = "SELECTED_ITEM_CHANGED",
-				_viewEnum = {
-					buttons: 0,
-					buttonEditor: 1,
-					logForm: 2,
-					none: 3
-				},
-				_selectedView = _viewEnum.none,
-				_selectedViewChanged = "SELECTED_VIEW_CHANGED";
+				_selectedView = "",
+				_selectedViewChanged = "SELECTED_VIEW_CHANGED",
+				_navigateBack = "NAVIGATE_BACK_REQUESTED";
 
 			function getSelectedItemId() {
 				return _selectedItem == null ? null : _selectedItem.getId();
@@ -36,20 +31,16 @@
 				return _selectedView;
 			}
 
-			function setSelectedView(viewEnum) {
-				_selectedView = viewEnum;
+			function setSelectedView(viewName) {
+				_selectedView = viewName;
 				publishOnSelectedViewChanged();
 			}
 
-			function showButtons() {
-				setSelectedView(_viewEnum.buttons);
+			function navigateBack() {
+				publishOnNavigateBack();
 			}
 
-			function showLogForm() {
-				setSelectedView(_viewEnum.logForm);
-			}
-
-			// events
+			//#region events
 
 			function subscribeToSelectedItemChanged(scope, callback) {
 				var handler = $rootScope.$on(_selectedItemChanged, callback);
@@ -69,7 +60,18 @@
 				$rootScope.$emit(_selectedViewChanged, _selectedView);
 			}
 
-			// private methods
+			function subscribeToNavigateBack(scope, callback) {
+				var handler = $rootScope.$on(_navigateBack, callback);
+				scope.$on("$destroy", handler);
+			}
+
+			function publishOnNavigateBack() {
+				$rootScope.$emit(_navigateBack);
+			}
+
+			//#endregion
+
+			//#region private functions
 
 			function setSelectedItemToParent() {
 				var parentId = getSelectedItemParentId();
@@ -77,18 +79,19 @@
 				setSelectedItem(parent);
 			}
 
+			//#endregion
+
 			return {
-				viewEnum: _viewEnum,
 				getSelectedItemId: getSelectedItemId,
 				getSelectedItem: getSelectedItem,
 				setSelectedItem: setSelectedItem,
 				setSelectedItemToParent: setSelectedItemToParent,
 				getSelectedView: getSelectedView,
 				setSelectedView: setSelectedView,
-				showButtons: showButtons,
-				showLogForm: showLogForm,
+				navigateBack: navigateBack,
 				subscribeToSelectedItemChanged: subscribeToSelectedItemChanged,
-				subscribeToSelectedViewChanged: subscribeToSelectedViewChanged
+				subscribeToSelectedViewChanged: subscribeToSelectedViewChanged,
+				subscribeToNavigateBack: subscribeToNavigateBack
 			};
 		}
 	]);

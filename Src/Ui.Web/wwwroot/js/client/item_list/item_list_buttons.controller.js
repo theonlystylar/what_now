@@ -12,29 +12,35 @@
 			initialize();
 
 			function initialize() {
-				setItems();
+				$timeout(loadItems, 100);
 			}
 
 			navBarStateService.subscribeToEditing($scope, function (event, args) {
 				$scope.editing = args.editing;
-				setItems();
+				loadItems();
 			});
 
 			$scope.onItemChange = function(item) {
 				$scope.$parent.showChangeForm(item);
 			}
 
-			$scope.onItemSelect = function (item) {
-				$scope.$parent.goToChildren(item);
-			};
+			$scope.selectItem = function (item) {
+				itemListState.setSelectedItem(item);
+			}
 
 			// bind events
 
-			itemListState.subscribeToSelectedItemChanged($scope, setItems);
+			itemListState.subscribeToSelectedItemChanged($scope, function() {
+				if (itemManager.getChildren(itemListState.getSelectedItemId()).length === 0) {
+					itemListState.setSelectedView(itemListState.viewEnum.logForm);
+					return;
+				}
+				loadItems();
+			});
 
 			// private methods
 
-			function setItems() {
+			function loadItems() {
 				var selectedItemId = itemListState.getSelectedItemId();
 				$scope.items = itemManager.getChildren(selectedItemId);
 			};

@@ -1,0 +1,17 @@
+﻿<div class="col-lg-12 text-center c-nav-text-ribbon" ng-cloak ng-show="item != null">
+	{{item.getDisplayName()}}
+</div>
+<div class="col-lg-12" ng-class="{'c-nav-spacer-lg': item == null, 'c-nav-spacer': item != null}"></div>
+<div class="container-fluid ng-cloak">
+	<div class="c-spacer-bottom" ng-show="item != null">
+		<nav>
+			<button class="btn btn-default" aria-label="Left Align" ng-click="back()">
+				<span class="fa fa-arrow-left" aria-hidden="true"></span>
+				back
+			</button>
+		</nav>
+	</div>
+	<div ng-include="'js/client/controls/item_explorer/item_list.template.html'" ng-controller="itemListController" ng-if="isExploring"></div>
+	<div ng-include="'js/client/controls/item_explorer/item_log.template.html'" ng-controller="itemLogController" ng-if="isLogging"></div>
+	<div ng-include="'js/client/controls/item_explorer/item_edit.template.html'" ng-controller="itemEditController" ng-if="isEditing"></div>
+</div>

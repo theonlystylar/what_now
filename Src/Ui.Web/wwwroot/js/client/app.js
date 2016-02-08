@@ -12,13 +12,18 @@ var clientApp = angular.module("clientApp", [
 	"itemListModule",
 	"clientApp.pagesModule",
 	"clientApp.logDetailModule",
-	"clientApp.modelsModule"
+	"clientApp.modelsModule",
+	"clientApp.controls"
 ]);
 
 clientApp.config([
 	"$routeProvider",
 	function($routeProvider) {
 		$routeProvider.
+			when("/itemexplorer", {
+				templateUrl: "js/client/pages/item_explorer_page.template.html",
+				controller: "itemExplorerPageController"
+			}).
 			when("/trackstuff", {
 				templateUrl: "js/client/pages/track_stuff_page.template.html",
 				controller: "trackStuffPageController"
@@ -28,7 +33,7 @@ clientApp.config([
 				controller: "seeStuffPageController"
 			}).
 			otherwise({
-				redirectTo: "/trackstuff"
+				redirectTo: "/itemexplorer"
 			});
 	}
 ]);

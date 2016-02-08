@@ -4,7 +4,8 @@
 		"$timeout",
 		"controlDataService",
 		"logService",
-		function($scope, $timeout, controlDataService, logService) {
+		"itemListState",
+		function($scope, $timeout, controlDataService, logService, itemListState) {
 
 			initialize();
 
@@ -24,12 +25,13 @@
 			};
 
 			$scope.cancel = function() {
-				$scope.$parent.back();
+				itemListState.setSelectedItemToParent();
+				itemListState.setSelectedView(itemListState.viewEnum.buttons);
 			};
 
 			$scope.save = function() {
 				var form = {
-					itemId: $scope.item.id,
+					itemId: $scope.item.getId(),
 					controlLogs: getCheckboxControlForms()
 				};
 
@@ -45,14 +47,15 @@
 				logService.save(form,
 					// success
 					function() {
-						toastr["success"]("Logged " + $scope.item.name + " form");
+						toastr["success"]("Logged " + $scope.item.getDisplayName() + " form");
 					},
 					// error
 					function(error) {
 						toastr["error"](error);
 					});
 
-				$scope.$parent.back();
+				itemListState.setSelectedItemToParent();
+				itemListState.setSelectedView(itemListState.viewEnum.buttons);
 			};
 
 			function getCheckboxControlForms() {
@@ -102,12 +105,11 @@
 			}
 
 			function setForm() {
-				var item = $scope.$parent.item;
-				$scope.item = item;
+				$scope.item = itemListState.getSelectedItem();
 				$scope.currentDate = new Date();
 				$scope.dateTimeOverride = null;
 
-				controlDataService.getByItem(item.id).then(function(controls) {
+				controlDataService.getByItem($scope.item.getId()).then(function(controls) {
 					$scope.controls = controls;
 				});
 			}
