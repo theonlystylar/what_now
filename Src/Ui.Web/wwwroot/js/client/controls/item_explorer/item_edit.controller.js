@@ -3,12 +3,17 @@
 		"itemEditController", [
 			"$scope",
 			"$timeout",
-			function ($scope, $timeout) {
+			"itemExplorerState",
+			function ($scope, $timeout, itemExplorerState) {
 
 				initialize();
 
 				//#region event handling
 
+				itemExplorerState.subscribeToNavigateBack($scope, function () {
+					itemExplorerState.setSelectedItemToParent();
+					itemExplorerState.setSelectedView("list");
+				});
 
 				//#endregion
 

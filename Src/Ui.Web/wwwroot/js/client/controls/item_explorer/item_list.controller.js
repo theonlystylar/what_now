@@ -48,6 +48,7 @@
 					// to loading the items.  This is needed so that transition style work as each
 					// item is rendered in the DOM.
 					$timeout(loadItems, 100);
+					$scope.editing = navBarStateService.getEditing();
 				}
 
 				function loadItems() {
