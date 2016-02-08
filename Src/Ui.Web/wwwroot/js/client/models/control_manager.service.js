@@ -1,5 +1,5 @@
 ﻿angular.module("clientApp.modelsModule")
-	.factory("itemControlManager", [
+	.factory("controlManager", [
 		"$timeout",
 		"itemControlDataService",
 		function ($timeout, itemControlDataService) {

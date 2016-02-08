@@ -4,15 +4,15 @@
 			"$scope",
 			"itemExplorerState",
 			"itemManager",
-			"itemControlManager",
-			function($scope, itemExplorerState, itemManager, itemControlManager) {
+			"controlManager",
+			function($scope, itemExplorerState, itemManager, controlManager) {
 
 				// preload items before intializing controller
 				// child controls assume the item manager is loaded
 				itemManager
 					.load()
 					.then(function() {
-						return itemControlManager.load();
+						return controlManager.load();
 					}).then(function() {
 						initialize();
 					});

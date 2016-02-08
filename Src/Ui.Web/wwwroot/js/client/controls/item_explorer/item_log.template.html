@@ -7,7 +7,7 @@
 		<div class="form-group">
 			<input type="text"
 					 kendo-date-time-picker
-					 k-on-change="onDateTimeSelected(kendoEvent)"
+					 k-on-change="selectDateTime(kendoEvent)"
 					 k-ng-model="currentDate"
 					 k-format="'M/d/yyyy h:mm tt'" />
 		</div>
@@ -15,18 +15,18 @@
 
 	<div class="slide-top" ng-repeat="control in controls">
 
-		<div ng-switch="control.controlType.name">
+		<div ng-switch="control.getControlType().getName()">
 
 			<!-- Checkbox Control -->
 
 			<div class="form-group" ng-switch-when="Checkbox">
 
-				<label>{{control.name}}</label>
+				<label>{{control.getDisplayName()}}</label>
 				<div class="form-group">
-					<div ng-repeat="controlOption in control.controlOptions">
+					<div ng-repeat="controlOption in control.getControlOptions()">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" ng-model="controlOption.checked" /> {{controlOption.name}}
+								<input type="checkbox" ng-model="controlOption.checked" /> {{controlOption.getDisplayName()}}
 							</label>
 						</div>
 					</div>
@@ -38,12 +38,12 @@
 
 			<div class="form-group" ng-switch-when="Radio">
 
-				<label>{{control.name}}</label>
+				<label>{{control.getDisplayName()}}</label>
 				<div class="form-group">
-					<div ng-repeat="controlOption in control.controlOptions">
+					<div ng-repeat="controlOption in control.getControlOptions()">
 						<div class="radio">
 							<label>
-								<input type="radio" name="{{control.name}}" ng-model="control.value" ng-value="controlOption.id" /> {{controlOption.name}}
+								<input type="radio" name="{{control.getDisplayName()}}" ng-model="control.value" ng-value="controlOption.getId()" /> {{controlOption.getDisplayName()}}
 							</label>
 						</div>
 					</div>
@@ -55,7 +55,7 @@
 
 			<div class="form-group" ng-switch-when="Textbox">
 
-				<label>{{control.name}}:</label>
+				<label>{{control.getDisplayName()}}:</label>
 				<textarea class="form-control" rows="3" ng-model="control.value"></textarea>
 
 			</div>
