@@ -15,18 +15,18 @@
 
 	<div class="slide-top" ng-repeat="control in controls">
 
-		<div ng-switch="control.getControlType().getName()">
+		<div ng-switch="control.controlType.name">
 
 			<!-- Checkbox Control -->
 
 			<div class="form-group" ng-switch-when="Checkbox">
 
-				<label>{{control.getDisplayName()}}</label>
+				<label>{{control.displayName}}</label>
 				<div class="form-group">
-					<div ng-repeat="controlOption in control.getControlOptions()">
+					<div ng-repeat="controlOption in control.controlOptions">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" ng-model="controlOption.checked" /> {{controlOption.getDisplayName()}}
+								<input type="checkbox" ng-model="controlOption.checked" /> {{controlOption.displayName}}
 							</label>
 						</div>
 					</div>
@@ -38,12 +38,12 @@
 
 			<div class="form-group" ng-switch-when="Radio">
 
-				<label>{{control.getDisplayName()}}</label>
+				<label>{{control.displayName}}</label>
 				<div class="form-group">
-					<div ng-repeat="controlOption in control.getControlOptions()">
+					<div ng-repeat="controlOption in control.controlOptions">
 						<div class="radio">
 							<label>
-								<input type="radio" name="{{control.getDisplayName()}}" ng-model="control.value" ng-value="controlOption.getId()" /> {{controlOption.getDisplayName()}}
+								<input type="radio" name="{{control.displayName}}" ng-model="control.value" ng-value="controlOption.id" /> {{controlOption.displayName}}
 							</label>
 						</div>
 					</div>
@@ -55,7 +55,7 @@
 
 			<div class="form-group" ng-switch-when="Textbox">
 
-				<label>{{control.getDisplayName()}}:</label>
+				<label>{{control.displayName}}:</label>
 				<textarea class="form-control" rows="3" ng-model="control.value"></textarea>
 
 			</div>

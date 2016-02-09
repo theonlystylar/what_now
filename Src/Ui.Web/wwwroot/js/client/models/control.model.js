@@ -13,6 +13,10 @@
 					_controlType = ControlType.responseTransformer(data.controlType),
 					_controlOptions = ControlOption.responseTransformer(data.controlOptions);
 
+				that.getControlOptions = function() {
+					return _controlOptions;
+				}
+
 				that.getControlType = function() {
 					return _controlType;
 				}
@@ -29,12 +33,20 @@
 					return _itemId;
 				};
 
-				that.getControlType = function() {
-					return _controlType;
-				}
-
-				that.getControlOptions = function() {
-					return _controlOptions;
+				that.toJson = function() {
+					return {
+						id: that.getId(),
+						itemId: that.getItemId(),
+						displayName: that.getDisplayName(),
+						controlType: _controlType.toJson(),
+						controlOptions: function() {
+							var controlOptions = [];
+							_.each(that.getControlOptions(), function(controlOption) {
+								controlOptions.push(controlOption.toJson());
+							});
+							return controlOptions;
+						}()
+					}
 				}
 			}
 

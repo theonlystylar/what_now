@@ -1,23 +1,29 @@
 ﻿angular.module("clientApp.modelsModule")
 	.factory("ControlType", [
-		function () {
+		function() {
 
 			function ControlType(data) {
 				var that = this,
 					_name = data.name;
 
-				that.getName = function () {
+				that.getName = function() {
 					return _name;
+				}
+
+				that.toJson = function() {
+					return {
+						name: that.getName()
+					}
 				}
 			}
 
 			// Static Properties
 
-			ControlType.build = function (data) {
+			ControlType.build = function(data) {
 				return new ControlType(data);
 			}
 
-			ControlType.responseTransformer = function (data) {
+			ControlType.responseTransformer = function(data) {
 				if (angular.isArray(data)) {
 					return data
 						.map(ControlType.build)

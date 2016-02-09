@@ -1,6 +1,6 @@
 ﻿angular.module("clientApp.modelsModule")
 	.factory("ControlOption", [
-		function () {
+		function() {
 
 			function ControlOption(data) {
 				var that = this,
@@ -8,22 +8,29 @@
 					_name = data.name,
 					_funnyName = data.funnyName;
 
-				that.getId = function () {
+				that.getId = function() {
 					return _id;
 				}
 
-				that.getDisplayName = function () {
+				that.getDisplayName = function() {
 					return _funnyName || _name;
+				}
+
+				that.toJson = function() {
+					return {
+						id: that.getId(),
+						displayName: that.getDisplayName()
+					}
 				}
 			}
 
 			// Static Properties
 
-			ControlOption.build = function (data) {
+			ControlOption.build = function(data) {
 				return new ControlOption(data);
 			}
 
-			ControlOption.responseTransformer = function (data) {
+			ControlOption.responseTransformer = function(data) {
 				if (angular.isArray(data)) {
 					return data
 						.map(ControlOption.build)

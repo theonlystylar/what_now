@@ -38,7 +38,7 @@
 				//#region private functions
 
 				function initialize() {
-					$scope.item = null;
+					$scope.item = itemExplorerState.getSelectedItem();
 					itemExplorerState.setSelectedView("list");
 				}
 
