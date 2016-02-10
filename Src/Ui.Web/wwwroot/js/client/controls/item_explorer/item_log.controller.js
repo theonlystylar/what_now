@@ -5,8 +5,8 @@
 			"$timeout",
 			"itemExplorerState",
 			"controlManager",
-			"logService",
-			function($scope, $timeout, itemExplorerState, controlManager, logService) {
+			"logManager",
+			function($scope, $timeout, itemExplorerState, controlManager, logManager) {
 
 				initialize();
 
@@ -16,29 +16,48 @@
 
 				// TODO: move logic to a new factory called logManager
 				$scope.save = function() {
-					var data = {
-						itemId: $scope.item.getId(),
-						controlLogs: getCheckboxControlForms()
-							.concat(getTextboxControlForms())
-							.concat(getRadioControlForms())
-					};
+					var log = logManager.create($scope.item.getId());
+					logCheckboxSelections(log);
+					logRadioSelections(log);
+					logTextboxEntries(log);
+
+					//var data = {
+					//	itemId: $scope.item.getId(),
+					//	controlLogs: getCheckboxControlForms()
+					//		.concat(getTextboxControlForms())
+					//		.concat(getRadioControlForms())
+					//};
 
 					// add datetime override if user provided
 					if ($scope.dateTimeOverride != null && $scope.dateTimeOverride instanceof Date) {
-						data.dateTimeOverride = $scope.dateTimeOverride;
+						log.setDateTimeOverride($scope.dateTimeOverride);
+						//data.dateTimeOverride = $scope.dateTimeOverride;
 					}
 
-					logService.save(data,
-						// success
-						function() {
-							toastr["success"]("Logged " + $scope.item.getDisplayName() + " form");
-						},
-						// error
-						function(error) {
-							toastr["error"](error);
-						});
+					logManager
+						.save(log)
+						.then(
+							// success
+							function() {
+								toastr["success"]("Logged " + $scope.item.getDisplayName() + " form");
+								back();
+							},
+							// error
+							function(error) {
+								toastr["error"](error);
+							});
 
-					back();
+					//logService.save(data,
+					//	// success
+					//	function() {
+					//		toastr["success"]("Logged " + $scope.item.getDisplayName() + " form");
+					//	},
+					//	// error
+					//	function(error) {
+					//		toastr["error"](error);
+					//	});
+
+					//back();
 				}
 
 				$scope.selectDateTime = function(e) {
@@ -61,17 +80,18 @@
 					itemExplorerState.setSelectedView("list");
 				}
 
-				function getCheckboxControlForms() {
+				function logCheckboxSelections(log) {
 					var forms = [];
 					_.each($scope.controls, function(control) {
 						if (control.controlType.name === "Checkbox") {
 							_.each(control.controlOptions, function(controlOption) {
 								if (controlOption.checked) {
-									forms.push({
-										controlId: control.id,
-										controlOptionId: controlOption.id,
-										value: null
-									});
+									log.addControlLog(control.id, controlOption.id);
+									//forms.push({
+									//	controlId: control.id,
+									//	controlOptionId: controlOption.id,
+									//	value: null
+									//});
 								}
 							});
 						}
@@ -79,29 +99,31 @@
 					return forms;
 				}
 
-				function getRadioControlForms() {
+				function logRadioSelections(log) {
 					var forms = [];
 					_.each($scope.controls, function(control) {
 						if (control.controlType.name === "Radio" && control.value != undefined && control.value > 0) {
-							forms.push({
-								controlId: control.id,
-								controlOptionId: control.value,
-								value: null
-							});
+							log.addControlLog(control.id, control.value);
+							//forms.push({
+							//	controlId: control.id,
+							//	controlOptionId: control.value,
+							//	value: null
+							//});
 						}
 					});
 					return forms;
 				}
 
-				function getTextboxControlForms() {
+				function logTextboxEntries(log) {
 					var forms = [];
 					_.each($scope.controls, function(control) {
 						if (control.controlType.name === "Textbox" && control.value != undefined && control.value.length > 0) {
-							forms.push({
-								controlId: control.id,
-								controlOptionId: null,
-								value: control.value
-							});
+							log.addControlLog(control.id, null, control.value);
+							//forms.push({
+							//	controlId: control.id,
+							//	controlOptionId: null,
+							//	value: control.value
+							//});
 						}
 					});
 					return forms;
