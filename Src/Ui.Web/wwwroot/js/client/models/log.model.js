@@ -6,6 +6,7 @@
 				var that = this,
 					_id = null,
 					_itemId = itemId,
+					_dateTimeOverride,
 					_controlLogs = [];
 
 				that.addControlLog = function(controlId, controlOptionId, value) {
@@ -20,11 +21,21 @@
 					return _id === null;
 				}
 
+				that.setDateTimeOverride = function(date) {
+					_dateTimeOverride = date;
+				}
+
 				that.toDto = function() {
-					return {
+					var dto = {
 						itemId: _itemId,
 						controlLogs: _controlLogs
 					}
+
+					if (_dateTimeOverride) {
+						dto.dateTimeOverride = _dateTimeOverride;
+					}
+
+					return dto;
 				}
 			}
 

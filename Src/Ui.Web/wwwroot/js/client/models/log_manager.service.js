@@ -3,7 +3,7 @@
 		"$timeout",
 		"logData",
 		"Log",
-		function ($timeout, logData, Log) {
+		function($timeout, logData, Log) {
 
 			function create(itemId) {
 				return new Log(itemId);

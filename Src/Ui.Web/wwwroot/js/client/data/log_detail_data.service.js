@@ -1,16 +1,16 @@
 ﻿angular.module("dataModule")
 	.factory("logDetailDataService", [
 		"$http",
-		function ($http) {
+		function($http) {
 
 			function deleteControlLog(logId, controlLogId) {
-				return $http.delete("api/logdetails/" + logId + "/" + controlLogId).then(function (response) {
+				return $http.delete("api/logdetails/" + logId + "/" + controlLogId).then(function(response) {
 					return response;
 				});
 			}
 
 			function getAll() {
-				return $http.get("api/logdetails").then(function (response) {
+				return $http.get("api/logdetails").then(function(response) {
 					return response.data;
 				});
 			}

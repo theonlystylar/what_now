@@ -14,24 +14,15 @@
 					back();
 				}
 
-				// TODO: move logic to a new factory called logManager
 				$scope.save = function() {
 					var log = logManager.create($scope.item.getId());
 					logCheckboxSelections(log);
 					logRadioSelections(log);
 					logTextboxEntries(log);
 
-					//var data = {
-					//	itemId: $scope.item.getId(),
-					//	controlLogs: getCheckboxControlForms()
-					//		.concat(getTextboxControlForms())
-					//		.concat(getRadioControlForms())
-					//};
-
 					// add datetime override if user provided
 					if ($scope.dateTimeOverride != null && $scope.dateTimeOverride instanceof Date) {
 						log.setDateTimeOverride($scope.dateTimeOverride);
-						//data.dateTimeOverride = $scope.dateTimeOverride;
 					}
 
 					logManager
@@ -46,18 +37,6 @@
 							function(error) {
 								toastr["error"](error);
 							});
-
-					//logService.save(data,
-					//	// success
-					//	function() {
-					//		toastr["success"]("Logged " + $scope.item.getDisplayName() + " form");
-					//	},
-					//	// error
-					//	function(error) {
-					//		toastr["error"](error);
-					//	});
-
-					//back();
 				}
 
 				$scope.selectDateTime = function(e) {
@@ -87,11 +66,6 @@
 							_.each(control.controlOptions, function(controlOption) {
 								if (controlOption.checked) {
 									log.addControlLog(control.id, controlOption.id);
-									//forms.push({
-									//	controlId: control.id,
-									//	controlOptionId: controlOption.id,
-									//	value: null
-									//});
 								}
 							});
 						}
@@ -104,11 +78,6 @@
 					_.each($scope.controls, function(control) {
 						if (control.controlType.name === "Radio" && control.value != undefined && control.value > 0) {
 							log.addControlLog(control.id, control.value);
-							//forms.push({
-							//	controlId: control.id,
-							//	controlOptionId: control.value,
-							//	value: null
-							//});
 						}
 					});
 					return forms;
@@ -119,11 +88,6 @@
 					_.each($scope.controls, function(control) {
 						if (control.controlType.name === "Textbox" && control.value != undefined && control.value.length > 0) {
 							log.addControlLog(control.id, null, control.value);
-							//forms.push({
-							//	controlId: control.id,
-							//	controlOptionId: null,
-							//	value: control.value
-							//});
 						}
 					});
 					return forms;
