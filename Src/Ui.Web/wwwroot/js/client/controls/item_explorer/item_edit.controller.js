@@ -4,7 +4,8 @@
 			"$scope",
 			"$timeout",
 			"itemExplorerState",
-			function ($scope, $timeout, itemExplorerState) {
+			"itemManager",
+			function ($scope, $timeout, itemExplorerState, itemManager) {
 
 				initialize();
 
@@ -27,7 +28,7 @@
 				}
 
 				function loadItems() {
-
+					$scope.item = itemExplorerState.getSelectedItem();
 				};
 
 				//#endregion

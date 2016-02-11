@@ -10,9 +10,10 @@
 		<div class="col-sm-4">
 			<div class="c-item clearfix" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 				<div class="img">
-					<img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="c-thumb" />
+					<img ng-show="myForm.file.$valid && item.iconFile()" ngf-thumbnail="item.iconFile()" class="c-thumb" />
+					<img ng-show="item.iconFile() == null" ng-src="{{'api/items/icon/' + item.getImageId()}}" />
 				</div>
-				<span>{{item.funnyName || item.name}}</span>
+				<span>{{item.displayName()}}</span>
 			</div>
 		</div>
 	</div>
@@ -21,24 +22,26 @@
 		<div class="col-sm-2">
 			<div class="btn btn-primary c-btn-file">
 				Choose Icon...
-				<input type="file" ngf-select ng-model="picFile" name="file"
+				<input type="file" ngf-select ng-model="item.iconFile"
+				       ng-model-options="{getterSetter: true}" 
+						 name="file"
 						 accept="image/*" ngf-max-size="2MB"
 						 ngf-model-invalid="errorFiles">
 			</div>
-			<button class="btn btn-warning c-btn-file" ng-click="picFile = null" ng-show="picFile">Remove</button>
+			<button class="btn btn-warning c-btn-file" ng-click="item.iconFile(null)" ng-show="item.iconFile()">Remove</button>
 		</div>
-		<div class="col-sm-8" style="line-height: 2em;">{{iconFile}}</div>
+		<div class="col-sm-8" style="line-height: 2em;">{{item.iconFile().name}}</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-2">Funny Name:</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" ng-model="item.funnyName" placeholder="Enter funny name of button">
+			<input type="text" class="form-control" ng-model="item.funnyName" ng-model-options="{getterSetter: true}" placeholder="Enter funny name of button">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-2">Name:</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" ng-model="item.name" placeholder="Enter name of button">
+			<input type="text" class="form-control" ng-model="item.name" ng-model-options="{getterSetter: true}" placeholder="Enter name of button">
 		</div>
 	</div>
 	<div class="form-group">

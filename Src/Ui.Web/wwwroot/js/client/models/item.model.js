@@ -9,29 +9,49 @@
 					_name = data.name,
 					_funnyName = data.funnyName,
 					_imageId = data.imageId,
+					_iconFile = null,
 					_isDirty = false;
 
 				that.getDisplayName = function() {
 					return _funnyName || _name;
+				};
+
+				that.icon = function (value) {
+					return arguments.length ? (_imageId = value) : _imageId;
 				}
 
-				that.getId = function () {
+				that.iconFile = function(value) {
+					return arguments.length ? (_iconFile = value) : _iconFile;
+				}
+
+				that.displayName = function() {
+					return _funnyName || _name;
+				};
+
+				that.funnyName = function(value) {
+					return arguments.length ? (_funnyName = value) : _funnyName;
+				};
+
+				that.name = function(value) {
+					return arguments.length ? (_name = value) : _name;
+				};
+
+				that.getId = function() {
 					return _id;
 				};
 
 				that.getImageId = function() {
 					return _imageId || 0;
-				}
-
-				that.getParentId = function () {
+				};
+				that.getParentId = function() {
 					return _parentId;
 				};
 
-				that.setParentId = function (parentId) {
+				that.setParentId = function(parentId) {
 					setProperty(_parentId, parentId);
 				};
 
-				that.isDirty = function () {
+				that.isDirty = function() {
 					return _isDirty;
 				};
 
@@ -49,8 +69,7 @@
 
 			Item.build = function(data) {
 				return new Item(data);
-			}
-
+			};
 			Item.responseTransformer = function(data) {
 				if (angular.isArray(data)) {
 					return data
@@ -58,8 +77,7 @@
 						.filter(Boolean);
 				}
 				return Item.build(data);
-			}
-
+			};
 			return Item;
 		}
 	]);
