@@ -4,13 +4,15 @@
 
 			function Item(data) {
 				var that = this,
-					_id = data.id,
-					_parentId = data.parentId,
-					_name = data.name,
-					_funnyName = data.funnyName,
-					_imageId = data.imageId,
-					_imageFile = null,
-					_isDirty = false;
+					_id,
+					_parentId,
+					_name,
+					_funnyName,
+					_imageId,
+					_imageFile,
+					_isDirty;
+
+				fromDto(data);
 
 				that.getDisplayName = function() {
 					return _funnyName || _name;
@@ -68,19 +70,8 @@
 					return _parentId;
 				};
 
-				//that.setParentId = function(parentId) {
-				//	setProperty(_parentId, parentId);
-				//};
-
 				that._fromDto = function(dto) {
-					_id = dto.id,
-					_parentId = dto.parentId,
-					_name = dto.name,
-					_funnyName = dto.funnyName,
-					_imageId = dto.imageId,
-					_imageFile = null,
-					_isDirty = false;
-					return this;
+					return fromDto(dto);
 				}
 
 				that.isDirty = function() {
@@ -105,15 +96,16 @@
 					return dto;
 				}
 
-				//function setProperty(property, value) {
-				//	if (arguments.length === 1) return property;
-				//	if (property !== value) {
-				//		property = value;
-				//		_isDirty = true;
-				//		return true;
-				//	}
-				//	return false;
-				//}
+				function fromDto(dto) {
+					_id = dto.id;
+					_parentId = dto.parentId;
+					_name = dto.name;
+					_funnyName = dto.funnyName;
+					_imageId = dto.imageId;
+					_imageFile = null;
+					_isDirty = false;
+					return this;
+				}
 			}
 
 			// Static Properties
