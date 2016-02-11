@@ -19,7 +19,7 @@
 					icon = event.target.files[0];
 					iconFile = event.target.files[0].name;
 				}
-				$scope.icon = icon;
+				$scope.imageId = icon;
 				$scope.iconFile = iconFile;
 				$scope.$apply();
 			};

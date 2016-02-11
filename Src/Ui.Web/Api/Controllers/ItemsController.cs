@@ -68,9 +68,8 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			return items.ToNodeModels();
 		}
 
-		// POST api/items/
-		[HttpPost]
-		public async Task<IActionResult> Post(ItemEditRequest request)
+		[HttpPost("withimage")]
+		public async Task<IActionResult> PostWithImage(ItemEditRequest request)
 		{
 			//http://damienbod.com/2015/12/05/asp-net-5-mvc-6-file-upload-with-ms-sql-server-filetable/
 
@@ -97,14 +96,12 @@ namespace WhatNow.Ui.Web.Api.Controllers
 
 			item.Name = request.Name;
 			item.FunnyName = request.FunnyName;
-			// parent id
-
-			//TODO: delete file if is empty
+			item.ParentId = request.ParentId;
 
 			// read stream
-			var file = request.File;
+			var file = request.ImageFile;
 
-			if(file != null)
+			if (file != null)
 			{
 				var fileBytes = new byte[file.Length];
 				await file.OpenReadStream().ReadAsync(fileBytes, 0, (int) file.Length);
@@ -113,28 +110,54 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
 				var fileName = parsedContentDisposition.FileName;
 
-				if (item.File == null)
+				// drop existing file so new file has new id 
+				// this is important so the url changes and the
+				// new image is shown in the UI.
+				if (item.File != null)
 				{
-					// create new file
-
-					item.File = new File
-					{
-						Content = fileBytes,
-						ContentType = request.File.ContentType,
-						Name = fileName,
-						FileType = FileType.Thumbnail
-					};
+					_dbContext.Files.Remove(item.File);
 				}
-				else
+
+				item.File = new File
 				{
-					// update file
-
-					item.File.Content = fileBytes;
-					item.File.ContentType = request.File.ContentType;
-					item.File.Name = fileName;
-				}
+					Content = fileBytes,
+					ContentType = request.ImageFile.ContentType,
+					Name = fileName,
+					FileType = FileType.Thumbnail
+				};
 			}
 
+
+			await _dbContext.SaveChangesAsync();
+			return Ok(item.ToNodeModel());
+		}
+
+		// POST api/items/
+		[HttpPost]
+		public async Task<IActionResult> Post([FromBody] ItemEditRequest request)
+		{
+			Item item;
+
+			if (request.Id == null)
+			{
+				item = new Item();
+				_dbContext.Items.Add(item);
+			}
+			else
+			{
+				item = await _dbContext
+					.Items
+					.FirstOrDefaultAsync(x => x.Id == request.Id);
+			}
+
+			if (item == null)
+			{
+				return HttpNotFound();
+			}
+
+			item.Name = request.Name;
+			item.FunnyName = request.FunnyName;
+			item.ParentId = request.ParentId;
 
 			await _dbContext.SaveChangesAsync();
 			return Ok(item.ToNodeModel());

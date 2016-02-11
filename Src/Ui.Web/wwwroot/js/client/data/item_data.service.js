@@ -18,6 +18,14 @@
 							return defer.promise;
 						})
 						.then(Item.responseTransformer);
+				},
+				
+				save: function(dto) {
+					return $http
+						.post("api/items", dto)
+						.then(function(response) {
+							$q.when(response.data);
+						});
 				}
 			}
 		}

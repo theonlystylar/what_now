@@ -2,7 +2,7 @@
 	<div class="form-group">
 		<div class="col-sm-12">
 			<button class="btn btn-default" ng-click="cancel()">Cancel</button>
-			<button class="btn btn-primary" ng-click="save(picFile)">Save</button>
+			<button class="btn btn-primary" ng-click="save(item)">Save</button>
 		</div>
 	</div>
 	<div class="form-group">
@@ -10,8 +10,8 @@
 		<div class="col-sm-4">
 			<div class="c-item clearfix" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 				<div class="img">
-					<img ng-show="myForm.file.$valid && item.iconFile()" ngf-thumbnail="item.iconFile()" class="c-thumb" />
-					<img ng-show="item.iconFile() == null" ng-src="{{'api/items/icon/' + item.getImageId()}}" />
+					<img ng-show="myForm.file.$valid && item.imageFile()" ngf-thumbnail="item.imageFile()" class="c-thumb" />
+					<img ng-show="item.imageFile() == null" ng-src="{{'api/items/icon/' + item.getImageId()}}" />
 				</div>
 				<span>{{item.displayName()}}</span>
 			</div>
@@ -22,15 +22,15 @@
 		<div class="col-sm-2">
 			<div class="btn btn-primary c-btn-file">
 				Choose Icon...
-				<input type="file" ngf-select ng-model="item.iconFile"
+				<input type="file" ngf-select ng-model="item.imageFile"
 				       ng-model-options="{getterSetter: true}" 
 						 name="file"
 						 accept="image/*" ngf-max-size="2MB"
 						 ngf-model-invalid="errorFiles">
 			</div>
-			<button class="btn btn-warning c-btn-file" ng-click="item.iconFile(null)" ng-show="item.iconFile()">Remove</button>
+			<button class="btn btn-warning c-btn-file" ng-click="item.imageFile(null)" ng-show="item.imageFile()">Remove</button>
 		</div>
-		<div class="col-sm-8" style="line-height: 2em;">{{item.iconFile().name}}</div>
+		<div class="col-sm-8" style="line-height: 2em;">{{item.imageFile().name}}</div>
 	</div>
 	<div class="form-group">
 		<label class="control-label col-sm-2">Funny Name:</label>
@@ -47,7 +47,7 @@
 	<div class="form-group">
 		<div class="col-sm-12">
 			<button class="btn btn-default" ng-click="cancel()">Cancel</button>
-			<button class="btn btn-primary" ng-click="save(picFile)">Save</button>
+			<button class="btn btn-primary" ng-click="save(item)">Save</button>
 		</div>
 	</div>
 </form>

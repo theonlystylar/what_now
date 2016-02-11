@@ -1,8 +1,10 @@
 ﻿angular.module("clientApp.modelsModule")
 	.factory("itemManager", [
+		"$q",
 		"$timeout",
+		"Upload",
 		"itemDataService",
-		function($timeout, itemDataService) {
+		function($q, $timeout, Upload, itemDataService) {
 
 			var _items;
 
@@ -11,7 +13,7 @@
 			}
 
 			function getById(id) {
-				var found =  _.filter(_items, function (item) {
+				var found = _.filter(_items, function(item) {
 					return item.getId() === id;
 				});
 				if (found && found.length > 0) {
@@ -38,8 +40,22 @@
 			}
 
 			function save(item) {
-				if (!item.isDirty()) return;
-				// TODO: add save code
+				if (!item.isDirty()) {
+					return $q.reject("Item has not been changed, no need to update");
+				}
+
+				if (item.imageFile) {
+					return Upload
+						.upload({
+							url: "api/items/withimage",
+							data: item.toDto()
+						})
+						.then(function (response) {
+							return $q.when(item._fromDto(response.data));
+						});
+				}
+
+				return itemDataService.save(item.toDto());
 			}
 
 			return {

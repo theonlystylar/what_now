@@ -9,19 +9,23 @@
 					_name = data.name,
 					_funnyName = data.funnyName,
 					_imageId = data.imageId,
-					_iconFile = null,
+					_imageFile = null,
 					_isDirty = false;
 
 				that.getDisplayName = function() {
 					return _funnyName || _name;
 				};
 
-				that.icon = function (value) {
-					return arguments.length ? (_imageId = value) : _imageId;
+				that.imageId = function() {
+					return _imageId;
 				}
 
-				that.iconFile = function(value) {
-					return arguments.length ? (_iconFile = value) : _iconFile;
+				that.imageFile = function(value) {
+					if (arguments.length && _imageFile !== value) {
+						_imageFile = value;
+						_isDirty = true;
+					}
+					return _imageFile;
 				}
 
 				that.displayName = function() {
@@ -29,11 +33,27 @@
 				};
 
 				that.funnyName = function(value) {
-					return arguments.length ? (_funnyName = value) : _funnyName;
+					if (arguments.length && _funnyName !== value) {
+						_funnyName = value;
+						_isDirty = true;
+					}
+					return _funnyName;
 				};
 
 				that.name = function(value) {
-					return arguments.length ? (_name = value) : _name;
+					if (arguments.length && _name !== value) {
+						_name = value;
+						_isDirty = true;
+					}
+					return _name;
+				};
+
+				that.parentId = function(value) {
+					if (arguments.length && _parentId !== value) {
+						_parentId = value;
+						_isDirty = true;
+					}
+					return _parentId;
 				};
 
 				that.getId = function() {
@@ -43,26 +63,57 @@
 				that.getImageId = function() {
 					return _imageId || 0;
 				};
+
 				that.getParentId = function() {
 					return _parentId;
 				};
 
-				that.setParentId = function(parentId) {
-					setProperty(_parentId, parentId);
-				};
+				//that.setParentId = function(parentId) {
+				//	setProperty(_parentId, parentId);
+				//};
+
+				that._fromDto = function(dto) {
+					_id = dto.id,
+					_parentId = dto.parentId,
+					_name = dto.name,
+					_funnyName = dto.funnyName,
+					_imageId = dto.imageId,
+					_imageFile = null,
+					_isDirty = false;
+					return this;
+				}
 
 				that.isDirty = function() {
 					return _isDirty;
 				};
 
-				function setProperty(property, value) {
-					if (property !== value) {
-						property = value;
-						_isDirty = true;
-						return true;
+				that.toDto = function() {
+					var dto = {
+						id: _id,
+						name: _name,
+						parentId: _parentId
 					}
-					return false;
+
+					if (_funnyName) {
+						dto.funnyName = _funnyName;
+					}
+
+					if (_imageFile) {
+						dto.imageFile = _imageFile;
+					}
+
+					return dto;
 				}
+
+				//function setProperty(property, value) {
+				//	if (arguments.length === 1) return property;
+				//	if (property !== value) {
+				//		property = value;
+				//		_isDirty = true;
+				//		return true;
+				//	}
+				//	return false;
+				//}
 			}
 
 			// Static Properties
@@ -70,6 +121,7 @@
 			Item.build = function(data) {
 				return new Item(data);
 			};
+
 			Item.responseTransformer = function(data) {
 				if (angular.isArray(data)) {
 					return data
@@ -78,6 +130,7 @@
 				}
 				return Item.build(data);
 			};
+
 			return Item;
 		}
 	]);
