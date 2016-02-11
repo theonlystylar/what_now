@@ -9,6 +9,8 @@
 
 				initialize();
 
+				$scope.cancel = $scope.back;
+
 				$scope.save = function(item) {
 					itemManager
 						.save(item)
