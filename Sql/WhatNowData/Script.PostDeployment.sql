@@ -85,7 +85,8 @@ Post-Deployment Script Template
 --		(32, NULL, N'Other', NULL, 1),
 --		(33, NULL, N'Daily Log / Comments', NULL, 1),
 --		(34, NULL, N'Eating / Drinking', NULL, 1),
---		(35, NULL, N'Acupuncture', NULL, 1)
+--		(35, NULL, N'Acupuncture', NULL, 1),
+--		(36, 22, N'Baclofen', NULL, 1)
 --) 
 --AS Source (Id, ParentId, Name, FunnyName, SortOrder) 
 --ON Target.Id = Source.Id 
@@ -144,7 +145,10 @@ Post-Deployment Script Template
 --		(52, 35, 1, N'Type', NULL),
 --		(53, 35, 2, N'Comments', NULL),
 --		(54, 29, 3, N'Dosage', NULL),
---		(55, 29, 2, N'Comments', NULL)
+--		(55, 29, 2, N'Comments', NULL),
+--		(56, 36, 3, N'Dosage', NULL),
+--		(57, 36, 1, N'Prep', NULL),
+--		(58, 36, 2, N'Comments', NULL)
 --) 
 --AS Source (Id, ItemId, ControlTypeId, Name, FunnyName) 
 --ON Target.Id = Source.Id 
@@ -268,7 +272,10 @@ Post-Deployment Script Template
 --		(123, 52, N'Acupressure @ Home', NULL),
 --		(124, 54, N'1', NULL),
 --		(125, 54, N'2', NULL),
---		(126, 54, N'3', NULL)
+--		(126, 54, N'3', NULL),
+--		(127, 56, N'1/2 Tab', NULL),
+--		(128, 56, N'1 Tab', NULL),
+--		(129, 57, N'Crushed And Mixed With Applesauce', NULL)
 --) 
 --AS Source (Id, ControlId, Name, FunnyName) 
 --ON Target.Id = Source.Id 
