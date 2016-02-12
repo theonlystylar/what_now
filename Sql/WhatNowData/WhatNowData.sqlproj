@@ -68,6 +68,8 @@
     <Build Include="ControlLog.sql" />
     <Build Include="LogDetail.sql" />
     <Build Include="File.sql" />
+    <Build Include="ItemPreset.sql" />
+    <Build Include="LogPreset.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

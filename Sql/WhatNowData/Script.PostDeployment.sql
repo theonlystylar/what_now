@@ -26,6 +26,10 @@ Post-Deployment Script Template
 --GO
 --DELETE [Item];
 --GO
+DELETE [LogPreset]
+GO
+DELETE [ItemPreset]
+GO
 
 --
 -- Added CreateDate to table Log.  Need to update default value with Logged column datetime
@@ -297,5 +301,89 @@ Post-Deployment Script Template
 --WHEN NOT MATCHED BY TARGET THEN 
 --INSERT (Id, Handle, UserName, [Password], FirstLogin, LastLogin) 
 --VALUES (Id, Handle, UserName, [Password], FirstLogin, LastLogin);
+
+SET IDENTITY_INSERT [ItemPreset] ON;
+MERGE INTO [ItemPreset] AS Target 
+USING (VALUES 
+		(1, NULL, N'Vomiting', N'Puke', 1),
+		(2, NULL, N'Vomiting 2x', N'Puke 2x', 1),
+		(3, 2, N'1 Time', NULL, 1),
+		(4, 2, N'2 Time', NULL, 2),
+		(5, 2, N'3 Time', NULL, 3),
+		(6, 2, N'4 Time', NULL, 4)
+) 
+AS Source (Id, ParentId, Name, FunnyName, SortOrder) 
+ON Target.Id = Source.Id 
+WHEN MATCHED THEN
+UPDATE SET Target.ParentId = Source.ParentId,
+	Target.Name = Source.Name,
+	Target.FunnyName = Source.FunnyName,
+	Target.SortOrder = Source.SortOrder
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT (Id, ParentId, Name, FunnyName, SortOrder) 
+VALUES (Id, ParentId, Name, FunnyName, SortOrder);
+SET IDENTITY_INSERT [ItemPreset] OFF;
+
+SET IDENTITY_INSERT [LogPreset] ON;
+MERGE INTO [LogPreset] AS Target 
+USING (VALUES 
+		(1, 1, 1, 1, 3, NULL),
+		(2, 1, 1, 2, 8, NULL),
+
+		(3, 3, 1, 1, 3, NULL),
+		(4, 3, 1, 2, 8, NULL),
+		(5, 3, 1, 2, 10, NULL),
+
+		(6, 4, 1, 1, 3, NULL),
+		(7, 4, 1, 2, 8, NULL),
+		(8, 4, 1, 2, 10, NULL),
+		(9, 4, 1, 3, NULL, N'1 of 2'),
+		(10, 4, 2, 1, 3, NULL),
+		(11, 4, 2, 2, 8, NULL),
+		(12, 4, 2, 2, 10, NULL),
+		(13, 4, 2, 3, NULL, N'2 of 2'),
+
+		(14, 5, 1, 1, 3, NULL),
+		(15, 5, 1, 2, 8, NULL),
+		(16, 5, 1, 2, 10, NULL),
+		(17, 5, 1, 3, NULL, N'1 of 3'),
+		(18, 5, 2, 1, 3, NULL),
+		(19, 5, 2, 2, 8, NULL),
+		(20, 5, 2, 2, 10, NULL),
+		(21, 5, 2, 3, NULL, N'2 of 3'),
+		(22, 5, 3, 1, 3, NULL),
+		(23, 5, 3, 2, 8, NULL),
+		(24, 5, 3, 2, 10, NULL),
+		(25, 5, 3, 3, NULL, N'3 of 3'),
+
+		(26, 6, 1, 1, 3, NULL),
+		(27, 6, 1, 2, 8, NULL),
+		(28, 6, 1, 2, 10, NULL),
+		(29, 6, 1, 3, NULL, N'1 of 4'),
+		(30, 6, 2, 1, 3, NULL),
+		(31, 6, 2, 2, 8, NULL),
+		(32, 6, 2, 2, 10, NULL),
+		(33, 6, 2, 3, NULL, N'2 of 4'),
+		(34, 6, 3, 1, 3, NULL),
+		(35, 6, 3, 2, 8, NULL),
+		(36, 6, 3, 2, 10, NULL),
+		(37, 6, 3, 3, NULL, N'3 of 4'),
+		(38, 6, 4, 1, 3, NULL),
+		(39, 6, 4, 2, 8, NULL),
+		(40, 6, 4, 2, 10, NULL),
+		(41, 6, 4, 3, NULL, N'4 of 4')
+) 
+AS Source (Id, ItemPresetId, LogGroup, ControlId, ControlOptionId, Value) 
+ON Target.Id = Source.Id 
+WHEN MATCHED THEN
+UPDATE SET Target.ItemPresetId = Source.ItemPresetId,
+	Target.LogGroup = Source.LogGroup,
+	Target.ControlId = Source.ControlId,
+	Target.ControlOptionId = Source.ControlOptionId,
+	Target.Value = Source.Value
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT (Id, ItemPresetId, LogGroup, ControlId, ControlOptionId, Value) 
+VALUES (Id, ItemPresetId, LogGroup, ControlId, ControlOptionId, Value);
+SET IDENTITY_INSERT [LogPreset] OFF;
 
 --COMMIT TRANSACTION
