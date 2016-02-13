@@ -16,9 +16,9 @@ namespace WhatNow.Ui.Web.Api.Controllers
 			_dbContext = dbContext;
 		}
 
-		// GET api/itempresets/nodes
-		[HttpGet("nodes")]
-		public IEnumerable<ItemPresetNodeModel> GetNodes()
+		// GET api/itempresets
+		[HttpGet]
+		public IEnumerable<ItemPresetModel> GetNodes()
 		{
 			var itemPresets = _dbContext
 				.ItemPresets

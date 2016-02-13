@@ -11,7 +11,7 @@
 			<div class="c-item clearfix" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
 				<div class="img">
 					<img ng-show="myForm.file.$valid && item.imageFile()" ngf-thumbnail="item.imageFile()" class="c-thumb" />
-					<img ng-show="item.imageFile() == null" ng-src="{{'api/images/' + item.getImageId()}}" />
+					<img ng-show="item.imageFile() == null" ng-src="{{'api/images/' + item.imageId()}}" />
 				</div>
 				<span>{{item.displayName()}}</span>
 			</div>

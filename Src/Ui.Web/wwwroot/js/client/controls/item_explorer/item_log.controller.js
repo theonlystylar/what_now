@@ -15,7 +15,7 @@
 				}
 
 				$scope.save = function() {
-					var log = logManager.create($scope.item.getId());
+					var log = logManager.create($scope.item.id());
 					logCheckboxSelections(log);
 					logRadioSelections(log);
 					logTextboxEntries(log);
@@ -30,7 +30,7 @@
 						.then(
 							// success
 							function() {
-								toastr["success"]("Logged " + $scope.item.getDisplayName() + " form");
+								toastr["success"]("Logged " + $scope.item.displayName() + " form");
 								back();
 							},
 							// error
@@ -104,7 +104,7 @@
 				}
 
 				function loadControls() {
-					var controlModels = controlManager.getByItemId($scope.item.getId());
+					var controlModels = controlManager.getByItemId($scope.item.id());
 					$scope.controls = [];
 					_.each(controlModels, function(control) {
 						$scope.controls.push(control.toJson());

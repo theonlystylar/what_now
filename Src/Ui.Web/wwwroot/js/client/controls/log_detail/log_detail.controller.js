@@ -2,14 +2,14 @@
 	.controller(
 		"logDetailController", [
 			"$scope",
-			"logDetailDataService",
-			function($scope, logDetailDataService) {
+			"logDetailData",
+			function($scope, logDetailData) {
 
 				initialize();
 
 				$scope.deleteLog = function (logDetail) {
 					if (confirm("Delete " + logDetail.item + " : " + logDetail.value)) {
-						logDetailDataService.deleteControlLog(logDetail.logId, logDetail.controlLogId).then(function() {
+						logDetailData.deleteControlLog(logDetail.logId, logDetail.controlLogId).then(function() {
 							setLogDetails();
 						});
 					}
@@ -20,7 +20,7 @@
 				}
 
 				function setLogDetails() {
-					logDetailDataService.getAll().then(function(logDetails) {
+					logDetailData.getAll().then(function(logDetails) {
 						_.each(logDetails, function(logDetail) {
 							logDetail.loggedLocalTime = moment.utc(logDetail.logged).toDate();
 						});

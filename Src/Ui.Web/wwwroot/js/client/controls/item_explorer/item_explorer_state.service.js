@@ -11,11 +11,11 @@
 				_navigateBack = "NAVIGATE_BACK_REQUESTED";
 
 			function getSelectedItemId() {
-				return _selectedItem == null ? null : _selectedItem.getId();
+				return _selectedItem == null ? null : _selectedItem.id();
 			}
 
 			function getSelectedItemParentId() {
-				return _selectedItem == null ? null : _selectedItem.getParentId();
+				return _selectedItem == null ? null : _selectedItem.parentId();
 			}
 
 			function getSelectedItem() {

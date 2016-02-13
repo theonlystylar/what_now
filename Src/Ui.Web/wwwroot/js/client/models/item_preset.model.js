@@ -1,8 +1,8 @@
 ﻿angular.module("clientApp.modelsModule")
-	.factory("Item", [
-		function() {
+	.factory("ItemPreset", [
+		function () {
 
-			function Item(data) {
+			function ItemPreset(data) {
 				var that = this,
 					_id,
 					_parentId,
@@ -16,25 +16,25 @@
 
 				that.id = function() {
 					return _id;
-				};
+				}
 
-				that.imageId = function() {
+				that.imageId = function () {
 					return _imageId;
-				};
+				}
 
-				that.imageFile = function(value) {
+				that.imageFile = function (value) {
 					if (arguments.length && _imageFile !== value) {
 						_imageFile = value;
 						_isDirty = true;
 					}
 					return _imageFile;
-				};
+				}
 
-				that.displayName = function() {
+				that.displayName = function () {
 					return _funnyName || _name;
 				};
 
-				that.funnyName = function(value) {
+				that.funnyName = function (value) {
 					if (arguments.length && _funnyName !== value) {
 						_funnyName = value;
 						_isDirty = true;
@@ -42,7 +42,7 @@
 					return _funnyName;
 				};
 
-				that.name = function(value) {
+				that.name = function (value) {
 					if (arguments.length && _name !== value) {
 						_name = value;
 						_isDirty = true;
@@ -50,7 +50,7 @@
 					return _name;
 				};
 
-				that.parentId = function(value) {
+				that.parentId = function (value) {
 					if (arguments.length && _parentId !== value) {
 						_parentId = value;
 						_isDirty = true;
@@ -58,20 +58,21 @@
 					return _parentId;
 				};
 
-				that._fromDto = function(dto) {
+				that._fromDto = function (dto) {
 					return fromDto(dto);
-				};
+				}
 
-				that.isDirty = function() {
+				that.isDirty = function () {
 					return _isDirty;
 				};
 
-				that.toDto = function() {
+				that.toDto = function () {
 					var dto = {
 						id: _id,
 						name: _name,
 						parentId: _parentId
-					};
+					}
+
 					if (_funnyName) {
 						dto.funnyName = _funnyName;
 					}
@@ -81,7 +82,7 @@
 					}
 
 					return dto;
-				};
+				}
 
 				function fromDto(dto) {
 					_id = dto.id;
@@ -97,19 +98,19 @@
 
 			// Static Properties
 
-			Item.build = function(data) {
-				return new Item(data);
+			ItemPreset.build = function (data) {
+				return new ItemPreset(data);
 			};
 
-			Item.responseTransformer = function(data) {
+			ItemPreset.responseTransformer = function (data) {
 				if (angular.isArray(data)) {
 					return data
-						.map(Item.build)
+						.map(ItemPreset.build)
 						.filter(Boolean);
 				}
-				return Item.build(data);
+				return ItemPreset.build(data);
 			};
 
-			return Item;
+			return ItemPreset;
 		}
 	]);

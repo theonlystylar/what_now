@@ -1,8 +1,8 @@
 ﻿angular.module("clientApp.modelsModule")
 	.factory("controlManager", [
 		"$timeout",
-		"itemControlDataService",
-		function ($timeout, itemControlDataService) {
+		"itemControlData",
+		function ($timeout, itemControlData) {
 
 			var _controls;
 
@@ -13,7 +13,7 @@
 			}
 
 			function load() {
-				return itemControlDataService
+				return itemControlData
 					.get()
 					.then(function(controls) {
 						_controls = controls;

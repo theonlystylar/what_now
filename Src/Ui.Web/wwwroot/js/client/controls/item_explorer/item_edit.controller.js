@@ -17,7 +17,7 @@
 						.then(
 							// success
 							function () {
-								toastr["success"]("Item " + $scope.item.getDisplayName() + " saved");
+								toastr["success"]("Item " + $scope.item.displayName() + " saved");
 								back();
 							},
 							// error

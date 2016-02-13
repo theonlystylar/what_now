@@ -14,7 +14,7 @@
 
 			function getById(id) {
 				var found = _.filter(_items, function(item) {
-					return item.getId() === id;
+					return item.id() === id;
 				});
 				if (found && found.length > 0) {
 					return found[0];
@@ -24,7 +24,7 @@
 
 			function getChildren(id) {
 				return _.filter(_items, function(item) {
-					return item.getParentId() === id;
+					return item.parentId() === id;
 				});
 			}
 

@@ -1,5 +1,5 @@
 ﻿angular.module("dataModule")
-	.factory("logDetailDataService", [
+	.factory("logDetailData", [
 		"$http",
 		function($http) {
 

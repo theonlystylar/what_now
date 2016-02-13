@@ -4,7 +4,7 @@ using WhatNow.Data.Ef;
 
 namespace WhatNow.Ui.Web.Api.Models
 {
-	public class ItemPresetNodeModel
+	public class ItemPresetModel
 	{
 		public int Id { get; set; }
 		public int? ParentId { get; set; }
@@ -16,9 +16,9 @@ namespace WhatNow.Ui.Web.Api.Models
 
 	public static class ItemPresetNodeModelExtensions
 	{
-		public static ItemPresetNodeModel ToNodeModel(this ItemPreset entity)
+		public static ItemPresetModel ToNodeModel(this ItemPreset entity)
 		{
-			return new ItemPresetNodeModel
+			return new ItemPresetModel
 			{
 				Id = entity.Id,
 				ParentId = entity.ParentId,
@@ -29,7 +29,7 @@ namespace WhatNow.Ui.Web.Api.Models
 			};
 		}
 
-		public static IEnumerable<ItemPresetNodeModel> ToNodeModels(this IEnumerable<ItemPreset> entities)
+		public static IEnumerable<ItemPresetModel> ToNodeModels(this IEnumerable<ItemPreset> entities)
 		{
 			return entities.Select(x => x.ToNodeModel());
 		}

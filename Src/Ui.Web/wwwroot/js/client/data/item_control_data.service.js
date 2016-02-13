@@ -1,5 +1,5 @@
 ﻿angular.module("dataModule")
-	.factory("itemControlDataService", [
+	.factory("itemControlData", [
 		"$http",
 		"$timeout",
 		"$q",

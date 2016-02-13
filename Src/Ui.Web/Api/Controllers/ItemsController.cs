@@ -1,15 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Hosting;
-using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 using Microsoft.Net.Http.Headers;
 using WhatNow.Data.Ef;
 using WhatNow.Ui.Web.Api.Models;
-using File = WhatNow.Data.Ef.File;
 
 namespace WhatNow.Ui.Web.Api.Controllers
 {
@@ -18,17 +14,14 @@ namespace WhatNow.Ui.Web.Api.Controllers
 	{
 		private readonly WhatNowDataEntities _dbContext;
 
-		public ItemsController(WhatNowDataEntities dbContext, IHostingEnvironment hostingEnvironment)
+		public ItemsController(WhatNowDataEntities dbContext)
 		{
 			_dbContext = dbContext;
-			HostingEnvironment = hostingEnvironment;
 		}
-
-		public IHostingEnvironment HostingEnvironment { get; set; }
 
 		// GET api/items
 		[HttpGet]
-		public IEnumerable<ItemNodeModel> Get()
+		public IEnumerable<ItemModel> Get()
 		{
 			var items = _dbContext
 				.Items
