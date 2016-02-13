@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using WhatNow.Data.Ef;
 
 namespace WhatNow.Ui.Web.Api.Models
 {
-	public class ItemNodeModel
+	public class ItemPresetNodeModel
 	{
 		public int Id { get; set; }
 		public int? ParentId { get; set; }
@@ -14,11 +14,11 @@ namespace WhatNow.Ui.Web.Api.Models
 		public int? ImageId { get; set; }
 	}
 
-	public static class ItemNodeModelExtensions
+	public static class ItemPresetNodeModelExtensions
 	{
-		public static ItemNodeModel ToNodeModel(this Item entity)
+		public static ItemPresetNodeModel ToNodeModel(this ItemPreset entity)
 		{
-			return new ItemNodeModel
+			return new ItemPresetNodeModel
 			{
 				Id = entity.Id,
 				ParentId = entity.ParentId,
@@ -29,7 +29,7 @@ namespace WhatNow.Ui.Web.Api.Models
 			};
 		}
 
-		public static IEnumerable<ItemNodeModel> ToNodeModels(this IEnumerable<Item> entities)
+		public static IEnumerable<ItemPresetNodeModel> ToNodeModels(this IEnumerable<ItemPreset> entities)
 		{
 			return entities.Select(x => x.ToNodeModel());
 		}

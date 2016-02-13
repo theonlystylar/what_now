@@ -18,24 +18,24 @@ namespace WhatNow.Ui.Web.Api.Models
 
 	public static class ItemModelExtensions
 	{
-		public static ItemModel ToModel(this Item itemEntity)
+		public static ItemModel ToModel(this Item entity)
 		{
-			var model = itemEntity.ToModelBase();
-			model.Parent = itemEntity.Parent != null ? itemEntity.Parent.ToModelBase() : null;
-			model.Children = itemEntity.Children.Select(x => x.ToModelBase()).ToList();
+			var model = entity.ToModelBase();
+			model.Parent = entity.Parent?.ToModelBase();
+			model.Children = entity.Children.Select(x => x.ToModelBase()).ToList();
 			return model;
 		}
 
-		private static ItemModel ToModelBase(this Item itemEntity)
+		private static ItemModel ToModelBase(this Item entity)
 		{
 			return new ItemModel()
 			{
-				Id = itemEntity.Id,
-				ParentId = itemEntity.ParentId,
-				Name = itemEntity.Name,
-				FunnyName = itemEntity.FunnyName,
-				SortOrder = itemEntity.SortOrder,
-				HasChildren = itemEntity.Children.Any()
+				Id = entity.Id,
+				ParentId = entity.ParentId,
+				Name = entity.Name,
+				FunnyName = entity.FunnyName,
+				SortOrder = entity.SortOrder,
+				HasChildren = entity.Children.Any()
 			};
 		}
 	}

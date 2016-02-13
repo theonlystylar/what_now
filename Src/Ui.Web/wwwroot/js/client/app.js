@@ -19,16 +19,20 @@ clientApp.config([
 	"$routeProvider",
 	function($routeProvider) {
 		$routeProvider.
-			when("/itemexplorer", {
-				templateUrl: "js/client/pages/item_explorer_page.template.html",
-				controller: "itemExplorerPageController"
+			when("/logstuff", {
+				templateUrl: "js/client/pages/log_stuff_page.template.html",
+				controller: "logStuffPageController"
+			}).
+			when("/quickpick", {
+				templateUrl: "js/client/pages/quick_pick_page.template.html",
+				controller: "quickPickPageController"
 			}).
 			when("/seestuff", {
 				templateUrl: "js/client/pages/see_stuff_page.template.html",
 				controller: "seeStuffPageController"
 			}).
 			otherwise({
-				redirectTo: "/itemexplorer"
+				redirectTo: "/logstuff"
 			});
 	}
 ]);

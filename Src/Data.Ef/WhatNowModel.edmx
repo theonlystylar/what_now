@@ -62,6 +62,17 @@
           <Property Name="SortOrder" Type="int" />
           <Property Name="ImageId" Type="int" />
         </EntityType>
+        <EntityType Name="ItemPreset">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FunnyName" Type="varchar" MaxLength="50" />
+          <Property Name="SortOrder" Type="int" />
+          <Property Name="ImageId" Type="int" />
+        </EntityType>
         <EntityType Name="Log">
           <Key>
             <PropertyRef Name="Id" />
@@ -71,6 +82,17 @@
           <Property Name="ItemId" Type="int" Nullable="false" />
           <Property Name="Logged" Type="datetime" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogPreset">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemPresetId" Type="int" Nullable="false" />
+          <Property Name="LogGroup" Type="int" Nullable="false" />
+          <Property Name="ControlId" Type="int" Nullable="false" />
+          <Property Name="ControlOptionId" Type="int" />
+          <Property Name="Value" Type="varchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -197,6 +219,30 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ItemPreset_File_ImageId">
+          <End Role="File" Type="Self.File" Multiplicity="0..1" />
+          <End Role="ItemPreset" Type="Self.ItemPreset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemPreset">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemPreset_ItemPreset_ParentId">
+          <End Role="ItemPreset" Type="Self.ItemPreset" Multiplicity="0..1" />
+          <End Role="ItemPreset1" Type="Self.ItemPreset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemPreset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemPreset1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Log_Item_ItemId">
           <End Role="Item" Type="Self.Item" Multiplicity="1" />
           <End Role="Log" Type="Self.Log" Multiplicity="*" />
@@ -221,6 +267,42 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_LogPreset_Control_ControlId">
+          <End Role="Control" Type="Self.Control" Multiplicity="1" />
+          <End Role="LogPreset" Type="Self.LogPreset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Control">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogPreset">
+              <PropertyRef Name="ControlId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogPreset_ControlOption_ControlOptionId">
+          <End Role="ControlOption" Type="Self.ControlOption" Multiplicity="0..1" />
+          <End Role="LogPreset" Type="Self.LogPreset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ControlOption">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogPreset">
+              <PropertyRef Name="ControlOptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogPreset_ItemPreset_ItemPresetId">
+          <End Role="ItemPreset" Type="Self.ItemPreset" Multiplicity="1" />
+          <End Role="LogPreset" Type="Self.LogPreset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemPreset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogPreset">
+              <PropertyRef Name="ItemPresetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="WhatNowDataModelStoreContainer">
           <EntitySet Name="Control" EntityType="Self.Control" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ControlLog" EntityType="Self.ControlLog" Schema="dbo" store:Type="Tables" />
@@ -228,7 +310,9 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <EntitySet Name="ControlType" EntityType="Self.ControlType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="File" EntityType="Self.File" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemPreset" EntityType="Self.ItemPreset" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogPreset" EntityType="Self.LogPreset" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogDetail" EntityType="Self.LogDetail" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -273,6 +357,14 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
             <End Role="Item" EntitySet="Item" />
             <End Role="Item1" EntitySet="Item" />
           </AssociationSet>
+          <AssociationSet Name="FK_ItemPreset_File_ImageId" Association="Self.FK_ItemPreset_File_ImageId">
+            <End Role="File" EntitySet="File" />
+            <End Role="ItemPreset" EntitySet="ItemPreset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemPreset_ItemPreset_ParentId" Association="Self.FK_ItemPreset_ItemPreset_ParentId">
+            <End Role="ItemPreset" EntitySet="ItemPreset" />
+            <End Role="ItemPreset1" EntitySet="ItemPreset" />
+          </AssociationSet>
           <AssociationSet Name="FK_Log_Item_ItemId" Association="Self.FK_Log_Item_ItemId">
             <End Role="Item" EntitySet="Item" />
             <End Role="Log" EntitySet="Log" />
@@ -280,6 +372,18 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <AssociationSet Name="FK_Log_User_UserId" Association="Self.FK_Log_User_UserId">
             <End Role="User" EntitySet="User" />
             <End Role="Log" EntitySet="Log" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogPreset_Control_ControlId" Association="Self.FK_LogPreset_Control_ControlId">
+            <End Role="Control" EntitySet="Control" />
+            <End Role="LogPreset" EntitySet="LogPreset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogPreset_ControlOption_ControlOptionId" Association="Self.FK_LogPreset_ControlOption_ControlOptionId">
+            <End Role="ControlOption" EntitySet="ControlOption" />
+            <End Role="LogPreset" EntitySet="LogPreset" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogPreset_ItemPreset_ItemPresetId" Association="Self.FK_LogPreset_ItemPreset_ItemPresetId">
+            <End Role="ItemPreset" EntitySet="ItemPreset" />
+            <End Role="LogPreset" EntitySet="LogPreset" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -364,6 +468,28 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
             <End Role="File" EntitySet="Files" />
             <End Role="Item" EntitySet="Items" />
           </AssociationSet>
+          <EntitySet Name="ItemPresets" EntityType="WhatNowDataModel.ItemPreset" />
+          <EntitySet Name="LogPresets" EntityType="WhatNowDataModel.LogPreset" />
+          <AssociationSet Name="FK_LogPreset_Control_ControlId" Association="WhatNowDataModel.FK_LogPreset_Control_ControlId">
+            <End Role="Control" EntitySet="Controls" />
+            <End Role="LogPreset" EntitySet="LogPresets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogPreset_ControlOption_ControlOptionId" Association="WhatNowDataModel.FK_LogPreset_ControlOption_ControlOptionId">
+            <End Role="ControlOption" EntitySet="ControlOptions" />
+            <End Role="LogPreset" EntitySet="LogPresets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemPreset_File_ImageId" Association="WhatNowDataModel.FK_ItemPreset_File_ImageId">
+            <End Role="File" EntitySet="Files" />
+            <End Role="ItemPreset" EntitySet="ItemPresets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemPreset_ItemPreset_ParentId" Association="WhatNowDataModel.FK_ItemPreset_ItemPreset_ParentId">
+            <End Role="ItemPreset" EntitySet="ItemPresets" />
+            <End Role="ItemPreset1" EntitySet="ItemPresets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LogPreset_ItemPreset_ItemPresetId" Association="WhatNowDataModel.FK_LogPreset_ItemPreset_ItemPresetId">
+            <End Role="ItemPreset" EntitySet="ItemPresets" />
+            <End Role="LogPreset" EntitySet="LogPresets" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_Item_Item_ParentId">
           <End Type="WhatNowDataModel.Item" Role="Item" Multiplicity="0..1" />
@@ -390,6 +516,7 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <NavigationProperty Name="Item" Relationship="WhatNowDataModel.FK_Control_Item_ItemId" FromRole="Control" ToRole="Item" />
           <NavigationProperty Name="ControlOptions" Relationship="WhatNowDataModel.FK_ControlOption_Control_ControlId" FromRole="Control" ToRole="ControlOption" />
           <NavigationProperty Name="ControlLogs" Relationship="WhatNowDataModel.FK_ControlLog_Control_ControlId" FromRole="Control" ToRole="ControlLog" />
+          <NavigationProperty Name="LogPresets" Relationship="WhatNowDataModel.FK_LogPreset_Control_ControlId" FromRole="Control" ToRole="LogPreset" />
         </EntityType>
         <EntityType Name="ControlOption">
           <Key>
@@ -401,6 +528,7 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <Property Name="FunnyName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Control" Relationship="WhatNowDataModel.FK_ControlOption_Control_ControlId" FromRole="ControlOption" ToRole="Control" />
           <NavigationProperty Name="ControlLogs" Relationship="WhatNowDataModel.FK_ControlLog_ControlOption_ControlOptionId" FromRole="ControlOption" ToRole="ControlLog" />
+          <NavigationProperty Name="LogPresets" Relationship="WhatNowDataModel.FK_LogPreset_ControlOption_ControlOptionId" FromRole="ControlOption" ToRole="LogPreset" />
         </EntityType>
         <EntityType Name="ControlType">
           <Key>
@@ -556,6 +684,7 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
           <Property Name="Content" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="FileType" Type="WhatNowDataModel.FileType" Nullable="false" />
           <NavigationProperty Name="Items" Relationship="WhatNowDataModel.FK_Item_File_ImageId" FromRole="File" ToRole="Item" />
+          <NavigationProperty Name="ItemPresets" Relationship="WhatNowDataModel.FK_ItemPreset_File_ImageId" FromRole="File" ToRole="ItemPreset" />
         </EntityType>
         <Association Name="FK_Item_File_ImageId">
           <End Type="WhatNowDataModel.File" Role="File" Multiplicity="0..1" />
@@ -572,6 +701,95 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
         <EnumType Name="FileType">
           <Member Name="Thumbnail" Value="1" />
         </EnumType>
+        <EntityType Name="ItemPreset">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FunnyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" />
+          <Property Name="ImageId" Type="Int32" />
+          <NavigationProperty Name="File" Relationship="WhatNowDataModel.FK_ItemPreset_File_ImageId" FromRole="ItemPreset" ToRole="File" />
+          <NavigationProperty Name="ItemPreset1" Relationship="WhatNowDataModel.FK_ItemPreset_ItemPreset_ParentId" FromRole="ItemPreset" ToRole="ItemPreset1" />
+          <NavigationProperty Name="ItemPreset2" Relationship="WhatNowDataModel.FK_ItemPreset_ItemPreset_ParentId" FromRole="ItemPreset1" ToRole="ItemPreset" />
+          <NavigationProperty Name="LogPresets" Relationship="WhatNowDataModel.FK_LogPreset_ItemPreset_ItemPresetId" FromRole="ItemPreset" ToRole="LogPreset" />
+        </EntityType>
+        <EntityType Name="LogPreset">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemPresetId" Type="Int32" Nullable="false" />
+          <Property Name="LogGroup" Type="Int32" Nullable="false" />
+          <Property Name="ControlId" Type="Int32" Nullable="false" />
+          <Property Name="ControlOptionId" Type="Int32" />
+          <Property Name="Value" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Control" Relationship="WhatNowDataModel.FK_LogPreset_Control_ControlId" FromRole="LogPreset" ToRole="Control" />
+          <NavigationProperty Name="ControlOption" Relationship="WhatNowDataModel.FK_LogPreset_ControlOption_ControlOptionId" FromRole="LogPreset" ToRole="ControlOption" />
+          <NavigationProperty Name="ItemPreset" Relationship="WhatNowDataModel.FK_LogPreset_ItemPreset_ItemPresetId" FromRole="LogPreset" ToRole="ItemPreset" />
+        </EntityType>
+        <Association Name="FK_LogPreset_Control_ControlId">
+          <End Type="WhatNowDataModel.Control" Role="Control" Multiplicity="1" />
+          <End Type="WhatNowDataModel.LogPreset" Role="LogPreset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Control">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogPreset">
+              <PropertyRef Name="ControlId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogPreset_ControlOption_ControlOptionId">
+          <End Type="WhatNowDataModel.ControlOption" Role="ControlOption" Multiplicity="0..1" />
+          <End Type="WhatNowDataModel.LogPreset" Role="LogPreset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ControlOption">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogPreset">
+              <PropertyRef Name="ControlOptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemPreset_File_ImageId">
+          <End Type="WhatNowDataModel.File" Role="File" Multiplicity="0..1" />
+          <End Type="WhatNowDataModel.ItemPreset" Role="ItemPreset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="File">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemPreset">
+              <PropertyRef Name="ImageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemPreset_ItemPreset_ParentId">
+          <End Type="WhatNowDataModel.ItemPreset" Role="ItemPreset" Multiplicity="0..1" />
+          <End Type="WhatNowDataModel.ItemPreset" Role="ItemPreset1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemPreset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ItemPreset1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LogPreset_ItemPreset_ItemPresetId">
+          <End Type="WhatNowDataModel.ItemPreset" Role="ItemPreset" Multiplicity="1" />
+          <End Type="WhatNowDataModel.LogPreset" Role="LogPreset" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemPreset">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LogPreset">
+              <PropertyRef Name="ItemPresetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -673,6 +891,30 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
                 <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="ContentType" ColumnName="ContentType" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemPresets">
+            <EntityTypeMapping TypeName="WhatNowDataModel.ItemPreset">
+              <MappingFragment StoreEntitySet="ItemPreset">
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="FunnyName" ColumnName="FunnyName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogPresets">
+            <EntityTypeMapping TypeName="WhatNowDataModel.LogPreset">
+              <MappingFragment StoreEntitySet="LogPreset">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ControlOptionId" ColumnName="ControlOptionId" />
+                <ScalarProperty Name="ControlId" ColumnName="ControlId" />
+                <ScalarProperty Name="LogGroup" ColumnName="LogGroup" />
+                <ScalarProperty Name="ItemPresetId" ColumnName="ItemPresetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

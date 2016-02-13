@@ -73,10 +73,16 @@
     <Compile Include="Item.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ItemPreset.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Log.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LogDetail.cs">
+      <DependentUpon>WhatNowModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LogPreset.cs">
       <DependentUpon>WhatNowModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

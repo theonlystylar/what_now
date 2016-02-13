@@ -18,6 +18,7 @@ namespace WhatNow.Data.Ef
         public ControlOption()
         {
             this.ControlLogs = new HashSet<ControlLog>();
+            this.LogPresets = new HashSet<LogPreset>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,7 @@ namespace WhatNow.Data.Ef
         public virtual Control Control { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ControlLog> ControlLogs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LogPreset> LogPresets { get; set; }
     }
 }

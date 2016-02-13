@@ -12,24 +12,27 @@ namespace WhatNow.Data.Ef
     using System;
     using System.Collections.Generic;
     
-    public partial class File
+    public partial class ItemPreset
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public File()
+        public ItemPreset()
         {
-            this.Items = new HashSet<Item>();
-            this.ItemPresets = new HashSet<ItemPreset>();
+            this.ItemPreset1 = new HashSet<ItemPreset>();
+            this.LogPresets = new HashSet<LogPreset>();
         }
     
         public int Id { get; set; }
+        public Nullable<int> ParentId { get; set; }
         public string Name { get; set; }
-        public string ContentType { get; set; }
-        public byte[] Content { get; set; }
-        public FileType FileType { get; set; }
+        public string FunnyName { get; set; }
+        public Nullable<int> SortOrder { get; set; }
+        public Nullable<int> ImageId { get; set; }
     
+        public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<ItemPreset> ItemPreset1 { get; set; }
+        public virtual ItemPreset ItemPreset2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItemPreset> ItemPresets { get; set; }
+        public virtual ICollection<LogPreset> LogPresets { get; set; }
     }
 }

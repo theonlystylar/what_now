@@ -1,6 +1,6 @@
 ﻿angular.module("clientApp.pagesModule")
 	.controller(
-		"itemExplorerPageController", [
+		"logStuffPageController", [
 			function () {
 			}
 		]);
