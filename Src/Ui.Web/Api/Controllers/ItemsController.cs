@@ -26,39 +26,9 @@ namespace WhatNow.Ui.Web.Api.Controllers
 
 		public IHostingEnvironment HostingEnvironment { get; set; }
 
-		// GET: api/items/children/5
-		[HttpGet("children/{parentId?}")]
-		public IEnumerable<ItemModel> GetChildren(int? parentId = null)
-		{
-			return _dbContext
-				.Items
-				.Where(x => x.ParentId == parentId)
-				.Include(x => x.Parent)
-				.Include(x => x.Children)
-				.OrderBy(x => x.Name)
-				.ThenBy(x => x.FunnyName)
-				.ToList()
-				.Select(x => x.ToModel());
-		}
-
-		// GET api/items/5
-		[HttpGet("{id}")]
-		public ItemModel Get(int id)
-		{
-			var item = _dbContext
-				.Items
-				.Include(x => x.Parent)
-				.Include(x => x.Children)
-				.OrderBy(x => x.Name)
-				.ThenBy(x => x.FunnyName)
-				.FirstOrDefault(x => x.Id == id);
-
-			return item?.ToModel();
-		}
-
-		// GET api/items/nodes
-		[HttpGet("nodes")]
-		public IEnumerable<ItemNodeModel> GetNodes()
+		// GET api/items
+		[HttpGet]
+		public IEnumerable<ItemNodeModel> Get()
 		{
 			var items = _dbContext
 				.Items
@@ -72,8 +42,6 @@ namespace WhatNow.Ui.Web.Api.Controllers
 		public async Task<IActionResult> PostWithImage(ItemEditRequest request)
 		{
 			//http://damienbod.com/2015/12/05/asp-net-5-mvc-6-file-upload-with-ms-sql-server-filetable/
-
-			//TODO: need to send parent ID as well.
 
 			Item item;
 
@@ -161,24 +129,6 @@ namespace WhatNow.Ui.Web.Api.Controllers
 
 			await _dbContext.SaveChangesAsync();
 			return Ok(item.ToNodeModel());
-		}
-
-		[HttpGet("icon/{id}")]
-		public async Task<IActionResult> GetImage(int id)
-		{
-			var file = await _dbContext
-				.Files
-				.FirstOrDefaultAsync(x => x.Id == id);
-
-			if (file != null)
-			{
-				return File(file.Content, file.ContentType);
-			}
-
-			// return default image
-			var path = Path.Combine(HostingEnvironment.WebRootPath, @"images\default_icon.png");
-			var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
-			return File(stream, "image/png");
 		}
 	}
 }

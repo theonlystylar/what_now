@@ -3,8 +3,8 @@
 		"$q",
 		"$timeout",
 		"Upload",
-		"itemDataService",
-		function($q, $timeout, Upload, itemDataService) {
+		"itemData",
+		function($q, $timeout, Upload, itemData) {
 
 			var _items;
 
@@ -29,7 +29,7 @@
 			}
 
 			function load() {
-				return itemDataService
+				return itemData
 					.get()
 					.then(function(items) {
 						_items = items;
@@ -55,7 +55,7 @@
 						});
 				}
 
-				return itemDataService.save(item.toDto());
+				return itemData.save(item.toDto());
 			}
 
 			return {

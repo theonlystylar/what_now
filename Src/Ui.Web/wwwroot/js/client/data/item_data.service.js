@@ -1,5 +1,5 @@
 ﻿angular.module("dataModule")
-	.factory("itemDataService", [
+	.factory("itemData", [
 		"$http",
 		"$timeout",
 		"$q",
@@ -9,7 +9,7 @@
 			return {
 				get: function() {
 					return $http
-						.get("api/items/nodes")
+						.get("api/items")
 						.then(function(response) {
 							var defer = $q.defer();
 							$timeout(function() {
