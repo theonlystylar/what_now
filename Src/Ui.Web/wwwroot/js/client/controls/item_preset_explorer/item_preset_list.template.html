@@ -1,0 +1,23 @@
+﻿<div class="row" ng-cloak>
+	<div class="col-xs-6 col-sm-4 col-lg-3 slide-top" ng-repeat="itemPreset in itemPresets">
+		<!-- item preset button -->
+		<div class="c-item-preset clearfix" ng-if="!editing" ng-click="selectItemPreset(itemPreset)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+			<div class="img">
+				<img ng-src="{{'api/images/' + itemPreset.imageId()}}" />
+			</div>
+			<span>{{itemPreset.displayName()}}</span>
+		</div>
+		<!-- end item preset button -->
+		<!-- edit mode item preset button -->
+		<div class="c-item-preset clearfix" ng-if="editing" ng-click="editItemPreset(itemPreset)" ng-class="{'hover':hovering}" ng-mouseenter="hovering=true" ng-mouseleave="hovering=false">
+			<div class="img">
+				<img ng-src="{{'api/images/' + itemPreset.imageId()}}" />
+			</div>
+			<span>{{itemPreset.displayName()}}</span>
+			<div class="c-menu">
+				<i class="fa fa-times" ng-click="onItemPresetDelete(itemPreset)"></i>
+			</div>
+		</div>
+		<!-- end edit mode item preset button -->
+	</div>
+</div>

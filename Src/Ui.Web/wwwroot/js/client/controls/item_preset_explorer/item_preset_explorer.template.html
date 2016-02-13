@@ -1,5 +1,5 @@
 ﻿<div class="col-lg-12 text-center c-nav-text-ribbon" ng-cloak ng-show="itemPreset != null">
-	{{itemPreset.getDisplayName()}}
+	{{itemPreset.displayName()}}
 </div>
 <div class="col-lg-12" ng-class="{'c-nav-spacer-lg': itemPreset == null, 'c-nav-spacer': itemPreset != null}"></div>
 <div class="container-fluid ng-cloak">
@@ -11,7 +11,7 @@
 			</button>
 		</nav>
 	</div>
-	<!--<div ng-include="'js/client/controls/item_explorer/item_list.template.html'" ng-controller="itemListController" ng-if="isExploring"></div>
-	<div ng-include="'js/client/controls/item_explorer/item_log.template.html'" ng-controller="itemLogController" ng-if="isLogging"></div>
+	<div ng-include="'js/client/controls/item_preset_explorer/item_preset_list.template.html'" ng-controller="itemPresetListController" ng-if="isExploring"></div>
+	<!--<div ng-include="'js/client/controls/item_explorer/item_log.template.html'" ng-controller="itemLogController" ng-if="isLogging"></div>
 	<div ng-include="'js/client/controls/item_explorer/item_edit.template.html'" ng-controller="itemEditController" ng-if="isEditing"></div>-->
 </div>

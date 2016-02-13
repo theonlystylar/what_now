@@ -13,7 +13,8 @@
 					.load()
 					.then(function() {
 						return controlManager.load();
-					}).then(function() {
+					})
+					.then(function () {
 						initialize();
 					});
 
