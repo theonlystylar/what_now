@@ -7,13 +7,10 @@
 			//"controlManager",
 			function ($scope, itemPresetExplorerState, itemPresetManager /*, controlManager */) {
 
-				// preload items before intializing controller
+				// preload item presets before intializing controller
 				// child controls assume the item manager is loaded
 				itemPresetManager
 					.load()
-					//.then(function () {
-					//	return controlManager.load();
-					//})
 					.then(function () {
 						initialize();
 					});

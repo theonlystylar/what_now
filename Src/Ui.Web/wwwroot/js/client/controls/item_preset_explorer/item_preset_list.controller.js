@@ -17,21 +17,29 @@
 				}
 
 				$scope.selectItemPreset = function (itemPreset) {
-					itemPresetExplorerState.setSelectedItemPreset(itemPreset);
+					// if children then drill down
+					if (itemPresetManager.getChildren(itemPreset.id()).length > 0) {
+						itemPresetExplorerState.setSelectedItemPreset(itemPreset);
+						return;
+					}
+					// otherwise log
+					logPresetLogData
+						.save(itemPreset.id())
+						.$promise
+						.then(
+							// success
+							function () {
+								toastr["success"]("Logged " + itemPreset.displayName());
+							},
+							// error
+							function (error) {
+								toastr["error"](error);
+							});
 				}
 
 				//#region event handling
 
-				itemPresetExplorerState.subscribeToSelectedItemPresetChanged($scope, function () {
-					var itemPresetId = itemPresetExplorerState.getSelectedItemPresetId();
-					// if no children then log
-					if (itemPresetManager.getChildren(itemPresetId).length === 0) {
-						logPresetLogData.save(itemPresetId);
-						return;
-					}
-					// otherwise show child item presets
-					loadItemPresets();
-				});
+				itemPresetExplorerState.subscribeToSelectedItemPresetChanged($scope, loadItemPresets);
 
 				itemPresetExplorerState.subscribeToNavigateBack($scope, function () {
 					itemPresetExplorerState.setSelectedItemPresetToParent();

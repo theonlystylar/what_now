@@ -30,7 +30,7 @@
 						.then(
 							// success
 							function() {
-								toastr["success"]("Logged " + $scope.item.displayName() + " form");
+								toastr["success"]("Logged " + $scope.item.displayName());
 								back();
 							},
 							// error
