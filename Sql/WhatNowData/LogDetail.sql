@@ -11,5 +11,5 @@
 		from Log
 		join Item on Log.ItemId = Item.Id
 		left outer join ControlLog on Log.Id = ControlLog.LogId
+		left outer join Control on ControlLog.ControlId = Control.Id
 		left outer join ControlOption on ControlLog.ControlOptionId = ControlOption.Id
-		left outer join Control on ControlOption.ControlId = Control.Id

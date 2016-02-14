@@ -26,10 +26,10 @@ Post-Deployment Script Template
 --GO
 --DELETE [Item];
 --GO
-DELETE [LogPreset]
-GO
-DELETE [ItemPreset]
-GO
+--DELETE [LogPreset]
+--GO
+--DELETE [ItemPreset]
+--GO
 
 --
 -- Added CreateDate to table Log.  Need to update default value with Logged column datetime
@@ -306,11 +306,11 @@ SET IDENTITY_INSERT [ItemPreset] ON;
 MERGE INTO [ItemPreset] AS Target 
 USING (VALUES 
 		(1, NULL, N'Vomiting', N'Puke', 1),
-		(2, NULL, N'Vomiting 2x', N'Puke 2x', 1),
+		(2, NULL, N'Vomiting X', N'Puke X', 1),
 		(3, 2, N'1 Time', NULL, 1),
-		(4, 2, N'2 Time', NULL, 2),
-		(5, 2, N'3 Time', NULL, 3),
-		(6, 2, N'4 Time', NULL, 4)
+		(4, 2, N'2 Times', NULL, 2),
+		(5, 2, N'3 Times', NULL, 3),
+		(6, 2, N'4 Times', NULL, 4)
 ) 
 AS Source (Id, ParentId, Name, FunnyName, SortOrder) 
 ON Target.Id = Source.Id 

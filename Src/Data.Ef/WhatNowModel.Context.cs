@@ -41,5 +41,6 @@ namespace WhatNow.Data.Ef
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<ItemPreset> ItemPresets { get; set; }
         public virtual DbSet<LogPreset> LogPresets { get; set; }
+        public virtual DbSet<LogPresetDetail> LogPresetDetails { get; set; }
     }
 }

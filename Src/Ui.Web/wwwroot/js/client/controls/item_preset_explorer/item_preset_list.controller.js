@@ -6,7 +6,8 @@
 			"itemPresetExplorerState",
 			"itemPresetManager",
 			"navBarStateService",
-			function ($scope, $timeout, itemPresetExplorerState, itemPresetManager, navBarStateService) {
+			"logPresetLogData",
+			function ($scope, $timeout, itemPresetExplorerState, itemPresetManager, navBarStateService, logPresetLogData) {
 
 				initialize();
 
@@ -22,10 +23,10 @@
 				//#region event handling
 
 				itemPresetExplorerState.subscribeToSelectedItemPresetChanged($scope, function () {
+					var itemPresetId = itemPresetExplorerState.getSelectedItemPresetId();
 					// if no children then log
-					if (itemPresetManager.getChildren(itemPresetExplorerState.getSelectedItemPresetId()).length === 0) {
-						//itemPresetExplorerState.setSelectedView("log");
-						// TODO: log
+					if (itemPresetManager.getChildren(itemPresetId).length === 0) {
+						logPresetLogData.save(itemPresetId);
 						return;
 					}
 					// otherwise show child item presets

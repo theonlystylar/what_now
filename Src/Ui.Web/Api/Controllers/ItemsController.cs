@@ -71,8 +71,7 @@ namespace WhatNow.Ui.Web.Api.Controllers
 				var parsedContentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
 				var fileName = parsedContentDisposition.FileName;
 
-				// drop existing file so new file has new id 
-				// this is important so the url changes and the
+				// drop existing file so new file has new id this is important so the url changes and the
 				// new image is shown in the UI.
 				if (item.File != null)
 				{

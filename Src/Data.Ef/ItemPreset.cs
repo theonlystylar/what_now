@@ -17,7 +17,7 @@ namespace WhatNow.Data.Ef
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ItemPreset()
         {
-            this.ItemPreset1 = new HashSet<ItemPreset>();
+            this.Children = new HashSet<ItemPreset>();
             this.LogPresets = new HashSet<LogPreset>();
         }
     
@@ -30,8 +30,8 @@ namespace WhatNow.Data.Ef
     
         public virtual File File { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ItemPreset> ItemPreset1 { get; set; }
-        public virtual ItemPreset ItemPreset2 { get; set; }
+        public virtual ICollection<ItemPreset> Children { get; set; }
+        public virtual ItemPreset Parent { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LogPreset> LogPresets { get; set; }
     }
