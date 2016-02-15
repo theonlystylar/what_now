@@ -10,8 +10,11 @@
 				initialize();
 
 				$scope.cancel = $scope.back;
+				$scope.enabled = true;
 
-				$scope.save = function(item) {
+				$scope.save = function (item) {
+					if (!$scope.enabled) return;
+
 					itemManager
 						.save(item)
 						.then(
@@ -23,6 +26,7 @@
 							// error
 							function (error) {
 								toastr["error"](error);
+								$scope.enabled = true;
 							});
 				}
 

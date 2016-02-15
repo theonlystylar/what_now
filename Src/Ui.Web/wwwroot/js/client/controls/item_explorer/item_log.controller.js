@@ -10,11 +10,17 @@
 
 				initialize();
 
-				$scope.cancel = function() {
+				$scope.cancel = function () {
+					if (!$scope.enabled) return;
 					back();
 				}
 
-				$scope.save = function() {
+				$scope.enabled = true;
+
+				$scope.save = function () {
+					if (!$scope.enabled) return;
+
+					$scope.enabled = false;
 					var log = logManager.create($scope.item.id());
 					logCheckboxSelections(log);
 					logRadioSelections(log);
@@ -36,6 +42,7 @@
 							// error
 							function(error) {
 								toastr["error"](error);
+								$scope.enabled = true;
 							});
 				}
 

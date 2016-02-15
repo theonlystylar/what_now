@@ -1,4 +1,8 @@
 ﻿<form role="form">
+	<div class="form-group">
+		<button class="btn btn-default" ng-click="cancel()" ng-class="{disabled: !enabled}">Cancel</button>
+		<button class="btn btn-primary" ng-click="save()" ng-class="{disabled: !enabled}">Save</button>
+	</div>
 
 	<!-- Calendar -->
 
@@ -6,10 +10,10 @@
 		<label>Time</label>
 		<div class="form-group">
 			<input type="text"
-					 kendo-date-time-picker
-					 k-on-change="selectDateTime(kendoEvent)"
-					 k-ng-model="currentDate"
-					 k-format="'M/d/yyyy h:mm tt'" />
+			       kendo-date-time-picker
+			       k-on-change="selectDateTime(kendoEvent)"
+			       k-ng-model="currentDate"
+			       k-format="'M/d/yyyy h:mm tt'"/>
 		</div>
 	</div>
 
@@ -26,7 +30,7 @@
 					<div ng-repeat="controlOption in control.controlOptions">
 						<div class="checkbox">
 							<label>
-								<input type="checkbox" ng-model="controlOption.checked" /> {{controlOption.displayName}}
+								<input type="checkbox" ng-model="controlOption.checked"/> {{controlOption.displayName}}
 							</label>
 						</div>
 					</div>
@@ -37,31 +41,28 @@
 			<!-- Option Control -->
 
 			<div class="form-group" ng-switch-when="Radio">
-
 				<label>{{control.displayName}}</label>
 				<div class="form-group">
 					<div ng-repeat="controlOption in control.controlOptions">
 						<div class="radio">
 							<label>
-								<input type="radio" name="{{control.displayName}}" ng-model="control.value" ng-value="controlOption.id" /> {{controlOption.displayName}}
+								<input type="radio" name="{{control.displayName}}" ng-model="control.value" ng-value="controlOption.id"/> {{controlOption.displayName}}
 							</label>
 						</div>
 					</div>
 				</div>
-
 			</div>
 
 			<!-- Texbox Control -->
 
 			<div class="form-group" ng-switch-when="Textbox">
-
 				<label>{{control.displayName}}:</label>
 				<textarea class="form-control" rows="3" ng-model="control.value"></textarea>
-
 			</div>
 		</div>
 	</div>
-
-	<button class="btn btn-default" ng-click="cancel()">Cancel</button>
-	<button class="btn btn-primary" ng-click="save()">Save</button>
+	<div class="form-group">
+		<button class="btn btn-default" ng-click="cancel()" ng-class="{disabled: !enabled}">Cancel</button>
+		<button class="btn btn-primary" ng-click="save()" ng-class="{disabled: !enabled}">Save</button>
+	</div>
 </form>
