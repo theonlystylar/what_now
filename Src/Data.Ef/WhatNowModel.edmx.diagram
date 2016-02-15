@@ -21,7 +21,6 @@
         <AssociationConnector Association="WhatNowDataModel.FK_ControlLog_Control_ControlId" />
         <AssociationConnector Association="WhatNowDataModel.FK_ControlLog_ControlOption_ControlOptionId" />
         <AssociationConnector Association="WhatNowDataModel.FK_ControlLog_Log_LogId" />
-        <EntityTypeShape EntityType="WhatNowDataModel.LogDetail" Width="1.5" PointX="10.125" PointY="1.125" />
         <EntityTypeShape EntityType="WhatNowDataModel.File" Width="1.5" PointX="0.75" PointY="9.5" />
         <AssociationConnector Association="WhatNowDataModel.FK_Item_File_ImageId" />
         <EntityTypeShape EntityType="WhatNowDataModel.ItemPreset" Width="1.5" PointX="3" PointY="9.25" />
@@ -31,7 +30,9 @@
         <AssociationConnector Association="WhatNowDataModel.FK_ItemPreset_File_ImageId" />
         <AssociationConnector Association="WhatNowDataModel.FK_ItemPreset_ItemPreset_ParentId" />
         <AssociationConnector Association="WhatNowDataModel.FK_LogPreset_ItemPreset_ItemPresetId" />
-        <EntityTypeShape EntityType="WhatNowDataModel.LogPresetDetail" Width="1.5" PointX="12" PointY="1.125" />
+        <EntityTypeShape EntityType="WhatNowDataModel.ControlLogDetail" Width="1.5" PointX="12.375" PointY="1" />
+        <EntityTypeShape EntityType="WhatNowDataModel.LogDetail" Width="1.5" PointX="10.375" PointY="1" />
+        <EntityTypeShape EntityType="WhatNowDataModel.LogPresetDetail" Width="1.5" PointX="14.375" PointY="1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

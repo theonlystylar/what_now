@@ -106,22 +106,29 @@
           <Property Name="LastLogin" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'WhatNowData.dbo.ControlLogDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ControlLogDetail">
+          <Key>
+            <PropertyRef Name="ControlLogId" />
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="ControlLogId" Type="int" Nullable="false" />
+          <Property Name="LogId" Type="int" Nullable="false" />
+          <Property Name="ControlName" Type="varchar" MaxLength="50" />
+          <Property Name="Value" Type="varchar" MaxLength="2000" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="LogDetail">
           <Key>
             <PropertyRef Name="LogId" />
             <PropertyRef Name="UserId" />
-            
-            
-            <PropertyRef Name="ControlLogId" />
+            <PropertyRef Name="Logged" />
           </Key>
           <Property Name="LogId" Type="int" Nullable="false" />
-          <Property Name="ControlLogId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="varchar" MaxLength="50" />
           <Property Name="Logged" Type="datetime" Nullable="false" />
-          <Property Name="Item" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Control" Type="varchar" MaxLength="50" />
-          <Property Name="Value" Type="varchar" MaxLength="2000" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -332,15 +339,20 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogPreset" EntityType="Self.LogPreset" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ControlLogDetail" EntityType="Self.ControlLogDetail" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ControlLogDetail].[ControlLogId] AS [ControlLogId], 
+    [ControlLogDetail].[LogId] AS [LogId], 
+    [ControlLogDetail].[ControlName] AS [ControlName], 
+    [ControlLogDetail].[Value] AS [Value]
+    FROM [dbo].[ControlLogDetail] AS [ControlLogDetail]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="LogDetail" EntityType="Self.LogDetail" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [LogDetail].[LogId] AS [LogId], 
-    [LogDetail].[ControlLogId] AS [ControlLogId], 
     [LogDetail].[UserId] AS [UserId], 
-    [LogDetail].[Logged] AS [Logged], 
-    [LogDetail].[Item] AS [Item], 
-    [LogDetail].[Control] AS [Control], 
-    [LogDetail].[Value] AS [Value]
+    [LogDetail].[ItemName] AS [ItemName], 
+    [LogDetail].[Logged] AS [Logged]
     FROM [dbo].[LogDetail] AS [LogDetail]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="LogPresetDetail" EntityType="Self.LogPresetDetail" store:Type="Views" store:Schema="dbo">
@@ -491,7 +503,6 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
             <End Role="Log" EntitySet="Logs" />
             <End Role="ControlLog" EntitySet="ControlLogs" />
           </AssociationSet>
-          <EntitySet Name="LogDetails" EntityType="WhatNowDataModel.LogDetail" />
           <EntitySet Name="Files" EntityType="WhatNowDataModel.File" />
           <AssociationSet Name="FK_Item_File_ImageId" Association="WhatNowDataModel.FK_Item_File_ImageId">
             <End Role="File" EntitySet="Files" />
@@ -519,6 +530,8 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
             <End Role="ItemPreset" EntitySet="ItemPresets" />
             <End Role="LogPreset" EntitySet="LogPresets" />
           </AssociationSet>
+          <EntitySet Name="ControlLogDetails" EntityType="WhatNowDataModel.ControlLogDetail" />
+          <EntitySet Name="LogDetails" EntityType="WhatNowDataModel.LogDetail" />
           <EntitySet Name="LogPresetDetails" EntityType="WhatNowDataModel.LogPresetDetail" />
         </EntityContainer>
         <Association Name="FK_Item_Item_ParentId">
@@ -690,20 +703,6 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="LogDetail">
-          <Key>
-            <PropertyRef Name="LogId" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="ControlLogId" />
-          </Key>
-          <Property Name="LogId" Type="Int32" Nullable="false" />
-          <Property Name="ControlLogId" Type="Int32" Nullable="false" />
-          <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Logged" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Item" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Control" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Value" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="File">
           <Key>
             <PropertyRef Name="Id" />
@@ -820,6 +819,27 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ControlLogDetail">
+          <Key>
+            <PropertyRef Name="ControlLogId" />
+            <PropertyRef Name="LogId" />
+          </Key>
+          <Property Name="ControlLogId" Type="Int32" Nullable="false" />
+          <Property Name="LogId" Type="Int32" Nullable="false" />
+          <Property Name="ControlName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LogDetail">
+          <Key>
+            <PropertyRef Name="LogId" />
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="Logged" />
+          </Key>
+          <Property Name="LogId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Logged" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="LogPresetDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -917,19 +937,6 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LogDetails">
-            <EntityTypeMapping TypeName="WhatNowDataModel.LogDetail">
-              <MappingFragment StoreEntitySet="LogDetail">
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="Control" ColumnName="Control" />
-                <ScalarProperty Name="Item" ColumnName="Item" />
-                <ScalarProperty Name="Logged" ColumnName="Logged" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ControlLogId" ColumnName="ControlLogId" />
-                <ScalarProperty Name="LogId" ColumnName="LogId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Files">
             <EntityTypeMapping TypeName="WhatNowDataModel.File">
               <MappingFragment StoreEntitySet="File">
@@ -962,6 +969,26 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
                 <ScalarProperty Name="LogGroup" ColumnName="LogGroup" />
                 <ScalarProperty Name="ItemPresetId" ColumnName="ItemPresetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ControlLogDetails">
+            <EntityTypeMapping TypeName="WhatNowDataModel.ControlLogDetail">
+              <MappingFragment StoreEntitySet="ControlLogDetail">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="ControlName" ColumnName="ControlName" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
+                <ScalarProperty Name="ControlLogId" ColumnName="ControlLogId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogDetails">
+            <EntityTypeMapping TypeName="WhatNowDataModel.LogDetail">
+              <MappingFragment StoreEntitySet="LogDetail">
+                <ScalarProperty Name="Logged" ColumnName="Logged" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LogId" ColumnName="LogId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

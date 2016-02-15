@@ -1,9 +1,23 @@
-﻿body { font-size: 1.5em; }
+﻿html,
+body {
+	height: 100%;
+	width: 100%;
+}
+
+body { font-size: 1.5em; }
 
 .c-page {
 	height: 100%;
 	left: 0;
-	padding: 50px 0 40px 0;
+	padding: 50px 0 20px 0;
+	top: 0;
+	width: 100%;
+}
+
+.c-page .c-margined {
+	height: 100%;
+	left: 0;
+	padding: 15px 15px 5px 15px;
 	top: 0;
 	width: 100%;
 }
@@ -55,46 +69,6 @@
 }
 
 .c-item .c-menu {
-	float: right;
-	font-size: 1.8em;
-	margin-top: -7px;
-}
-
-.c-item-preset {
-	border: solid 1px #dd4814;
-	border-radius: 4px;
-	color: #dd4814;
-	cursor: pointer;
-	margin-bottom: 20px;
-	padding: 8px;
-}
-
-.c-item-preset.hover {
-	background-color: #dd4814;
-	color: #fff;
-}
-
-.c-item-preset .img {
-	background-color: #fff;
-	border: solid 1px #dd4814;
-	border-radius: 4px;
-	float: left;
-	height: 80px;
-	width: 80px;
-}
-
-.c-item-preset img {
-	border-radius: 4px;
-	height: 78px;
-	width: 78px;
-}
-
-.c-item-preset span {
-	font-size: 1.4em;
-	padding-left: 15px;
-}
-
-.c-item-preset .c-menu {
 	float: right;
 	font-size: 1.8em;
 	margin-top: -7px;

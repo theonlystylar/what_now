@@ -1,22 +1,51 @@
-﻿<div class="table-responsive">
+﻿<div class="c-margined">
+	<div kendo-grid="grid" options="gridOptions" style="height: 100%">
+		<div k-detail-template>
+			<div kendo-grid k-options="detailGridOptions(dataItem)"></div>
+		</div>
+	</div>
+</div>
+
+
+<!--<div class="table-responsive">
 	<table class="table table-striped">
 		<thead>
 		<tr>
 			<th></th>
 			<th>Logged</th>
 			<th>Item</th>
-			<th>Control</th>
-			<th>Value</th>
 		</tr>
 		</thead>
 		<tbody>
-		<tr ng-repeat="logDetail in logDetails">
-			<td><button class="btn btn-sm btn-danger" ng-click="deleteLog(logDetail)">Delete</button></td>
-			<td>{{logDetail.loggedLocalTime | date:'MM/dd/yyyy h:mma'}}</td>
-			<td>{{logDetail.item}}</td>
-			<td>{{logDetail.control}}</td>
-			<td>{{logDetail.value}}</td>
+		<tr ng-repeat-start="log in logs">
+			<td>
+				<button class="btn btn-sm btn-danger" ng-click="deleteLog(log)">Delete</button>
+			</td>
+			<td>{{log.loggedLocalTime | date:'MM/dd/yyyy h:mma'}}</td>
+			<td>{{log.itemName}}</td>
+		</tr>
+		<tr ng-repeat-end>
+			<td colspan="3">
+				<table class="table table-striped">
+					<thead>
+					<tr>
+						<th></th>
+						<th>Name</th>
+						<th>Value</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr ng-repeat="log in getControlLogs(log.logId)">
+						<td>
+							<button class="btn btn-sm btn-danger" ng-click="deleteControlLog(controlLog)">Delete</button>
+						</td>
+						<td>{{log.controlName}}</td>
+						<td>{{log.value}}</td>
+					</tr>
+					</tbody>
+				</table>
+			</td>
 		</tr>
 		</tbody>
 	</table>
-</div>
+</div>-->

@@ -6,4 +6,4 @@ Components Used:
 
 	AngularJS Directives
 	DateTimePicker
-	Upload
+	Grid

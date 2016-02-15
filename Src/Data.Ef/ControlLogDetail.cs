@@ -12,11 +12,11 @@ namespace WhatNow.Data.Ef
     using System;
     using System.Collections.Generic;
     
-    public partial class LogDetail
+    public partial class ControlLogDetail
     {
+        public int ControlLogId { get; set; }
         public int LogId { get; set; }
-        public int UserId { get; set; }
-        public string ItemName { get; set; }
-        public System.DateTime Logged { get; set; }
+        public string ControlName { get; set; }
+        public string Value { get; set; }
     }
 }

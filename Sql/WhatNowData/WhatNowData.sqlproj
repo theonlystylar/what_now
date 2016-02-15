@@ -71,6 +71,7 @@
     <Build Include="ItemPreset.sql" />
     <Build Include="LogPreset.sql" />
     <Build Include="LogPresetDetail.sql" />
+    <Build Include="ControlLogDetail.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />
