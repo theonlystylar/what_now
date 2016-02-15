@@ -110,7 +110,6 @@ warning 6002: The table/view 'WhatNowData.dbo.ControlLogDetail' does not have a 
         <EntityType Name="ControlLogDetail">
           <Key>
             <PropertyRef Name="ControlLogId" />
-            <PropertyRef Name="LogId" />
           </Key>
           <Property Name="ControlLogId" Type="int" Nullable="false" />
           <Property Name="LogId" Type="int" Nullable="false" />
@@ -122,8 +121,6 @@ warning 6002: The table/view 'WhatNowData.dbo.LogDetail' does not have a primary
         <EntityType Name="LogDetail">
           <Key>
             <PropertyRef Name="LogId" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="Logged" />
           </Key>
           <Property Name="LogId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
@@ -135,10 +132,6 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
         <EntityType Name="LogPresetDetail">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="ItemPresetId" />
-            <PropertyRef Name="ItemId" />
-            <PropertyRef Name="LogGroup" />
-            <PropertyRef Name="ControlId" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
           <Property Name="ItemPresetId" Type="int" Nullable="false" />
@@ -822,7 +815,6 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
         <EntityType Name="ControlLogDetail">
           <Key>
             <PropertyRef Name="ControlLogId" />
-            <PropertyRef Name="LogId" />
           </Key>
           <Property Name="ControlLogId" Type="Int32" Nullable="false" />
           <Property Name="LogId" Type="Int32" Nullable="false" />
@@ -832,8 +824,6 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
         <EntityType Name="LogDetail">
           <Key>
             <PropertyRef Name="LogId" />
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="Logged" />
           </Key>
           <Property Name="LogId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
@@ -843,10 +833,6 @@ warning 6002: The table/view 'WhatNowData.dbo.LogPresetDetail' does not have a p
         <EntityType Name="LogPresetDetail">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="ItemPresetId" />
-            <PropertyRef Name="ItemId" />
-            <PropertyRef Name="LogGroup" />
-            <PropertyRef Name="ControlId" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="ItemPresetId" Type="Int32" Nullable="false" />
