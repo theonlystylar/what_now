@@ -44,6 +44,10 @@ gulp.task("bower", ["bower:clean"], function() {
 		])
 		.pipe(gulp.dest(paths.webroot + "lib/angular"));
 
+	// angular-loading-bar
+	gulp.src("bower_components/angular-loading-bar/build/*")
+		.pipe(gulp.dest(paths.webroot + "lib/angular-loading-bar"));
+
 	// moment
 	gulp.src("bower_components/moment/moment*.js")
 		.pipe(gulp.dest(paths.webroot + "lib/moment"));
@@ -64,6 +68,7 @@ gulp.task("bower:clean", function() {
 	return del([
 		paths.webroot + "lib/**/*",
 		"!" + paths.webroot + "lib/toastr/**",
-		"!" + paths.webroot + "lib/kendo_ui/**"
+		"!" + paths.webroot + "lib/kendo_ui/**",
+		"!" + paths.webroot + "lib/angular-loading-bar/**"
 	]);
 });

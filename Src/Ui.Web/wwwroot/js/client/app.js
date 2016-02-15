@@ -3,6 +3,7 @@
 /* App Module */
 
 var clientApp = angular.module("clientApp", [
+	"angular-loading-bar",
 	"ngRoute",
 	"ngAnimate",
 	"kendo.directives",
